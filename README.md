@@ -1,6 +1,6 @@
-# Web Application
+# Personal Website
 
-This repository contains the source code for [martinbraquet.com](https://martinbraquet.com), my personal website. Built with Next.js, React and TypeScript.
+This repository contains the source code for [martinbraquet.com](https://martinbraquet.com).
 
 ## Tech Stack
 
