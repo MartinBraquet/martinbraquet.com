@@ -88,64 +88,50 @@
 
   :root {
     touch-action: pan-y;
-    /* Text / Ink Grey Scale */
-    /* High Contrast */
-    --color-ink-0: 255 255 255; /* white */
-    --color-ink-50: 255 255 255;
-    --color-ink-100: 255 255 255;
-    --color-ink-200: 255 255 255;
-    --color-ink-300: 160 160 160;
-    --color-ink-400: 160 160 160;
-    --color-ink-500: 80 80 80;
-    --color-ink-600: 0 0 0;
-    --color-ink-700: 0 0 0;
-    --color-ink-800: 0 0 0;
-    --color-ink-900: 0 0 0;
-    --color-ink-950: 0 0 0;
-    --color-ink-1000: 0 0 0; /* black */
 
-    /* Medium Contrast */
-    /*--color-ink-0: 255 255 255; !* white *!*/
-    /*--color-ink-50: 245 245 245;*/
-    /*--color-ink-100: 230 230 230;*/
-    /*--color-ink-200: 200 200 200;*/
-    /*--color-ink-300: 170 170 170;*/
-    /*--color-ink-400: 140 140 140;*/
-    /*--color-ink-500: 110 110 110;*/
-    /*--color-ink-600: 85 85 85;*/
-    /*--color-ink-700: 60 60 60;*/
-    /*--color-ink-800: 40 40 40;*/
-    /*--color-ink-900: 25 25 25;*/
-    /*--color-ink-950: 12 12 12;*/
-    /*--color-ink-1000: 0 0 0; !* black *!*/
+    /* ── Text / Ink scale (warm, not neutral) ── */
+    --color-ink-0:     255 254 249;   /* #fffef9  card surface */
+    --color-ink-50:    250 246 240;   /* #faf6f0  main bg */
+    --color-ink-100:   232 222 206;   /* #e8dece  border */
+    --color-ink-200:   200 184 154;   /* #c8b89a  mid border */
+    --color-ink-300:   186 178 160;   /* #bab2a0  text-tertiary */
+    --color-ink-400:   122 112 96;    /* #7a7060  text-secondary */
+    --color-ink-500:   90  78  60;
+    --color-ink-600:   60  50  38;
+    --color-ink-700:   45  38  28;
+    --color-ink-800:   35  30  20;
+    --color-ink-900:   30  26  20;    /* #1e1a14  text-primary */
+    --color-ink-950:   18  14  10;
+    --color-ink-1000:  0   0   0;
 
-    /* Background / Canvas Grey Scale */
-    --color-canvas-0: 255 255 255; /* white */
-    --color-canvas-25: 245 245 245;
-    --color-canvas-50: 240 240 240;
-    --color-canvas-100: 220 220 220;
-    --color-canvas-200: 210 210 210;
-    --color-canvas-300: 190 190 190;
-    --color-canvas-400: 160 160 160;
-    --color-canvas-500: 130 130 130;
-    --color-canvas-600: 100 100 100;
-    --color-canvas-700: 75 75 75;
-    --color-canvas-800: 50 50 50;
-    --color-canvas-900: 30 30 30;
-    --color-canvas-950: 15 15 15;
-    --color-canvas-1000: 0 0 0; /* black */
+    /* ── Background / Canvas scale (warm cream → near-black) ── */
+    --color-canvas-0:     255 254 249;   /* #fffef9  card / panel surface */
+    --color-canvas-25:    250 246 240;   /* #faf6f0  main page background */
+    --color-canvas-50:    255 255 255;   /* #ffffff  alternate section bg */
+    --color-canvas-100:   232 222 206;   /* #e8dece  borders, dividers */
+    --color-canvas-200:   200 184 154;   /* #c8b89a  outline-btn border */
+    --color-canvas-300:   186 178 160;   /* #bab2a0  text-tertiary / muted */
+    --color-canvas-400:   122 112 96;    /* #7a7060  text-secondary */
+    --color-canvas-500:   90  78  60;
+    --color-canvas-600:   60  50  38;
+    --color-canvas-700:   45  38  28;
+    --color-canvas-800:   35  30  20;
+    --color-canvas-900:   30  26  20;    /* #1e1a14  text-primary + footer bg */
+    --color-canvas-950:   18  14  10;
+    --color-canvas-1000:  0   0   0;
 
-    --color-primary-950: 23 37 84; /* very dark navy */
-    --color-primary-900: 30 58 138;
-    --color-primary-800: 30 64 175;
-    --color-primary-700: 29 78 216;
-    --color-primary-600: 29 78 216;
-    --color-primary-500: 59 130 246; /* standard blue */
-    --color-primary-400: 96 165 250;
-    --color-primary-300: 147 197 253;
-    --color-primary-200: 191 219 254;
-    --color-primary-100: 219 234 254;
-    --color-primary-50: 239 246 255; /* very light blue */
+    /* ── Primary / Brand Red ── */
+    --color-primary-950:  61  0   0;
+    --color-primary-900:  112 0   0;    /* #700000  hover / pressed */
+    --color-primary-800:  139 0   0;    /* #8B0000  brand red — main */
+    --color-primary-700:  155 50  50;
+    --color-primary-600:  155 68  68;   /* #9b4444  conference pill text */
+    --color-primary-500:  180 90  90;
+    --color-primary-400:  196 112 110;  /* #c4706e  footer name accent */
+    --color-primary-300:  210 140 140;
+    --color-primary-200:  225 170 170;
+    --color-primary-100:  240 210 210;
+    --color-primary-50:   250 238 238;
 
     --color-yes-0: 255 255 255;
     --color-yes-50: 249 249 249;

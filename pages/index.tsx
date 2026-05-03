@@ -2,6 +2,75 @@ import { useEffect, useRef, useState } from "react"
 
 const EMAIL = "martin.braquet@gmail.com"
 
+// ── Color tokens ──────────────────────────────────────────────────────────────
+// All values resolve through CSS custom properties defined in :root / globals.css.
+// The space-separated format (e.g. "139 0 0") enables the slash-alpha syntax:
+//   rgb(var(--color-primary-800) / 0.10)
+// ─────────────────────────────────────────────────────────────────────────────
+const C = {
+  // Surfaces
+  bg:         "rgb(var(--color-canvas-25))",   // #faf6f0  main page bg
+  bgCard:     "rgb(var(--color-canvas-0))",    // #fffef9  card / panel bg
+  bgAlt:      "rgb(var(--color-canvas-50))",   // #ffffff  alternate section bg
+
+  // Borders
+  border:     "rgb(var(--color-canvas-100))",  // #e8dece  default border
+  borderMd:   "rgb(var(--color-canvas-200))",  // #c8b89a  outline-btn border
+
+  // Text
+  text:       "rgb(var(--color-canvas-900))",  // #1e1a14  primary text
+  textSec:    "rgb(var(--color-canvas-400))",  // #7a7060  secondary text
+  textTert:   "rgb(var(--color-canvas-300))",  // #bab2a0  tertiary / muted text
+
+  // Brand red — solid
+  red:        "rgb(var(--color-primary-800))", // #8B0000  brand red
+  redDark:    "rgb(var(--color-primary-900))", // #700000  hover dark red
+  redMid:     "rgb(var(--color-primary-600))", // #9b4444  conference pill text
+  redFooter:  "rgb(var(--color-primary-400))", // #c4706e  footer name accent
+
+  // Brand red — with alpha
+  redA045: "rgb(var(--color-primary-800) / 0.045)",
+  redA04:  "rgb(var(--color-primary-800) / 0.04)",
+  redA07:  "rgb(var(--color-primary-800) / 0.07)",
+  redA08:  "rgb(var(--color-primary-800) / 0.08)",
+  redA10:  "rgb(var(--color-primary-800) / 0.10)",
+  redA15:  "rgb(var(--color-primary-800) / 0.15)",
+  redA18:  "rgb(var(--color-primary-800) / 0.18)",
+  redA25:  "rgb(var(--color-primary-800) / 0.25)",
+  redA30:  "rgb(var(--color-primary-800) / 0.30)",
+  redA35:  "rgb(var(--color-primary-800) / 0.35)",
+
+  // Dark ink (canvas-900 = #1e1a14) — with alpha
+  inkA04:  "rgb(var(--color-canvas-900) / 0.04)",
+  inkA07:  "rgb(var(--color-canvas-900) / 0.07)",
+
+  // Text-secondary (canvas-400 = #7a7060) — with alpha
+  textSecA25: "rgb(var(--color-canvas-400) / 0.25)",
+
+  // Page bg (canvas-25 = #faf6f0) — with alpha (nav glass, footer text overlays)
+  bgA07:  "rgb(var(--color-canvas-25) / 0.07)",
+  bgA25:  "rgb(var(--color-canvas-25) / 0.25)",
+  bgA35:  "rgb(var(--color-canvas-25) / 0.35)",
+  bgA40:  "rgb(var(--color-canvas-25) / 0.40)",
+  bgA65:  "rgb(var(--color-canvas-25) / 0.65)",
+  bgA70:  "rgb(var(--color-canvas-25) / 0.70)",
+  bgA80:  "rgb(var(--color-canvas-25) / 0.80)",
+  bgA95:  "rgb(var(--color-canvas-25) / 0.95)",
+
+  // CTA card decorative overlays (pure white / black — no palette token needed)
+  white05: "rgba(255, 255, 255, 0.05)",
+  black10: "rgba(0, 0, 0, 0.10)",
+} as const
+
+// Hero decorative background — kept as a named constant to avoid repetition
+const HERO_BG = [
+  `radial-gradient(ellipse 55% 50% at 85% 15%, ${C.redA07} 0%, transparent 60%)`,
+  // The warm tan (196 154 114) is a unique one-off decoration, not in the palette
+  `radial-gradient(ellipse 40% 35% at 5% 85%, rgba(196, 154, 114, 0.10) 0%, transparent 55%)`,
+].join(", ")
+
+// ── Data ──────────────────────────────────────────────────────────────────────
+
 const PUBLICATIONS = [
   {
     year: "2022",
@@ -39,7 +108,7 @@ const PUBLICATIONS = [
     url: "https://dial.uclouvain.be/memoire/ucl/object/thesis:25100",
     tag: "Thesis",
   },
-];
+]
 
 const SOCIAL = [
   {
@@ -69,67 +138,74 @@ const SOCIAL = [
   //     </svg>
   //   ),
   // },
-];
+]
 
-function SocialButtons({withEmail = false}: {withEmail?: boolean}) {
-  return <div style={{ display: "flex", gap: "0.8rem", flexWrap: "wrap", animation: "fadeUp 0.55s 0.24s ease both" }}>
-    {SOCIAL.map((s) => (
-      <a key={s.label} href={s.href} target="_blank" rel="noopener noreferrer" className="social-btn">
-        {s.icon} {s.label}
-      </a>
-    ))}
-    {withEmail && <a href={`mailto:${EMAIL}`} className="social-btn">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-        <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
-        <polyline points="22,6 12,13 2,6"/>
-      </svg>
-      Email
-    </a>}
-  </div>
+// ── Sub-components ────────────────────────────────────────────────────────────
+
+function SocialButtons({ withEmail = false }: { withEmail?: boolean }) {
+  return (
+    <div style={{ display: "flex", gap: "0.8rem", flexWrap: "wrap", animation: "fadeUp 0.55s 0.24s ease both" }}>
+      {SOCIAL.map((s) => (
+        <a key={s.label} href={s.href} target="_blank" rel="noopener noreferrer" className="social-btn">
+          {s.icon} {s.label}
+        </a>
+      ))}
+      {withEmail && (
+        <a href={`mailto:${EMAIL}`} className="social-btn">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+            <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+            <polyline points="22,6 12,13 2,6"/>
+          </svg>
+          Email
+        </a>
+      )}
+    </div>
+  )
 }
 
+// ── Main component ────────────────────────────────────────────────────────────
+
 export default function MartinBraquet() {
-  const [scrolled, setScrolled] = useState(false);
-  const [activeSection, setActiveSection] = useState("home");
-  const [hoveredPub, setHoveredPub] = useState<number | null>(null);
-  const revealRefs = useRef<HTMLElement[]>([]);
+  const [scrolled, setScrolled] = useState(false)
+  const [hoveredPub, setHoveredPub] = useState<number | null>(null)
+  const revealRefs = useRef<HTMLElement[]>([])
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 24);
-    window.addEventListener("scroll", onScroll);
-    return () => window.removeEventListener("scroll", onScroll);
-  }, []);
+    const onScroll = () => setScrolled(window.scrollY > 24)
+    window.addEventListener("scroll", onScroll)
+    return () => window.removeEventListener("scroll", onScroll)
+  }, [])
 
   useEffect(() => {
     const obs = new IntersectionObserver(
       (entries) =>
         entries.forEach((e) => {
           if (e.isIntersecting) {
-            const target = e.target as HTMLElement;
-            target.style.opacity = "1";
-            target.style.transform = "translateY(0)";
+            const el = e.target as HTMLElement
+            el.style.opacity = "1"
+            el.style.transform = "translateY(0)"
           }
         }),
       { threshold: 0.08 }
-    );
-    revealRefs.current.forEach((el) => el && obs.observe(el));
-    return () => obs.disconnect();
-  }, []);
+    )
+    revealRefs.current.forEach((el) => el && obs.observe(el))
+    return () => obs.disconnect()
+  }, [])
 
   const rs = {
     opacity: 0,
     transform: "translateY(28px)",
     transition: "opacity 0.7s ease, transform 0.7s ease",
-  };
+  }
 
-  let _ri = 0;
+  let _ri = 0
   const R = () => {
-    const i = _ri++;
-    return { ref: (el: any) => { revealRefs.current[i] = el; }, style: rs };
-  };
+    const i = _ri++
+    return { ref: (el: any) => { revealRefs.current[i] = el }, style: rs }
+  }
 
   return (
-    <div style={{ fontFamily: "'DM Sans', sans-serif", background: "#faf6f0", color: "#1e1a14", overflowX: "hidden" }}>
+    <div style={{ fontFamily: "'DM Sans', sans-serif", background: C.bg, color: C.text, overflowX: "hidden" }}>
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,400;1,500&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&family=DM+Mono:wght@400;500&display=swap');
 
@@ -138,109 +214,99 @@ export default function MartinBraquet() {
         @keyframes fadeUp   { from { opacity:0; transform:translateY(28px) } to { opacity:1; transform:none } }
         @keyframes fadeIn   { from { opacity:0 } to { opacity:1 } }
         @keyframes drift    { 0%,100% { transform: translateY(0) } 50% { transform: translateY(-10px) } }
-        @keyframes scanline { 0% { top: -20% } 100% { top: 110% } }
 
         .nav-link {
           font-size: 0.72rem; font-weight: 500; letter-spacing: 0.08em;
-          text-transform: uppercase; color: #7a7060; text-decoration: none;
+          text-transform: uppercase; color: ${C.textSec}; text-decoration: none;
           transition: color 0.2s; padding-bottom: 2px;
           border-bottom: 1px solid transparent;
         }
-        .nav-link:hover, .nav-link.active { color: #1e1a14; border-bottom-color: #8B0000; }
+        .nav-link:hover, .nav-link.active { color: ${C.text}; border-bottom-color: ${C.red}; }
 
         .pill-label {
           display: inline-block; font-size: 0.62rem; font-weight: 600;
           letter-spacing: 0.1em; text-transform: uppercase;
           padding: 0.28rem 0.7rem; border-radius: 100px;
         }
-        .pill-thesis   { background: rgba(139,0,0,0.1); color: #8B0000; }
-        .pill-conf     { background: rgba(139,0,0,0.07); color: #9b4444; border: 1px solid rgba(139,0,0,0.15); }
+        .pill-thesis { background: ${C.redA10}; color: ${C.red}; }
+        .pill-conf   { background: ${C.redA07}; color: ${C.redMid}; border: 1px solid ${C.redA15}; }
 
         .pub-card {
-          background: #fffef9; border: 1.5px solid #e8dece; border-radius: 18px;
+          background: ${C.bgCard}; border: 1.5px solid ${C.border}; border-radius: 18px;
           padding: 1.75rem 2rem;
-          // cursor: pointer;
           transition: border-color 0.25s, box-shadow 0.25s, transform 0.2s;
           position: relative; overflow: hidden;
         }
         .pub-card:hover {
-          border-color: rgba(139,0,0,0.35);
-          box-shadow: 0 12px 36px rgba(139,0,0,0.08);
+          border-color: ${C.redA35};
+          box-shadow: 0 12px 36px ${C.redA08};
           transform: translateY(-3px);
         }
-        // .pub-card::before {
-        //   content: ''; position: absolute; left: 0; top: 0; bottom: 0;
-        //   width: 3px; background: #8B0000; border-radius: 3px 0 0 3px;
-        //   transform: scaleY(0); transform-origin: bottom;
-        //   transition: transform 0.3s ease;
-        // }
-        // .pub-card:hover::before { transform: scaleY(1); }
 
         .link-inline {
-          color: #8B0000; text-decoration: none; font-weight: 500;
-          border-bottom: 1px solid rgba(139,0,0,0.25);
-          transition: border-color 0.2s;
+          color: ${C.red}; text-decoration: none; font-weight: 500;
+          border-bottom: 1px solid ${C.redA25}; transition: border-color 0.2s;
         }
-        .link-inline:hover { border-color: #8B0000; }
+        .link-inline:hover { border-color: ${C.red}; }
 
         .link-ghost {
-          color: #7a7060; text-decoration: none;
-          border-bottom: 1px solid rgba(122,112,96,0.25);
+          color: ${C.textSec}; text-decoration: none;
+          border-bottom: 1px solid ${C.textSecA25};
           transition: color 0.2s, border-color 0.2s;
         }
-        .link-ghost:hover { color: #1e1a14; border-color: #7a7060; }
+        .link-ghost:hover { color: ${C.text}; border-color: ${C.textSec}; }
 
         .btn-primary {
-          display: inline-block; background: #8B0000; color: #faf6f0;
+          display: inline-block; background: ${C.red}; color: ${C.bg};
           border: none; border-radius: 100px; padding: 14px 30px;
           font-size: 0.85rem; font-weight: 500; letter-spacing: 0.04em;
           cursor: pointer; text-decoration: none;
           transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
         }
         .btn-primary:hover {
-          background: #700000;
+          background: ${C.redDark};
           transform: translateY(-2px);
-          box-shadow: 0 8px 24px rgba(139,0,0,0.25);
+          box-shadow: 0 8px 24px ${C.redA25};
         }
 
         .btn-outline {
-          display: inline-block; background: transparent; color: #1e1a14;
-          border: 1.5px solid #c8b89a; border-radius: 100px;
+          display: inline-block; background: transparent; color: ${C.text};
+          border: 1.5px solid ${C.borderMd}; border-radius: 100px;
           padding: 13px 29px; font-size: 0.85rem; font-weight: 500;
           letter-spacing: 0.04em; cursor: pointer; text-decoration: none;
           transition: all 0.2s;
         }
-        .btn-outline:hover { border-color: #1e1a14; background: rgba(30,26,20,0.04); }
+        .btn-outline:hover { border-color: ${C.text}; background: ${C.inkA04}; }
 
         .social-btn {
           display: flex; align-items: center; gap: 0.55rem;
           padding: 0.6rem 1.1rem; border-radius: 100px;
-          border: 1px solid #e8dece; background: #fffef9;
-          color: #7a7060; text-decoration: none; font-size: 0.8rem;
+          border: 1px solid ${C.border}; background: ${C.bgCard};
+          color: ${C.textSec}; text-decoration: none; font-size: 0.8rem;
           font-weight: 500; transition: all 0.2s;
         }
         .social-btn:hover {
-          border-color: rgba(139,0,0,0.3); color: #8B0000;
-          background: rgba(139,0,0,0.04);
-          box-shadow: 0 4px 12px rgba(139,0,0,0.07);
+          border-color: ${C.redA30}; color: ${C.red};
+          background: ${C.redA04};
+          box-shadow: 0 4px 12px ${C.redA07};
         }
 
         .section-label {
           font-size: 0.65rem; font-weight: 600; letter-spacing: 0.14em;
-          text-transform: uppercase; color: #8B0000;
+          text-transform: uppercase; color: ${C.red};
           display: block; margin-bottom: 0.65rem;
         }
 
         .card-box {
-          background: #fffef9; border: 1px solid #e8dece; border-radius: 20px;
+          background: ${C.bgCard}; border: 1px solid ${C.border}; border-radius: 20px;
           padding: 2rem; transition: box-shadow 0.2s, transform 0.2s;
         }
         .card-box:hover {
-          box-shadow: 0 12px 32px rgba(30,26,20,0.07);
+          box-shadow: 0 12px 32px ${C.inkA07};
           transform: translateY(-3px);
         }
 
-        .divider { height: 1px; background: #e8dece; margin: 0 2.5rem; }
+        .divider { height: 1px; background: ${C.border}; margin: 0 2.5rem; }
 
         @media (max-width: 768px) {
           .two-col   { flex-direction: column !important; }
@@ -251,9 +317,9 @@ export default function MartinBraquet() {
       {/* ── NAV ── */}
       <nav style={{
         position: "sticky", top: 0, zIndex: 100,
-        background: scrolled ? "rgba(250,246,240,0.95)" : "rgba(250,246,240,0.8)",
+        background: scrolled ? C.bgA95 : C.bgA80,
         backdropFilter: "blur(16px)",
-        borderBottom: `1px solid ${scrolled ? "#e8dece" : "transparent"}`,
+        borderBottom: `1px solid ${scrolled ? C.border : "transparent"}`,
         padding: "0 2.5rem",
         display: "flex", alignItems: "center", justifyContent: "space-between",
         height: 62, transition: "all 0.3s",
@@ -261,20 +327,16 @@ export default function MartinBraquet() {
         <a href="/" style={{ textDecoration: "none" }}>
           <span style={{
             fontFamily: "'Playfair Display', serif",
-            fontSize: "1rem", fontWeight: 700, color: "#1e1a14",
-            letterSpacing: "-0.01em",
+            fontSize: "1rem", fontWeight: 700, color: C.text, letterSpacing: "-0.01em",
           }}>
-            Martin <span style={{ color: "#8B0000" }}>Braquet</span>
+            Martin <span style={{ color: C.red }}>Braquet</span>
           </span>
         </a>
 
         <div style={{ display: "flex", gap: "2rem", alignItems: "center" }}>
           {[["#about", "About"], ["#academia", "Academia"], ["#publications", "Publications"], ["#contact", "Contact"]].map(([href, label]) => (
             <a key={label} href={href} className="nav-link"
-               onClick={(e) => {
-                 e.preventDefault();
-                 document.querySelector(href)?.scrollIntoView({ behavior: "smooth" });
-               }}
+               onClick={(e) => { e.preventDefault(); document.querySelector(href)?.scrollIntoView({ behavior: "smooth" }) }}
             >{label}</a>
           ))}
         </div>
@@ -286,18 +348,15 @@ export default function MartinBraquet() {
         display: "flex", alignItems: "center",
         position: "relative", overflow: "hidden",
       }}>
-        {/* Background atmosphere */}
-        <div style={{
-          position: "absolute", inset: 0, pointerEvents: "none",
-          background: "radial-gradient(ellipse 55% 50% at 85% 15%, rgba(139,0,0,0.07) 0%, transparent 60%), radial-gradient(ellipse 40% 35% at 5% 85%, rgba(196,154,114,0.1) 0%, transparent 55%)",
-        }} />
+        {/* Atmospheric background */}
+        <div style={{ position: "absolute", inset: 0, pointerEvents: "none", background: HERO_BG }} />
 
         {/* Decorative large letter */}
         <div style={{
           position: "absolute", right: "5%", top: "50%", transform: "translateY(-50%)",
           fontFamily: "'Playfair Display', serif",
           fontSize: "clamp(14rem, 22vw, 26rem)",
-          fontWeight: 700, color: "rgba(139,0,0,0.045)",
+          fontWeight: 700, color: C.redA045,
           lineHeight: 1, userSelect: "none", pointerEvents: "none",
           animation: "drift 7s ease-in-out infinite",
         }}>B</div>
@@ -308,9 +367,9 @@ export default function MartinBraquet() {
             <div style={{ display: "flex", alignItems: "center", gap: "0.75rem", marginBottom: "2.5rem", animation: "fadeUp 0.5s ease both" }}>
               <div style={{
                 width: 8, height: 8, borderRadius: "50%",
-                background: "#8B0000", animation: "fadeIn 1s 0.8s ease both",
+                background: C.red, animation: "fadeIn 1s 0.8s ease both",
               }} />
-              <span style={{ fontSize: "0.7rem", fontWeight: 500, letterSpacing: "0.12em", textTransform: "uppercase", color: "#bab2a0" }}>
+              <span style={{ fontSize: "0.7rem", fontWeight: 500, letterSpacing: "0.12em", textTransform: "uppercase", color: C.textTert }}>
                 Personal Website
               </span>
             </div>
@@ -318,18 +377,18 @@ export default function MartinBraquet() {
             <h1 style={{
               fontFamily: "'Playfair Display', serif",
               fontSize: "clamp(3rem, 7vw, 6rem)",
-              lineHeight: 1.0, fontWeight: 700, color: "#1e1a14",
+              lineHeight: 1.0, fontWeight: 700, color: C.text,
               marginBottom: "1rem",
               animation: "fadeUp 0.55s 0.08s ease both",
             }}>
               Martin<br />
-              <span style={{ color: "#8B0000" }}>Braquet</span>
+              <span style={{ color: C.red }}>Braquet</span>
             </h1>
 
             <p style={{
               fontFamily: "'Playfair Display', serif",
               fontSize: "clamp(1.05rem, 2vw, 1.3rem)",
-              lineHeight: 1.75, color: "#7a7060",
+              lineHeight: 1.75, color: C.textSec,
               fontStyle: "italic", fontWeight: 400,
               maxWidth: 560, marginBottom: "3rem",
               animation: "fadeUp 0.55s 0.16s ease both",
@@ -358,19 +417,16 @@ export default function MartinBraquet() {
       <section id="about" style={{ padding: "90px 2.5rem" }}>
         <div style={{ maxWidth: 1100, margin: "0 auto" }}>
           <div className="two-col" style={{ display: "flex", gap: "5rem", alignItems: "flex-start" }}>
-
-            {/* Left text */}
             <div {...R()} style={{ flex: "1 1 420px" }}>
               <span className="section-label">About</span>
               <h2 style={{
                 fontFamily: "'Playfair Display', serif",
                 fontSize: "clamp(1.9rem, 3.5vw, 2.8rem)",
-                fontWeight: 700, color: "#1e1a14", lineHeight: 1.15,
-                marginBottom: "1.5rem",
+                fontWeight: 700, color: C.text, lineHeight: 1.15, marginBottom: "1.5rem",
               }}>
                 Personal Life
               </h2>
-              <p style={{ fontSize: "1rem", lineHeight: 1.85, color: "#7a7060", marginBottom: "1.75rem" }}>
+              <p style={{ fontSize: "1rem", lineHeight: 1.85, color: C.textSec, marginBottom: "1.75rem" }}>
                 To find out who I am as a person, feel free to explore my Compass profile — a space designed for deeper connection.
               </p>
               <a href="https://compassmeet.com/Martin" target="_blank" rel="noopener noreferrer" className="btn-primary">
@@ -397,18 +453,18 @@ export default function MartinBraquet() {
       <div className="divider" />
 
       {/* ── ACADEMIA ── */}
-      <section id="academia" style={{ padding: "90px 2.5rem", background: "#fff" }}>
+      <section id="academia" style={{ padding: "90px 2.5rem", background: C.bgAlt }}>
         <div style={{ maxWidth: 1100, margin: "0 auto" }}>
           <div {...R()} style={{ ...rs, marginBottom: "3.5rem" }}>
             <span className="section-label">Academia</span>
             <h2 style={{
               fontFamily: "'Playfair Display', serif",
               fontSize: "clamp(1.9rem, 3.5vw, 2.8rem)",
-              fontWeight: 700, color: "#1e1a14", lineHeight: 1.15, marginBottom: "0.75rem",
+              fontWeight: 700, color: C.text, lineHeight: 1.15, marginBottom: "0.75rem",
             }}>
               Research & Education
             </h2>
-            <p style={{ fontSize: "0.95rem", color: "#7a7060", maxWidth: 540, lineHeight: 1.8 }}>
+            <p style={{ fontSize: "0.95rem", color: C.textSec, maxWidth: 540, lineHeight: 1.8 }}>
               Trained across engineering and sciences, with graduate research spanning task allocation, controls, and energy-efficient sensing.
             </p>
           </div>
@@ -436,17 +492,17 @@ export default function MartinBraquet() {
                 href: "https://scholar.google.com/citations?user=thzpnRoAAAAJ",
                 cta: "Open Scholar",
               },
-            ].map((item, i) => (
+            ].map((item) => (
               <div key={item.label} className="card-box" {...R()} style={{ flex: "1 1 220px" }}>
                 <div style={{ fontSize: "1.75rem", marginBottom: "1rem" }}>{item.icon}</div>
-                <div style={{ fontWeight: 600, fontSize: "0.95rem", color: "#1e1a14", marginBottom: "0.35rem" }}>{item.label}</div>
-                <div style={{ fontSize: "0.8rem", color: "#bab2a0", lineHeight: 1.6, marginBottom: "1.25rem" }}>{item.desc}</div>
+                <div style={{ fontWeight: 600, fontSize: "0.95rem", color: C.text, marginBottom: "0.35rem" }}>{item.label}</div>
+                <div style={{ fontSize: "0.8rem", color: C.textTert, lineHeight: 1.6, marginBottom: "1.25rem" }}>{item.desc}</div>
                 <a href={item.href} target="_blank" rel="noopener noreferrer" style={{
                   display: "inline-flex", alignItems: "center", gap: "0.3rem",
-                  fontSize: "0.78rem", fontWeight: 500, color: "#8B0000",
+                  fontSize: "0.78rem", fontWeight: 500, color: C.red,
                   textDecoration: "none", letterSpacing: "0.04em",
                 }}>
-                  {item.cta} <span style={{ transition: "transform 0.2s" }}>→</span>
+                  {item.cta} →
                 </a>
               </div>
             ))}
@@ -464,7 +520,7 @@ export default function MartinBraquet() {
             <h2 style={{
               fontFamily: "'Playfair Display', serif",
               fontSize: "clamp(1.9rem, 3.5vw, 2.8rem)",
-              fontWeight: 700, color: "#1e1a14", lineHeight: 1.15,
+              fontWeight: 700, color: C.text, lineHeight: 1.15,
             }}>
               Publications
             </h2>
@@ -485,31 +541,30 @@ export default function MartinBraquet() {
                   </span>
                   <span style={{
                     fontFamily: "'DM Mono', monospace",
-                    fontSize: "0.72rem", color: "#bab2a0", fontWeight: 500,
-                    lineHeight: 1.8,
+                    fontSize: "0.72rem", color: C.textTert, fontWeight: 500, lineHeight: 1.8,
                   }}>{p.year}</span>
                 </div>
 
                 <h3 style={{
                   fontFamily: "'Playfair Display', serif",
-                  fontSize: "1.1rem", fontWeight: 600, color: "#1e1a14",
+                  fontSize: "1.1rem", fontWeight: 600, color: C.text,
                   lineHeight: 1.4, marginBottom: "0.5rem",
                 }}>
                   {p.title}
                 </h3>
 
-                <p style={{ fontSize: "0.82rem", color: "#7a7060", marginBottom: "0.3rem" }}>
+                <p style={{ fontSize: "0.82rem", color: C.textSec, marginBottom: "0.3rem" }}>
                   <em>{p.venue}</em>
                 </p>
-                <p style={{ fontSize: "0.78rem", color: "#bab2a0", marginBottom: "1.25rem" }}>
+                <p style={{ fontSize: "0.78rem", color: C.textTert, marginBottom: "1.25rem" }}>
                   {p.supervisor}
                 </p>
 
                 <div className="pub-links" style={{ display: "flex", gap: "0.75rem", alignItems: "center" }}>
                   <a href={p.pdf} target="_blank" rel="noopener noreferrer" style={{
                     display: "inline-flex", alignItems: "center", gap: "0.35rem",
-                    background: "rgba(139,0,0,0.08)", color: "#8B0000",
-                    border: "1px solid rgba(139,0,0,0.18)", borderRadius: 100,
+                    background: C.redA08, color: C.red,
+                    border: `1px solid ${C.redA18}`, borderRadius: 100,
                     padding: "0.4rem 0.95rem", fontSize: "0.75rem", fontWeight: 500,
                     textDecoration: "none", transition: "all 0.2s",
                   }}>
@@ -518,8 +573,8 @@ export default function MartinBraquet() {
                   </a>
                   <a href={p.url} target="_blank" rel="noopener noreferrer" style={{
                     display: "inline-flex", alignItems: "center", gap: "0.35rem",
-                    color: "#7a7060", fontSize: "0.75rem", fontWeight: 500,
-                    textDecoration: "none", borderBottom: "1px solid #e8dece",
+                    color: C.textSec, fontSize: "0.75rem", fontWeight: 500,
+                    textDecoration: "none", borderBottom: `1px solid ${C.border}`,
                     transition: "all 0.2s", paddingBottom: "1px",
                   }}>
                     <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
@@ -535,7 +590,7 @@ export default function MartinBraquet() {
       <div className="divider" />
 
       {/* ── CONTACT ── */}
-      <section id="contact" style={{ padding: "90px 2.5rem", background: "#fff" }}>
+      <section id="contact" style={{ padding: "90px 2.5rem", background: C.bgAlt }}>
         <div style={{ maxWidth: 1100, margin: "0 auto" }}>
           <div className="two-col" style={{ display: "flex", gap: "5rem", alignItems: "flex-start" }}>
 
@@ -544,26 +599,29 @@ export default function MartinBraquet() {
               <h2 style={{
                 fontFamily: "'Playfair Display', serif",
                 fontSize: "clamp(1.9rem, 3.5vw, 2.8rem)",
-                fontWeight: 700, color: "#1e1a14", lineHeight: 1.15, marginBottom: "1.25rem",
+                fontWeight: 700, color: C.text, lineHeight: 1.15, marginBottom: "1.25rem",
               }}>
                 Let's Connect
               </h2>
-              <p style={{ fontSize: "0.95rem", lineHeight: 1.85, color: "#7a7060", marginBottom: "2rem" }}>
+              <p style={{ fontSize: "0.95rem", lineHeight: 1.85, color: C.textSec, marginBottom: "2rem" }}>
                 Whether you're curious about my research, interested in collaboration, or simply want to form a genuine connection — I'm reachable via any of the channels below.
               </p>
 
               <a href={`mailto:${EMAIL}`} style={{
                 display: "flex", alignItems: "center", gap: "0.6rem",
                 fontFamily: "'DM Mono', monospace", fontSize: "0.88rem",
-                color: "#1e1a14", textDecoration: "none", marginBottom: "2.5rem",
-                borderBottom: "1px solid #e8dece", paddingBottom: "1.5rem",
+                color: C.text, textDecoration: "none", marginBottom: "2.5rem",
+                borderBottom: `1px solid ${C.border}`, paddingBottom: "1.5rem",
               }}>
                 <span style={{
                   width: 36, height: 36, borderRadius: "50%",
-                  background: "rgba(139,0,0,0.08)", display: "flex",
+                  background: C.redA08, display: "flex",
                   alignItems: "center", justifyContent: "center", flexShrink: 0,
                 }}>
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#8B0000" strokeWidth="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke={C.red} strokeWidth="2">
+                    <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+                    <polyline points="22,6 12,13 2,6"/>
+                  </svg>
                 </span>
                 {EMAIL}
               </a>
@@ -594,22 +652,23 @@ export default function MartinBraquet() {
             {/* CTA card */}
             <div {...R()} style={{ flex: "1 1 340px" }}>
               <div style={{
-                background: "#8B0000", borderRadius: 24, padding: "2.75rem 2.5rem",
-                color: "#faf6f0", position: "relative", overflow: "hidden",
+                background: C.red, borderRadius: 24, padding: "2.75rem 2.5rem",
+                color: C.bg, position: "relative", overflow: "hidden",
               }}>
-                <div style={{ position: "absolute", top: -60, right: -60, width: 220, height: 220, borderRadius: "50%", background: "rgba(255,255,255,0.05)" }} />
-                <div style={{ position: "absolute", bottom: -40, left: -40, width: 160, height: 160, borderRadius: "50%", background: "rgba(0,0,0,0.1)" }} />
+                {/* Decorative circles — pure white/black, not in palette */}
+                <div style={{ position: "absolute", top: -60, right: -60, width: 220, height: 220, borderRadius: "50%", background: C.white05 }} />
+                <div style={{ position: "absolute", bottom: -40, left: -40, width: 160, height: 160, borderRadius: "50%", background: C.black10 }} />
 
                 <div style={{ position: "relative" }}>
                   <div style={{ fontSize: "2.5rem", marginBottom: "1.25rem" }}>🤝</div>
                   <h3 style={{ fontFamily: "'Playfair Display', serif", fontSize: "1.5rem", fontWeight: 700, marginBottom: "0.75rem" }}>
                     Form a Deeper Connection
                   </h3>
-                  <p style={{ fontSize: "0.9rem", lineHeight: 1.75, color: "rgba(250,246,240,0.7)", marginBottom: "2rem" }}>
+                  <p style={{ fontSize: "0.9rem", lineHeight: 1.75, color: C.bgA70, marginBottom: "2rem" }}>
                     Interested in learning more about me beyond what's on this page? Fill in the form to connect more meaningfully.
                   </p>
                   <a href="https://forms.gle/8LvKnRcXjYri2qZT6" target="_blank" rel="noopener noreferrer" style={{
-                    display: "inline-block", background: "#faf6f0", color: "#8B0000",
+                    display: "inline-block", background: C.bg, color: C.red,
                     borderRadius: 100, padding: "13px 26px", fontSize: "0.85rem",
                     fontWeight: 600, textDecoration: "none", transition: "all 0.2s",
                     letterSpacing: "0.02em",
@@ -647,42 +706,50 @@ export default function MartinBraquet() {
       </section>
 
       {/* ── FOOTER ── */}
-      <footer style={{ background: "#1e1a14", padding: "3.5rem 2.5rem 2.5rem" }}>
+      <footer style={{ background: C.text, padding: "3.5rem 2.5rem 2.5rem" }}>
         <div style={{ maxWidth: 1100, margin: "0 auto" }}>
           <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", flexWrap: "wrap", gap: "2rem", marginBottom: "2.5rem" }}>
             <div>
-              <div style={{ fontFamily: "'Playfair Display', serif", fontSize: "1.1rem", fontWeight: 700, color: "#faf6f0", marginBottom: "0.4rem" }}>
-                Martin <span style={{ color: "#c4706e" }}>Braquet</span>
+              <div style={{ fontFamily: "'Playfair Display', serif", fontSize: "1.1rem", fontWeight: 700, color: C.bg, marginBottom: "0.4rem" }}>
+                Martin <span style={{ color: C.redFooter }}>Braquet</span>
               </div>
-              <p style={{ fontSize: "0.78rem", color: "rgba(250,246,240,0.35)", lineHeight: 1.6 }}>
+              <p style={{ fontSize: "0.78rem", color: C.bgA35, lineHeight: 1.6 }}>
                 Researcher · Engineer
               </p>
             </div>
 
             <div style={{ display: "flex", gap: "2rem", flexWrap: "wrap" }}>
               {[
-                ["About", "#about"],
-                ["Academia", "#academia"],
+                ["About",        "#about"],
+                ["Academia",     "#academia"],
                 ["Publications", "#publications"],
-                ["Contact", "#contact"],
+                ["Contact",      "#contact"],
               ].map(([label, href]) => (
-                <a key={label} href={href} style={{ fontSize: "0.75rem", color: "rgba(250,246,240,0.4)", textDecoration: "none", letterSpacing: "0.05em", transition: "color 0.2s" }}
-                   onMouseEnter={e => e.currentTarget.style.color = "rgba(250,246,240,0.8)"}
-                   onMouseLeave={e => e.currentTarget.style.color = "rgba(250,246,240,0.4)"}
+                <a key={label} href={href} style={{
+                  fontSize: "0.75rem", color: C.bgA40, textDecoration: "none",
+                  letterSpacing: "0.05em", transition: "color 0.2s",
+                }}
+                   onMouseEnter={(e) => (e.currentTarget.style.color = C.bgA80)}
+                   onMouseLeave={(e) => (e.currentTarget.style.color = C.bgA40)}
                 >{label}</a>
               ))}
             </div>
           </div>
 
-          <div style={{ borderTop: "1px solid rgba(250,246,240,0.07)", paddingTop: "1.5rem", display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: "0.5rem" }}>
-            <p style={{ fontSize: "0.75rem", color: "rgba(250,246,240,0.25)", margin: 0 }}>
+          <div style={{
+            borderTop: `1px solid ${C.bgA07}`, paddingTop: "1.5rem",
+            display: "flex", justifyContent: "space-between", alignItems: "center",
+            flexWrap: "wrap", gap: "0.5rem",
+          }}>
+            <p style={{ fontSize: "0.75rem", color: C.bgA25, margin: 0 }}>
               © {new Date().getFullYear()} Martin Braquet
             </p>
             <div style={{ display: "flex", gap: "1.25rem" }}>
               {SOCIAL.map((s) => (
-                <a key={s.label} href={s.href} target="_blank" rel="noopener noreferrer" style={{ color: "rgba(250,246,240,0.25)", textDecoration: "none", fontSize: "0.75rem", transition: "color 0.2s" }}
-                   onMouseEnter={e => e.currentTarget.style.color = "rgba(250,246,240,0.65)"}
-                   onMouseLeave={e => e.currentTarget.style.color = "rgba(250,246,240,0.25)"}
+                <a key={s.label} href={s.href} target="_blank" rel="noopener noreferrer"
+                   style={{ color: C.bgA25, textDecoration: "none", fontSize: "0.75rem", transition: "color 0.2s" }}
+                   onMouseEnter={(e) => (e.currentTarget.style.color = C.bgA65)}
+                   onMouseLeave={(e) => (e.currentTarget.style.color = C.bgA25)}
                 >{s.label}</a>
               ))}
             </div>
@@ -690,5 +757,5 @@ export default function MartinBraquet() {
         </div>
       </footer>
     </div>
-  );
+  )
 }
