@@ -1,4 +1,6 @@
-import { useEffect, useRef,useState } from "react"
+import { useEffect, useRef, useState } from "react"
+
+const EMAIL = "martin.braquet@gmail.com"
 
 const PUBLICATIONS = [
   {
@@ -58,16 +60,33 @@ const SOCIAL = [
       </svg>
     ),
   },
-  {
-    label: "Scholar",
-    href: "https://scholar.google.com/citations?user=thzpnRoAAAAJ",
-    icon: (
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
-        <path d="M12 24a7 7 0 110-14 7 7 0 010 14zm0-24L0 9.5l4.838 3.94A8 8 0 0112 10a8 8 0 017.162 3.44L24 9.5 12 0z"/>
-      </svg>
-    ),
-  },
+  // {
+  //   label: "Scholar",
+  //   href: "https://scholar.google.com/citations?user=thzpnRoAAAAJ",
+  //   icon: (
+  //     <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+  //       <path d="M12 24a7 7 0 110-14 7 7 0 010 14zm0-24L0 9.5l4.838 3.94A8 8 0 0112 10a8 8 0 017.162 3.44L24 9.5 12 0z"/>
+  //     </svg>
+  //   ),
+  // },
 ];
+
+function SocialButtons({withEmail = false}: {withEmail?: boolean}) {
+  return <div style={{ display: "flex", gap: "0.8rem", flexWrap: "wrap", animation: "fadeUp 0.55s 0.24s ease both" }}>
+    {SOCIAL.map((s) => (
+      <a key={s.label} href={s.href} target="_blank" rel="noopener noreferrer" className="social-btn">
+        {s.icon} {s.label}
+      </a>
+    ))}
+    {withEmail && <a href={`mailto:${EMAIL}`} className="social-btn">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+        <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+        <polyline points="22,6 12,13 2,6"/>
+      </svg>
+      Email
+    </a>}
+  </div>
+}
 
 export default function MartinBraquet() {
   const [scrolled, setScrolled] = useState(false);
@@ -139,7 +158,8 @@ export default function MartinBraquet() {
 
         .pub-card {
           background: #fffef9; border: 1.5px solid #e8dece; border-radius: 18px;
-          padding: 1.75rem 2rem; cursor: pointer;
+          padding: 1.75rem 2rem;
+          // cursor: pointer;
           transition: border-color 0.25s, box-shadow 0.25s, transform 0.2s;
           position: relative; overflow: hidden;
         }
@@ -148,13 +168,13 @@ export default function MartinBraquet() {
           box-shadow: 0 12px 36px rgba(139,0,0,0.08);
           transform: translateY(-3px);
         }
-        .pub-card::before {
-          content: ''; position: absolute; left: 0; top: 0; bottom: 0;
-          width: 3px; background: #8B0000; border-radius: 3px 0 0 3px;
-          transform: scaleY(0); transform-origin: bottom;
-          transition: transform 0.3s ease;
-        }
-        .pub-card:hover::before { transform: scaleY(1); }
+        // .pub-card::before {
+        //   content: ''; position: absolute; left: 0; top: 0; bottom: 0;
+        //   width: 3px; background: #8B0000; border-radius: 3px 0 0 3px;
+        //   transform: scaleY(0); transform-origin: bottom;
+        //   transition: transform 0.3s ease;
+        // }
+        // .pub-card:hover::before { transform: scaleY(1); }
 
         .link-inline {
           color: #8B0000; text-decoration: none; font-weight: 500;
@@ -317,32 +337,19 @@ export default function MartinBraquet() {
               "What's here reflects pieces of me, but not the full constellation. Explore as you like; fill in the gaps at your own risk."
             </p>
 
-            <div style={{ display: "flex", gap: "0.8rem", flexWrap: "wrap", animation: "fadeUp 0.55s 0.24s ease both" }}>
-              {SOCIAL.map((s) => (
-                <a key={s.label} href={s.href} target="_blank" rel="noopener noreferrer" className="social-btn">
-                  {s.icon} {s.label}
-                </a>
-              ))}
-              <a href="mailto:martin.braquet@gmail.com" className="social-btn">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                  <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
-                  <polyline points="22,6 12,13 2,6"/>
-                </svg>
-                Email
-              </a>
-            </div>
+            <SocialButtons withEmail />
           </div>
         </div>
 
         {/* Scroll hint */}
-        <div style={{
-          position: "absolute", bottom: "2.5rem", left: "50%", transform: "translateX(-50%)",
-          display: "flex", flexDirection: "column", alignItems: "center", gap: "0.5rem",
-          animation: "fadeIn 1s 1s ease both",
-        }}>
-          <div style={{ width: 1, height: 40, background: "linear-gradient(to bottom, transparent, #c8b89a)" }} />
-          <span style={{ fontSize: "0.62rem", letterSpacing: "0.12em", textTransform: "uppercase", color: "#bab2a0" }}>Scroll</span>
-        </div>
+        {/*<div style={{*/}
+        {/*  position: "absolute", bottom: "2.5rem", left: "50%", transform: "translateX(-50%)",*/}
+        {/*  display: "flex", flexDirection: "column", alignItems: "center", gap: "0.5rem",*/}
+        {/*  animation: "fadeIn 1s 1s ease both",*/}
+        {/*}}>*/}
+        {/*  <div style={{ width: 1, height: 40, background: "linear-gradient(to bottom, transparent, #c8b89a)" }} />*/}
+        {/*  <span style={{ fontSize: "0.62rem", letterSpacing: "0.12em", textTransform: "uppercase", color: "#bab2a0" }}>Scroll</span>*/}
+        {/*</div>*/}
       </section>
 
       <div className="divider" />
@@ -369,56 +376,20 @@ export default function MartinBraquet() {
               <a href="https://compassmeet.com/Martin" target="_blank" rel="noopener noreferrer" className="btn-primary">
                 Compass Profile →
               </a>
-              <div style={{ marginTop: "3rem", paddingTop: "2rem", borderTop: "1px solid #e8dece" }}>
-                <p style={{ fontSize: "0.9rem", color: "#7a7060", lineHeight: 1.75, marginBottom: "1.25rem" }}>
-                  Interested in forming a genuine connection? Learn more about me and reach out directly.
-                </p>
-                <a href="https://forms.gle/8LvKnRcXjYri2qZT6" target="_blank" rel="noopener noreferrer" className="btn-outline">
-                  Connect with Martin
-                </a>
-              </div>
+              {/*<div style={{ marginTop: "3rem", paddingTop: "2rem", borderTop: "1px solid #e8dece" }}>*/}
+              {/*  <p style={{ fontSize: "0.9rem", color: "#7a7060", lineHeight: 1.75, marginBottom: "1.25rem" }}>*/}
+              {/*    Interested in forming a genuine connection? Learn more about me and reach out directly.*/}
+              {/*  </p>*/}
+              {/*  <a href="https://forms.gle/8LvKnRcXjYri2qZT6" target="_blank" rel="noopener noreferrer" className="btn-outline">*/}
+              {/*    Connect with Martin*/}
+              {/*  </a>*/}
+              {/*</div>*/}
             </div>
 
             {/* Right — identity card */}
-            <div {...R()} style={{ flex: "1 1 360px" }}>
-              <div style={{
-                background: "#1e1a14", borderRadius: 24, padding: "2.5rem",
-                color: "#faf6f0", position: "relative", overflow: "hidden",
-              }}>
-                {/* Decorative circles */}
-                <div style={{ position: "absolute", top: -50, right: -50, width: 200, height: 200, borderRadius: "50%", background: "rgba(139,0,0,0.12)" }} />
-                <div style={{ position: "absolute", bottom: -30, left: -30, width: 130, height: 130, borderRadius: "50%", background: "rgba(139,0,0,0.07)" }} />
-
-                {/* Monogram */}
-                <div style={{
-                  width: 64, height: 64, borderRadius: "50%",
-                  background: "rgba(139,0,0,0.85)",
-                  display: "flex", alignItems: "center", justifyContent: "center",
-                  marginBottom: "1.5rem", position: "relative",
-                }}>
-                  <span style={{ fontFamily: "'Playfair Display', serif", fontSize: "1.5rem", fontWeight: 700, color: "#faf6f0" }}>MB</span>
-                </div>
-
-                <h3 style={{ fontFamily: "'Playfair Display', serif", fontSize: "1.5rem", fontWeight: 700, marginBottom: "0.25rem", position: "relative" }}>Martin Braquet</h3>
-                <p style={{ fontSize: "0.8rem", color: "rgba(250,246,240,0.45)", marginBottom: "2rem", position: "relative" }}>
-                  Researcher · Engineer
-                </p>
-
-                <div style={{ display: "flex", flexDirection: "column", gap: "0.9rem", position: "relative" }}>
-                  {[
-                    ["📍", "Belgium (current)"],
-                    ["🎓", "MSc · UT Austin & UCLouvain"],
-                    // ["🔬", "Multi-agent systems · Control theory"],
-                    ["✉️", "martin.braquet@gmail.com"],
-                  ].map(([icon, text]) => (
-                    <div key={text} style={{ display: "flex", gap: "0.75rem", alignItems: "flex-start", fontSize: "0.85rem", color: "rgba(250,246,240,0.65)" }}>
-                      <span style={{ flexShrink: 0 }}>{icon}</span>
-                      <span>{text}</span>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </div>
+            {/*<div {...R()} style={{ flex: "1 1 360px" }}>*/}
+            {/*  <IdentityCard email={EMAIL} />*/}
+            {/*</div>*/}
           </div>
         </div>
       </section>
@@ -455,7 +426,7 @@ export default function MartinBraquet() {
                 icon: "📚",
                 label: "Courses at University",
                 desc: "Complete list of university courses followed",
-                href: "https://martinbraquet.com/index.php/courses-university",
+                href: "/courses-university",
                 cta: "View Courses",
               },
               {
@@ -581,7 +552,7 @@ export default function MartinBraquet() {
                 Whether you're curious about my research, interested in collaboration, or simply want to form a genuine connection — I'm reachable via any of the channels below.
               </p>
 
-              <a href="mailto:martin.braquet@gmail.com" style={{
+              <a href={`mailto:${EMAIL}`} style={{
                 display: "flex", alignItems: "center", gap: "0.6rem",
                 fontFamily: "'DM Mono', monospace", fontSize: "0.88rem",
                 color: "#1e1a14", textDecoration: "none", marginBottom: "2.5rem",
@@ -594,28 +565,30 @@ export default function MartinBraquet() {
                 }}>
                   <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#8B0000" strokeWidth="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
                 </span>
-                martin.braquet [at] gmail [dot] com
+                {EMAIL}
               </a>
 
-              <div style={{ display: "flex", flexDirection: "column", gap: "0.75rem" }}>
-                {SOCIAL.map((s) => (
-                  <a key={s.label} href={s.href} target="_blank" rel="noopener noreferrer" style={{
-                    display: "flex", alignItems: "center", gap: "0.75rem",
-                    padding: "0.9rem 1.25rem", borderRadius: 14,
-                    border: "1px solid #e8dece", background: "#fffef9",
-                    color: "#1e1a14", textDecoration: "none", fontSize: "0.88rem",
-                    fontWeight: 500, transition: "all 0.2s",
-                    cursor: "pointer",
-                  }}
-                     onMouseEnter={e => { e.currentTarget.style.borderColor = "rgba(139,0,0,0.3)"; e.currentTarget.style.background = "rgba(139,0,0,0.03)"; }}
-                     onMouseLeave={e => { e.currentTarget.style.borderColor = "#e8dece"; e.currentTarget.style.background = "#fffef9"; }}
-                  >
-                    <span style={{ color: "#8B0000" }}>{s.icon}</span>
-                    {s.label}
-                    <svg style={{ marginLeft: "auto", opacity: 0.3 }} width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M7 17L17 7M7 7h10v10"/></svg>
-                  </a>
-                ))}
-              </div>
+              {/*<div style={{ display: "flex", flexDirection: "column", gap: "0.75rem" }}>*/}
+              {/*  {SOCIAL.map((s) => (*/}
+              {/*    <a key={s.label} href={s.href} target="_blank" rel="noopener noreferrer" style={{*/}
+              {/*      display: "flex", alignItems: "center", gap: "0.75rem",*/}
+              {/*      padding: "0.9rem 1.25rem", borderRadius: 14,*/}
+              {/*      border: "1px solid #e8dece", background: "#fffef9",*/}
+              {/*      color: "#1e1a14", textDecoration: "none", fontSize: "0.88rem",*/}
+              {/*      fontWeight: 500, transition: "all 0.2s",*/}
+              {/*      cursor: "pointer",*/}
+              {/*    }}*/}
+              {/*       onMouseEnter={e => { e.currentTarget.style.borderColor = "rgba(139,0,0,0.3)"; e.currentTarget.style.background = "rgba(139,0,0,0.03)"; }}*/}
+              {/*       onMouseLeave={e => { e.currentTarget.style.borderColor = "#e8dece"; e.currentTarget.style.background = "#fffef9"; }}*/}
+              {/*    >*/}
+              {/*      <span style={{ color: "#8B0000" }}>{s.icon}</span>*/}
+              {/*      {s.label}*/}
+              {/*      <svg style={{ marginLeft: "auto", opacity: 0.3 }} width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M7 17L17 7M7 7h10v10"/></svg>*/}
+              {/*    </a>*/}
+              {/*  ))}*/}
+              {/*</div>*/}
+
+              <SocialButtons />
             </div>
 
             {/* CTA card */}
@@ -647,27 +620,27 @@ export default function MartinBraquet() {
               </div>
 
               {/* Study reference */}
-              <div style={{
-                marginTop: "1.5rem",
-                background: "#fffef9", border: "1px solid #e8dece", borderRadius: 18,
-                padding: "1.5rem",
-              }}>
-                <div style={{ fontSize: "0.65rem", fontWeight: 600, letterSpacing: "0.1em", textTransform: "uppercase", color: "#bab2a0", marginBottom: "0.5rem" }}>
-                  Current Project
-                </div>
-                <p style={{ fontSize: "0.88rem", color: "#1e1a14", fontWeight: 500, lineHeight: 1.5, marginBottom: "0.75rem" }}>
-                  Personalized Pre-Session Preparation in Early Autism Intervention
-                </p>
-                <p style={{ fontSize: "0.78rem", color: "#7a7060", lineHeight: 1.6, marginBottom: "1rem" }}>
-                  An N-of-1 Bayesian adaptive trial at Maya Care & Grow, Agartala.
-                </p>
-                <a href="https://martinbraquet.com/autism-study" style={{
-                  fontSize: "0.78rem", color: "#8B0000", fontWeight: 500,
-                  textDecoration: "none", borderBottom: "1px solid rgba(139,0,0,0.25)",
-                }}>
-                  View study site →
-                </a>
-              </div>
+              {/*<div style={{*/}
+              {/*  marginTop: "1.5rem",*/}
+              {/*  background: "#fffef9", border: "1px solid #e8dece", borderRadius: 18,*/}
+              {/*  padding: "1.5rem",*/}
+              {/*}}>*/}
+              {/*  <div style={{ fontSize: "0.65rem", fontWeight: 600, letterSpacing: "0.1em", textTransform: "uppercase", color: "#bab2a0", marginBottom: "0.5rem" }}>*/}
+              {/*    Current Project*/}
+              {/*  </div>*/}
+              {/*  <p style={{ fontSize: "0.88rem", color: "#1e1a14", fontWeight: 500, lineHeight: 1.5, marginBottom: "0.75rem" }}>*/}
+              {/*    Personalized Pre-Session Preparation in Early Autism Intervention*/}
+              {/*  </p>*/}
+              {/*  <p style={{ fontSize: "0.78rem", color: "#7a7060", lineHeight: 1.6, marginBottom: "1rem" }}>*/}
+              {/*    An N-of-1 Bayesian adaptive trial at Maya Care & Grow, Agartala.*/}
+              {/*  </p>*/}
+              {/*  <a href="https://martinbraquet.com/autism-study" style={{*/}
+              {/*    fontSize: "0.78rem", color: "#8B0000", fontWeight: 500,*/}
+              {/*    textDecoration: "none", borderBottom: "1px solid rgba(139,0,0,0.25)",*/}
+              {/*  }}>*/}
+              {/*    View study site →*/}
+              {/*  </a>*/}
+              {/*</div>*/}
             </div>
           </div>
         </div>
@@ -682,7 +655,7 @@ export default function MartinBraquet() {
                 Martin <span style={{ color: "#c4706e" }}>Braquet</span>
               </div>
               <p style={{ fontSize: "0.78rem", color: "rgba(250,246,240,0.35)", lineHeight: 1.6 }}>
-                Researcher · Engineer · Builder
+                Researcher · Engineer
               </p>
             </div>
 
