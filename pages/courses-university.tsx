@@ -116,11 +116,6 @@ const styles = {
   },
 
   // Semester grid
-  semesterGrid: {
-    display: 'grid',
-    gridTemplateColumns: 'repeat(2, minmax(0, 1fr))',
-    gap: '1rem',
-  },
   semesterCard: {
     background: 'rgb(var(--color-canvas-0))',
     border: '1px solid rgb(var(--color-canvas-100))',
@@ -823,7 +818,12 @@ function DegreeSection({degree, alt}: {degree: Degree; alt: boolean}) {
           </div>
         </div>
 
-        <div style={styles.semesterGrid}>
+        <div
+          style={{
+            gap: '1rem',
+          }}
+          className={'grid grid-cols-1 sm:grid-cols-2'}
+        >
           {degree.semesters.map((sem) => (
             <SemesterCard key={sem.term} semester={sem} alt={alt} />
           ))}
