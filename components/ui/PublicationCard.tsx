@@ -28,7 +28,7 @@ export default function PublicationCard({
           // transform: translateY(-3px);
         }
       `}</style>
-      <div className={`pub-card ${className}`} style={style} {...(R && R())}>
+      <div className={`pub-card ${className}`} style={style}>
         {children}
       </div>
     </>
