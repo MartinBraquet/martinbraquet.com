@@ -552,6 +552,18 @@ export default function Home() {
                         textDecoration: 'none',
                         transition: 'all 0.2s',
                       }}
+                      onMouseEnter={(e) => {
+                        e.currentTarget.style.background = C.redA15
+                        e.currentTarget.style.borderColor = C.redA30
+                        e.currentTarget.style.transform = 'translateY(-1px)'
+                        e.currentTarget.style.boxShadow = `0 4px 12px ${C.redA15}`
+                      }}
+                      onMouseLeave={(e) => {
+                        e.currentTarget.style.background = C.redA08
+                        e.currentTarget.style.borderColor = C.redA18
+                        e.currentTarget.style.transform = 'none'
+                        e.currentTarget.style.boxShadow = 'none'
+                      }}
                     >
                       <svg
                         width="12"
@@ -582,6 +594,16 @@ export default function Home() {
                         borderBottom: `1px solid ${C.border}`,
                         transition: 'all 0.2s',
                         paddingBottom: '1px',
+                      }}
+                      onMouseEnter={(e) => {
+                        e.currentTarget.style.color = C.red
+                        e.currentTarget.style.borderBottomColor = C.redA25
+                        e.currentTarget.style.gap = '0.5rem'
+                      }}
+                      onMouseLeave={(e) => {
+                        e.currentTarget.style.color = C.textSec
+                        e.currentTarget.style.borderBottomColor = C.border
+                        e.currentTarget.style.gap = '0.35rem'
                       }}
                     >
                       <svg
