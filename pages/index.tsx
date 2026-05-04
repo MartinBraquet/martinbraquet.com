@@ -46,7 +46,7 @@ const PUBLICATIONS = [
     venue: 'MSc Thesis · UCLouvain',
     supervisor: 'Supervised by David Bol and Ramin Sadre',
     pdf: 'https://martinbraquet.com/wp-content/uploads/EPL-master-thesis-Martin-Braquet.pdf',
-    url: 'https://dial.uclouvain.be/memoire/ucl/object/thesis:25100',
+    url: 'https://hdl.handle.net/2078.2/16675',
     tag: 'Thesis',
   },
 ]
