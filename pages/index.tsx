@@ -282,7 +282,7 @@ export default function Home() {
               className="two-col"
               style={{display: 'flex', gap: '5rem', alignItems: 'flex-start'}}
             >
-              <div {...R()} style={{...rs, flex: '1 1 420px'}}>
+              <div {...R()} style={{...rs, flex: '1 1 280px'}}>
                 <span className="section-label">About</span>
                 <h2
                   style={{
