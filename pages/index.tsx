@@ -1,4 +1,4 @@
-import {useEffect, useRef, useState} from 'react'
+import {useEffect, useRef} from 'react'
 import {PageBase} from 'web/components/page-base'
 import {SOCIAL} from 'web/components/socials'
 import {C} from 'web/lib/colors'
@@ -91,7 +91,6 @@ function SocialButtons({withEmail = false}: {withEmail?: boolean}) {
 // ── Main component ────────────────────────────────────────────────────────────
 
 export default function Home() {
-  const [hoveredPub, setHoveredPub] = useState<number | null>(null)
   const revealRefs = useRef<HTMLElement[]>([])
 
   useEffect(() => {
