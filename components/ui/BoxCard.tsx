@@ -1,3 +1,4 @@
+import {JSX} from 'react'
 import {C} from 'web/lib/colors'
 
 interface BoxCardProps {
