@@ -4,9 +4,15 @@ interface PublicationCardProps {
   children: React.ReactNode
   className?: string
   style?: React.CSSProperties
+  R?: any
 }
 
-export default function PublicationCard({children, className = '', style}: PublicationCardProps) {
+export default function PublicationCard({
+  children,
+  className = '',
+  style,
+  R,
+}: PublicationCardProps) {
   return (
     <>
       <style>{`
@@ -22,7 +28,7 @@ export default function PublicationCard({children, className = '', style}: Publi
           // transform: translateY(-3px);
         }
       `}</style>
-      <div className={`pub-card ${className}`} style={style}>
+      <div className={`pub-card ${className}`} style={style} {...(R && R())}>
         {children}
       </div>
     </>

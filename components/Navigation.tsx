@@ -1,8 +1,11 @@
+import {useRouter} from 'next/router'
 import {CustomLink} from 'web/components/links'
 import {C} from 'web/lib/colors'
 import {PAGES} from 'web/lib/constants'
 
 export default function Navigation() {
+  const router = useRouter()
+  const currentPath = router.pathname
   return (
     <>
       <style>{`
@@ -45,19 +48,33 @@ export default function Navigation() {
         </a>
 
         <div style={{display: 'flex', gap: '2rem', alignItems: 'center'}}>
-          {PAGES.map(([href, label]) => (
-            <CustomLink
-              key={label}
-              href={href}
-              className="nav-link"
-              // onClick={(e) => {
-              //   e.preventDefault()
-              //   document.querySelector(href)?.scrollIntoView({behavior: 'smooth'})
-              // }}
-            >
-              {label}
-            </CustomLink>
-          ))}
+          {PAGES.map(([href, label]) => {
+            const isActive = href === currentPath || (href === '/' && currentPath === '/')
+            
+            if (isActive) {
+              return (
+                <span
+                  key={label}
+                  className="nav-link active"
+                  style={{
+                    cursor: 'default',
+                  }}
+                >
+                  {label}
+                </span>
+              )
+            }
+            
+            return (
+              <CustomLink
+                key={label}
+                href={href}
+                className="nav-link"
+              >
+                {label}
+              </CustomLink>
+            )
+          })}
         </div>
       </nav>
     </>

@@ -39,12 +39,11 @@ export function PageBase(props: {
       `}</style>
       <SkipLink />
       <Col
-        className={
-          clsx()
+        className={clsx(
           // 'pb-page-base lg:pb-0', // bottom bar padding
-          // 'text-ink-1000 mx-auto min-h-screen w-full',
+          'mx-auto min-h-screen w-full flex flex-col',
           // !hideSidebar && 'lg:grid lg:grid-cols-12',
-        }
+        )}
       >
         <Toaster
           position={isMobile ? 'bottom-center' : 'top-center'}
@@ -60,7 +59,7 @@ export function PageBase(props: {
         {/* ── NAV ── */}
         <Navigation />
 
-        <main id="main-content" tabIndex={-1} className={clsx('', className)}>
+        <main id="main-content" tabIndex={-1} className={clsx('flex-1', className)}>
           {children}
         </main>
 

@@ -1,3 +1,4 @@
+import {BookOpen, FileText, GraduationCap, Handshake} from 'lucide-react'
 import {useEffect, useRef} from 'react'
 import {PageBase} from 'web/components/page-base'
 import {SOCIAL} from 'web/components/socials'
@@ -281,7 +282,7 @@ export default function Home() {
               className="two-col"
               style={{display: 'flex', gap: '5rem', alignItems: 'flex-start'}}
             >
-              <div {...R()} style={{flex: '1 1 420px'}}>
+              <div {...R()} style={{...rs, flex: '1 1 420px'}}>
                 <span className="section-label">About</span>
                 <h2
                   style={{
@@ -350,24 +351,28 @@ export default function Home() {
               </p>
             </div>
 
-            <div className="two-col" style={{display: 'flex', gap: '1.5rem', marginBottom: '4rem'}}>
+            <div
+              className="two-col"
+              {...R()}
+              style={{...rs, display: 'flex', gap: '1.5rem', marginBottom: '4rem'}}
+            >
               {[
                 {
-                  icon: '📄',
+                  icon: <FileText size={28} strokeWidth={1.5} color={C.red} />,
                   label: 'Curriculum Vitae',
                   desc: 'Full academic and professional record',
                   href: 'https://martinbraquet.com/wp-content/uploads/Braquet-Martin-cv-2026.pdf',
                   cta: 'Download PDF',
                 },
                 {
-                  icon: '📚',
+                  icon: <BookOpen size={28} strokeWidth={1.5} color={C.red} />,
                   label: 'Courses at University',
                   desc: 'Complete list of university courses followed',
                   href: '/courses-university',
                   cta: 'View Courses',
                 },
                 {
-                  icon: '🎓',
+                  icon: <GraduationCap size={28} strokeWidth={1.5} color={C.red} />,
                   label: 'Google Scholar',
                   desc: 'Citation metrics and paper index',
                   href: 'https://scholar.google.com/citations?user=thzpnRoAAAAJ',
@@ -375,18 +380,20 @@ export default function Home() {
                 },
               ].map((item) => (
                 <BoxCard
+                  key={item.label}
+                  href={item.href}
                   style={{
                     flex: '1 1 220px',
-                    textDecoration: 'none', // Remove default link styling
+                    textDecoration: 'none',
                     display: 'block',
-                    padding: '1.5rem', // Add padding here if not in card-box class
+                    padding: '1.5rem',
                     borderRadius: '12px',
-                    backgroundColor: C.bg, // Or your card background
+                    backgroundColor: C.bg,
                     transition: 'all 0.25s ease-out',
                   }}
-                  href={item.href}
                 >
-                  <div style={{fontSize: '1.75rem', marginBottom: '1rem'}}>{item.icon}</div>
+                  {/* Icon Container */}
+                  <div style={{marginBottom: '1rem', display: 'flex'}}>{item.icon}</div>
 
                   <div
                     style={{
@@ -401,8 +408,8 @@ export default function Home() {
 
                   <div
                     style={{
-                      fontSize: '0.85rem', // Slightly larger
-                      color: '#555', // Slightly darker for contrast
+                      fontSize: '0.85rem',
+                      color: '#555',
                       lineHeight: 1.6,
                       marginBottom: '1.25rem',
                     }}
@@ -456,7 +463,7 @@ export default function Home() {
               {PUBLICATIONS.map((p, i) => (
                 <PublicationCard
                   key={i}
-                  // {...R()}
+                  R={R}
                   // onMouseEnter={() => setHoveredPub(i)}
                   // onMouseLeave={() => setHoveredPub(null)}
                 >
@@ -635,7 +642,7 @@ export default function Home() {
               className="two-col"
               style={{display: 'flex', gap: '5rem', alignItems: 'flex-start'}}
             >
-              <div {...R()} style={{flex: '1 1 400px'}}>
+              <div {...R()} style={{...rs, flex: '1 1 400px'}}>
                 <span className="section-label">Get in Touch</span>
                 <h2
                   style={{
@@ -674,6 +681,17 @@ export default function Home() {
                     marginBottom: '2.5rem',
                     borderBottom: `1px solid ${C.border}`,
                     paddingBottom: '1.5rem',
+                    transition: 'all 0.2s',
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.color = C.red
+                    e.currentTarget.style.borderColor = C.redA25
+                    e.currentTarget.style.gap = '0.8rem'
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.color = C.text
+                    e.currentTarget.style.borderColor = C.border
+                    e.currentTarget.style.gap = '0.6rem'
                   }}
                 >
                   <span
@@ -686,6 +704,15 @@ export default function Home() {
                       alignItems: 'center',
                       justifyContent: 'center',
                       flexShrink: 0,
+                      transition: 'all 0.2s',
+                    }}
+                    onMouseEnter={(e) => {
+                      e.currentTarget.style.background = C.redA18
+                      e.currentTarget.style.transform = 'scale(1.1)'
+                    }}
+                    onMouseLeave={(e) => {
+                      e.currentTarget.style.background = C.redA08
+                      e.currentTarget.style.transform = 'scale(1)'
                     }}
                   >
                     <svg
@@ -727,7 +754,7 @@ export default function Home() {
               </div>
 
               {/* CTA card */}
-              <div {...R()} style={{flex: '1 1 340px'}}>
+              <div {...R()} style={{...rs, flex: '1 1 340px'}}>
                 <div
                   style={{
                     background: C.red,
@@ -763,7 +790,9 @@ export default function Home() {
                   />
 
                   <div style={{position: 'relative'}}>
-                    <div style={{fontSize: '2.5rem', marginBottom: '1.25rem'}}>🤝</div>
+                    <div style={{marginBottom: '1.25rem'}}>
+                      <Handshake size={42} strokeWidth={1.2} color={C.bg} />
+                    </div>
                     <h3
                       style={{
                         fontFamily: "'Playfair Display', serif",
@@ -800,6 +829,18 @@ export default function Home() {
                         textDecoration: 'none',
                         transition: 'all 0.2s',
                         letterSpacing: '0.02em',
+                      }}
+                      onMouseEnter={(e) => {
+                        e.currentTarget.style.background = 'rgb(var(--color-canvas-100))'
+                        e.currentTarget.style.color = C.redDark
+                        e.currentTarget.style.transform = 'translateY(-2px)'
+                        e.currentTarget.style.boxShadow = `0 8px 25px ${C.redA15}`
+                      }}
+                      onMouseLeave={(e) => {
+                        e.currentTarget.style.background = C.bg
+                        e.currentTarget.style.color = C.red
+                        e.currentTarget.style.transform = 'none'
+                        e.currentTarget.style.boxShadow = 'none'
                       }}
                     >
                       Connect with Me →
