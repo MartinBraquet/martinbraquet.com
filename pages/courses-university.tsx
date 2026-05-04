@@ -1,328 +1,177 @@
-import Link from "next/link"
-import {useEffect, useRef, useState} from "react"
+import {useEffect, useRef, useState} from 'react'
+import {PageBase} from 'web/components/page-base'
 
 // ── Styles ─────────────────────────────────────────────────────────────────────
 
 const styles = {
-  // Fonts
-  playfair: "'Playfair Display', serif",
-  dmSans: "'DM Sans', sans-serif",
-  dmMono: "'DM Mono', monospace",
-  
-  // Colors
-  canvas25: "rgb(var(--color-canvas-25))",
-  canvas50: "rgb(var(--color-canvas-50))",
-  canvas0: "rgb(var(--color-canvas-0))",
-  canvas100: "rgb(var(--color-canvas-100))",
-  canvas200: "rgb(var(--color-canvas-200))",
-  canvas300: "rgb(var(--color-canvas-300))",
-  canvas400: "rgb(var(--color-canvas-400))",
-  canvas900: "rgb(var(--color-canvas-900))",
-  primary800: "rgb(var(--color-primary-800))",
-  primary400: "rgb(var(--color-primary-400))",
-  
   // Base styles
   page: {
     fontFamily: "'DM Sans', sans-serif",
-    background: "rgb(var(--color-canvas-25))",
-    color: "rgb(var(--color-canvas-900))",
-    overflowX: "hidden",
-    minHeight: "100vh"
+    background: 'rgb(var(--color-canvas-25))',
+    color: 'rgb(var(--color-canvas-900))',
+    overflowX: 'hidden' as const,
+    minHeight: '100vh',
   },
-  
-  // Navigation
-  nav: {
-    position: "sticky" as const,
-    top: 0,
-    zIndex: 100,
-    background: "rgb(var(--color-canvas-25) / 0.80)",
-    backdropFilter: "blur(16px)",
-    borderBottom: "1px solid transparent",
-    padding: "0 2.5rem",
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "space-between",
-    height: "62px",
-    transition: "background 0.3s, border-color 0.3s"
-  },
-  navScrolled: {
-    background: "rgb(var(--color-canvas-25) / 0.95)",
-    borderBottomColor: "rgb(var(--color-canvas-100))"
-  },
-  navBrand: {
-    fontFamily: "'Playfair Display', serif",
-    fontSize: "1rem",
-    fontWeight: 700,
-    color: "rgb(var(--color-canvas-900))",
-    textDecoration: "none",
-    letterSpacing: "-0.01em"
-  },
-  navBrandAccent: { color: "rgb(var(--color-primary-800))" },
-  navLinks: { display: "flex", gap: "2rem", alignItems: "center" },
-  navLink: {
-    fontSize: "0.72rem",
-    fontWeight: 500,
-    letterSpacing: "0.08em",
-    textTransform: "uppercase" as const,
-    color: "rgb(var(--color-canvas-400))",
-    textDecoration: "none",
-    paddingBottom: "2px",
-    borderBottom: "1px solid transparent",
-    transition: "color 0.2s, border-color 0.2s"
-  },
-  navLinkHover: {
-    color: "rgb(var(--color-canvas-900))",
-    borderBottomColor: "rgb(var(--color-primary-800))"
-  },
-  
+
   // Hero
   hero: {
-    padding: "5rem 2.5rem 4rem",
-    position: "relative" as const,
-    overflow: "hidden",
-    borderBottom: "1px solid rgb(var(--color-canvas-100))"
+    padding: '5rem 2.5rem 4rem',
+    position: 'relative' as const,
+    overflow: 'hidden',
+    borderBottom: '1px solid rgb(var(--color-canvas-100))',
   },
   heroBg: {
-    position: "absolute" as const,
+    position: 'absolute' as const,
     inset: 0,
-    pointerEvents: "none",
+    pointerEvents: 'none' as const,
     background: `
       radial-gradient(ellipse 45% 70% at 100% 50%, rgb(var(--color-primary-800) / 0.06) 0%, transparent 60%),
       radial-gradient(ellipse 30% 40% at 0% 80%, rgb(196 154 114 / 0.08) 0%, transparent 55%)
-    `
+    `,
   },
-  heroInner: { maxWidth: "1100px", margin: "0 auto", position: "relative" as const, zIndex: 1 },
+  heroInner: {maxWidth: '1100px', margin: '0 auto', position: 'relative' as const, zIndex: 1},
   heroEyebrow: {
-    display: "flex",
-    alignItems: "center",
-    gap: "0.75rem",
-    marginBottom: "1.5rem",
-    animation: "fadeUp 0.5s ease both"
+    display: 'flex',
+    alignItems: 'center',
+    gap: '0.75rem',
+    marginBottom: '1.5rem',
+    animation: 'fadeUp 0.5s ease both',
   },
   heroDot: {
-    width: "8px", height: "8px",
-    borderRadius: "50%",
-    background: "rgb(var(--color-primary-800))",
-    flexShrink: 0
+    width: '8px',
+    height: '8px',
+    borderRadius: '50%',
+    background: 'rgb(var(--color-primary-800))',
+    flexShrink: 0,
   },
   heroEyebrowText: {
-    fontSize: "0.7rem",
+    fontSize: '0.7rem',
     fontWeight: 500,
-    letterSpacing: "0.12em",
-    textTransform: "uppercase" as const,
-    color: "rgb(var(--color-canvas-300))"
+    letterSpacing: '0.12em',
+    textTransform: 'uppercase' as const,
+    color: 'rgb(var(--color-canvas-300))',
   },
   heroTitle: {
     fontFamily: "'Playfair Display', serif",
-    fontSize: "clamp(2.4rem, 5vw, 4rem)",
+    fontSize: 'clamp(2.4rem, 5vw, 4rem)',
     fontWeight: 700,
-    color: "rgb(var(--color-canvas-900))",
+    color: 'rgb(var(--color-canvas-900))',
     lineHeight: 1.05,
-    marginBottom: "1rem",
-    animation: "fadeUp 0.55s 0.08s ease both"
+    marginBottom: '1rem',
+    animation: 'fadeUp 0.55s 0.08s ease both',
   },
-  heroAccent: { color: "rgb(var(--color-primary-800))" },
+  heroAccent: {color: 'rgb(var(--color-primary-800))'},
   heroSub: {
-    fontSize: "0.95rem",
-    color: "rgb(var(--color-canvas-400))",
+    fontSize: '0.95rem',
+    color: 'rgb(var(--color-canvas-400))',
     lineHeight: 1.8,
-    maxWidth: "480px",
-    animation: "fadeUp 0.55s 0.16s ease both"
+    maxWidth: '480px',
+    animation: 'fadeUp 0.55s 0.16s ease both',
   },
-  
+
   // Stats bar
   statsBar: {
-    display: "flex",
-    background: "rgb(var(--color-canvas-0))",
-    borderBottom: "1px solid rgb(var(--color-canvas-100))"
+    display: 'flex',
+    background: 'rgb(var(--color-canvas-0))',
+    borderBottom: '1px solid rgb(var(--color-canvas-100))',
   },
   stat: {
     flex: 1,
-    padding: "1.25rem 2.5rem",
-    borderRight: "1px solid rgb(var(--color-canvas-100))"
+    padding: '1.25rem 2.5rem',
+    borderRight: '1px solid rgb(var(--color-canvas-100))',
   },
-  statLast: { borderRight: "none" },
+  statLast: {borderRight: 'none'},
   statNumber: {
     fontFamily: "'DM Mono', monospace",
-    fontSize: "1.5rem",
+    fontSize: '1.5rem',
     fontWeight: 500,
-    color: "rgb(var(--color-canvas-900))",
-    display: "block"
+    color: 'rgb(var(--color-canvas-900))',
+    display: 'block',
   },
   statLabel: {
-    fontSize: "0.75rem",
-    color: "rgb(var(--color-canvas-300))",
-    letterSpacing: "0.03em"
+    fontSize: '0.75rem',
+    color: 'rgb(var(--color-canvas-300))',
+    letterSpacing: '0.03em',
   },
-  
+
   // Degree sections
-  section: { padding: "5rem 2.5rem" },
-  sectionAlt: { background: "rgb(var(--color-canvas-50))" },
-  sectionInner: { maxWidth: "1100px", margin: "0 auto" },
+  section: {padding: '5rem 2.5rem'},
+  sectionAlt: {background: 'rgb(var(--color-canvas-50))'},
+  sectionInner: {maxWidth: '1100px', margin: '0 auto'},
   sectionLabel: {
-    fontSize: "0.65rem",
+    fontSize: '0.65rem',
     fontWeight: 600,
-    letterSpacing: "0.14em",
-    textTransform: "uppercase" as const,
-    color: "rgb(var(--color-primary-800))",
-    display: "block",
-    marginBottom: "0.5rem"
-  },
-  degreeHeader: {
-    display: "flex",
-    alignItems: "flex-end",
-    justifyContent: "space-between",
-    gap: "1rem",
-    flexWrap: "wrap",
-    paddingBottom: "2rem",
-    marginBottom: "2.5rem",
-    borderBottom: "1px solid rgb(var(--color-canvas-100))"
+    letterSpacing: '0.14em',
+    textTransform: 'uppercase' as const,
+    color: 'rgb(var(--color-primary-800))',
+    display: 'block',
+    marginBottom: '0.5rem',
   },
   degreeTitle: {
     fontFamily: "'Playfair Display', serif",
-    fontSize: "clamp(1.5rem, 3vw, 2.2rem)",
+    fontSize: 'clamp(1.5rem, 3vw, 2.2rem)',
     fontWeight: 700,
-    color: "rgb(var(--color-canvas-900))",
-    lineHeight: 1.2
+    color: 'rgb(var(--color-canvas-900))',
+    lineHeight: 1.2,
   },
-  degreeMeta: {
-    fontFamily: "'DM Mono', monospace",
-    fontSize: "0.78rem",
-    color: "rgb(var(--color-canvas-300))",
-    textAlign: "right",
-    lineHeight: 1.7,
-    flexShrink: 0
-  },
-  
+
   // Semester grid
   semesterGrid: {
-    display: "grid",
-    gridTemplateColumns: "repeat(2, minmax(0, 1fr))",
-    gap: "1rem"
+    display: 'grid',
+    gridTemplateColumns: 'repeat(2, minmax(0, 1fr))',
+    gap: '1rem',
   },
   semesterCard: {
-    background: "rgb(var(--color-canvas-0))",
-    border: "1px solid rgb(var(--color-canvas-100))",
-    borderRadius: "16px",
-    padding: "1.5rem 1.75rem",
-    transition: "border-color 0.2s, box-shadow 0.2s"
+    background: 'rgb(var(--color-canvas-0))',
+    border: '1px solid rgb(var(--color-canvas-100))',
+    borderRadius: '16px',
+    padding: '1.5rem 1.75rem',
+    transition: 'border-color 0.2s, box-shadow 0.2s',
   },
-  semesterCardAlt: { background: "rgb(var(--color-canvas-25))" },
+  semesterCardAlt: {background: 'rgb(var(--color-canvas-25))'},
   semesterCardHover: {
-    borderColor: "rgb(var(--color-canvas-200))",
-    boxShadow: "0 8px 24px rgb(var(--color-canvas-900) / 0.05)"
+    borderColor: 'rgb(var(--color-canvas-200))',
+    boxShadow: '0 8px 24px rgb(var(--color-canvas-900) / 0.05)',
   },
   semesterTitle: {
     fontFamily: "'DM Mono', monospace",
-    fontSize: "0.72rem",
+    fontSize: '0.72rem',
     fontWeight: 500,
-    letterSpacing: "0.06em",
-    textTransform: "uppercase" as const,
-    color: "rgb(var(--color-primary-800))",
-    marginBottom: "1rem",
-    paddingBottom: "0.75rem",
-    borderBottom: "1px solid rgb(var(--color-canvas-100))"
+    letterSpacing: '0.06em',
+    textTransform: 'uppercase' as const,
+    color: 'rgb(var(--color-primary-800))',
+    marginBottom: '1rem',
+    paddingBottom: '0.75rem',
+    borderBottom: '1px solid rgb(var(--color-canvas-100))',
   },
-  
+
   // Course list
-  courseList: {
-    listStyle: "none",
-    display: "flex",
-    flexDirection: "column",
-    gap: "0.45rem"
-  },
   courseLink: {
-    display: "flex",
-    alignItems: "baseline",
-    gap: "0.6rem",
-    color: "rgb(var(--color-canvas-400))",
-    textDecoration: "none",
-    fontSize: "0.84rem",
+    display: 'flex',
+    alignItems: 'baseline',
+    gap: '0.6rem',
+    color: 'rgb(var(--color-canvas-400))',
+    textDecoration: 'none',
+    fontSize: '0.84rem',
     lineHeight: 1.5,
-    transition: "color 0.15s"
+    transition: 'color 0.15s',
   },
-  courseLinkHover: { color: "rgb(var(--color-canvas-900))" },
+  courseLinkHover: {color: 'rgb(var(--color-canvas-900))'},
   courseCode: {
     fontFamily: "'DM Mono', monospace",
-    fontSize: "0.7rem",
-    color: "rgb(var(--color-canvas-300))",
-    border: "1px solid rgb(var(--color-canvas-100))",
-    borderRadius: "4px",
-    padding: "1px 6px",
-    whiteSpace: "nowrap",
+    fontSize: '0.7rem',
+    color: 'rgb(var(--color-canvas-300))',
+    border: '1px solid rgb(var(--color-canvas-100))',
+    borderRadius: '4px',
+    padding: '1px 6px',
+    whiteSpace: 'nowrap',
     flexShrink: 0,
-    transition: "color 0.15s, border-color 0.15s"
+    transition: 'color 0.15s, border-color 0.15s',
   },
   courseCodeHover: {
-    color: "rgb(var(--color-primary-800))",
-    borderColor: "rgb(var(--color-primary-800) / 0.3)"
+    color: 'rgb(var(--color-primary-800))',
+    borderColor: 'rgb(var(--color-primary-800) / 0.3)',
   },
-  
-  // Footer
-  footer: {
-    background: "rgb(var(--color-canvas-900))",
-    padding: "3.5rem 2.5rem 2.5rem"
-  },
-  footerInner: { maxWidth: "1100px", margin: "0 auto" },
-  footerTop: {
-    display: "flex",
-    justifyContent: "space-between",
-    alignItems: "flex-start",
-    flexWrap: "wrap",
-    gap: "2rem",
-    marginBottom: "2.5rem"
-  },
-  footerBrand: {
-    fontFamily: "'Playfair Display', serif",
-    fontSize: "1.1rem",
-    fontWeight: 700,
-    color: "rgb(var(--color-canvas-25))",
-    marginBottom: "0.4rem"
-  },
-  footerBrandAccent: { color: "rgb(var(--color-primary-400))" },
-  footerTagline: { fontSize: "0.78rem", color: "rgb(var(--color-canvas-25) / 0.35)", lineHeight: 1.6 },
-  footerLinks: { display: "flex", gap: "2rem", flexWrap: "wrap", alignItems: "center" },
-  footerLink: {
-    fontSize: "0.75rem",
-    color: "rgb(var(--color-canvas-25) / 0.40)",
-    textDecoration: "none",
-    letterSpacing: "0.05em",
-    transition: "color 0.2s"
-  },
-  footerLinkHover: { color: "rgb(var(--color-canvas-25) / 0.80)" },
-  footerBottom: {
-    borderTop: "1px solid rgb(var(--color-canvas-25) / 0.07)",
-    paddingTop: "1.5rem",
-    display: "flex",
-    justifyContent: "space-between",
-    alignItems: "center",
-    flexWrap: "wrap",
-    gap: "0.5rem"
-  },
-  footerCopy: { fontSize: "0.75rem", color: "rgb(var(--color-canvas-25) / 0.25)" },
-  footerSocials: { display: "flex", gap: "1.25rem" },
-  footerSocial: {
-    fontSize: "0.75rem",
-    color: "rgb(var(--color-canvas-25) / 0.25)",
-    textDecoration: "none",
-    transition: "color 0.2s"
-  },
-  footerSocialHover: { color: "rgb(var(--color-canvas-25) / 0.65)" },
-  
-  // Responsive
-  '@media (max-width: 768px)': {
-    nav: { padding: "0 1.25rem" },
-    navLinks: { gap: "1rem" },
-    hero: { padding: "3rem 1.25rem" },
-    section: { padding: "3rem 1.25rem" },
-    semesterGrid: { gridTemplateColumns: "1fr" },
-    statsBar: { flexWrap: "wrap" },
-    stat: { minWidth: "50%", borderBottom: "1px solid rgb(var(--color-canvas-100))" },
-    degreeHeader: { flexDirection: "column", alignItems: "flex-start" },
-    degreeMeta: { textAlign: "left" },
-    divider: { margin: "0 1.25rem" },
-    footer: { padding: "2.5rem 1.25rem 2rem" }
-  }
 }
 
 // ── Types ─────────────────────────────────────────────────────────────────────
@@ -339,7 +188,7 @@ interface Semester {
 }
 
 interface Degree {
-  label: string           // eyebrow label
+  label: string // eyebrow label
   title: string
   institution: string
   years: string
@@ -349,279 +198,427 @@ interface Degree {
 
 // ── Data ──────────────────────────────────────────────────────────────────────
 
-const BASE = "https://martinbraquet.com/wp-content/uploads"
+const BASE = 'https://martinbraquet.com/wp-content/uploads'
 
 const DEGREES: Degree[] = [
   {
-    label: "Graduate",
-    title: "MSc in Aerospace Engineering",
-    institution: "UT Austin",
-    years: "2020 – 2022",
+    label: 'Graduate',
+    title: 'MSc in Aerospace Engineering',
+    institution: 'UT Austin',
+    years: '2020 – 2022',
     courseCount: 9,
     semesters: [
       {
-        term: "Fall 2020",
-        courses: [
-          {code: "ASE 380P 1", name: "Analytical methods I", pdf: `${BASE}/Syllabus_ASE380P1_Fall2020.pdf`},
-          {code: "ASE 381P 1", name: "Linear systems analysis", pdf: `${BASE}/Syllabus_ASE381P1_Fall2020.pdf`},
-          {code: "ASE 381P 6", name: "Statistical estimation theory", pdf: `${BASE}/Syllabus_ASE381P6_Fall2020.pdf`},
-        ],
-      },
-      {
-        term: "Spring 2021",
-        courses: [
-          {code: "ASE 380P 2", name: "Analytical methods II", pdf: `${BASE}/Syllabus_ASE380P2_Spring2021.pdf`},
-          {code: "ASE 381P 3", name: "Optimal control theory", pdf: `${BASE}/Syllabus_ASE381P3_Spring2021.pdf`},
-        ],
-      },
-      {
-        term: "Fall 2021",
+        term: 'Fall 2020',
         courses: [
           {
-            code: "ASE 389",
-            name: "Modeling of multi-agent systems",
-            pdf: `${BASE}/219_Syllabus_ASE389_Fridovich-Keil.pdf`
+            code: 'ASE 380P 1',
+            name: 'Analytical methods I',
+            pdf: `${BASE}/Syllabus_ASE380P1_Fall2020.pdf`,
           },
-          {code: "CS 391R", name: "Robot learning", pdf: `${BASE}/Syllabus-CS391R-Robot-Learning.pdf`},
+          {
+            code: 'ASE 381P 1',
+            name: 'Linear systems analysis',
+            pdf: `${BASE}/Syllabus_ASE381P1_Fall2020.pdf`,
+          },
+          {
+            code: 'ASE 381P 6',
+            name: 'Statistical estimation theory',
+            pdf: `${BASE}/Syllabus_ASE381P6_Fall2020.pdf`,
+          },
         ],
       },
       {
-        term: "Spring 2022",
+        term: 'Spring 2021',
         courses: [
-          {code: "ASE 381P 2", name: "Multivariable control systems", pdf: `${BASE}/ASE381P2_Syllabus_v2.pdf`},
-          {code: "SDS 380D", name: "Statistical methods II", pdf: `${BASE}/StatMethsII-Syllabus-2022.pdf`},
+          {
+            code: 'ASE 380P 2',
+            name: 'Analytical methods II',
+            pdf: `${BASE}/Syllabus_ASE380P2_Spring2021.pdf`,
+          },
+          {
+            code: 'ASE 381P 3',
+            name: 'Optimal control theory',
+            pdf: `${BASE}/Syllabus_ASE381P3_Spring2021.pdf`,
+          },
+        ],
+      },
+      {
+        term: 'Fall 2021',
+        courses: [
+          {
+            code: 'ASE 389',
+            name: 'Modeling of multi-agent systems',
+            pdf: `${BASE}/219_Syllabus_ASE389_Fridovich-Keil.pdf`,
+          },
+          {
+            code: 'CS 391R',
+            name: 'Robot learning',
+            pdf: `${BASE}/Syllabus-CS391R-Robot-Learning.pdf`,
+          },
+        ],
+      },
+      {
+        term: 'Spring 2022',
+        courses: [
+          {
+            code: 'ASE 381P 2',
+            name: 'Multivariable control systems',
+            pdf: `${BASE}/ASE381P2_Syllabus_v2.pdf`,
+          },
+          {
+            code: 'SDS 380D',
+            name: 'Statistical methods II',
+            pdf: `${BASE}/StatMethsII-Syllabus-2022.pdf`,
+          },
         ],
       },
     ],
   },
   {
-    label: "Graduate",
-    title: "MSc in Electromechanical Engineering",
-    institution: "UCLouvain",
-    years: "2018 – 2020",
+    label: 'Graduate',
+    title: 'MSc in Electromechanical Engineering',
+    institution: 'UCLouvain',
+    years: '2018 – 2020',
     courseCount: 16,
     semesters: [
       {
-        term: "Fall 2018",
+        term: 'Fall 2018',
         courses: [
           {
-            code: "ELEC2313",
-            name: "Dynamic modelling and control of electromechanical converters",
-            pdf: `${BASE}/2020/05/en-cours-2018-lelec2313.pdf`
+            code: 'ELEC2313',
+            name: 'Dynamic modelling and control of electromechanical converters',
+            pdf: `${BASE}/2020/05/en-cours-2018-lelec2313.pdf`,
           },
           {
-            code: "ELEC2531",
-            name: "Design and architecture of digital electronic systems",
-            pdf: `${BASE}/2020/05/en-cours-2018-lelec2531.pdf`
-          },
-          {code: "ELEC2660", name: "Power electronics", pdf: `${BASE}/2020/05/en-cours-2018-lelec2660.pdf`},
-          {code: "ELEC2811", name: "Instrumentation and sensors", pdf: `${BASE}/2020/05/en-cours-2018-lelec2811.pdf`},
-          {code: "EPL2351", name: "Group dynamics", pdf: `${BASE}/2020/05/en-cours-2018-lepl2351.pdf`},
-          {code: "MECA2755", name: "Industrial automation", pdf: `${BASE}/2020/05/en-cours-2018-lmeca2755.pdf`},
-          {code: "MECA2801", name: "Machine design", pdf: `${BASE}/2020/05/en-cours-2018-lmeca2801.pdf`},
-        ],
-      },
-      {
-        term: "Spring 2019",
-        courses: [
-          {
-            code: "ELEC2103",
-            name: "Project in electricity 3: electronic systems",
-            pdf: `${BASE}/2020/05/en-cours-2018-lelec2103.pdf`
+            code: 'ELEC2531',
+            name: 'Design and architecture of digital electronic systems',
+            pdf: `${BASE}/2020/05/en-cours-2018-lelec2531.pdf`,
           },
           {
-            code: "ELEC2311",
-            name: "Physics of electromechanical converters",
-            pdf: `${BASE}/2020/05/en-cours-2018-lelec2311.pdf`
+            code: 'ELEC2660',
+            name: 'Power electronics',
+            pdf: `${BASE}/2020/05/en-cours-2018-lelec2660.pdf`,
           },
           {
-            code: "ELEC2590",
-            name: "Seminar in electronics and communications",
-            pdf: `${BASE}/2020/05/en-cours-2018-lelec2590.pdf`
+            code: 'ELEC2811',
+            name: 'Instrumentation and sensors',
+            pdf: `${BASE}/2020/05/en-cours-2018-lelec2811.pdf`,
           },
           {
-            code: "ELEC2760",
-            name: "Secure electronic circuits and systems",
-            pdf: `${BASE}/2020/05/en-cours-2018-lelec2760.pdf`
-          },
-          {code: "ELME2002", name: "Project in mechatronics", pdf: `${BASE}/2020/05/en-cours-2018-lelme2002.pdf`},
-          {
-            code: "FSA2230",
-            name: "Introduction to management and business economics",
-            pdf: `${BASE}/2020/05/en-cours-2018-lfsa2230.pdf`
+            code: 'EPL2351',
+            name: 'Group dynamics',
+            pdf: `${BASE}/2020/05/en-cours-2018-lepl2351.pdf`,
           },
           {
-            code: "INGI2315",
-            name: "Design of embedded and real-time systems",
-            pdf: `${BASE}/2020/05/en-cours-2018-lingi2315.pdf`
-          },
-          {code: "INGI2347", name: "Computer system security", pdf: `${BASE}/2020/05/en-cours-2018-lingi2347.pdf`},
-          {code: "MECA2732", name: "Introduction to robotics", pdf: `${BASE}/2020/05/en-cours-2018-lmeca2732.pdf`},
-        ],
-      },
-      {
-        term: "Fall 2019",
-        courses: [
-          {
-            code: "ELEC2795",
-            name: "Radiation and communication systems",
-            pdf: `${BASE}/2020/05/en-cours-2019-lelec2795.pdf`
+            code: 'MECA2755',
+            name: 'Industrial automation',
+            pdf: `${BASE}/2020/05/en-cours-2018-lmeca2755.pdf`,
           },
           {
-            code: "ELEC2870",
-            name: "Machine learning: regression, dimensionality reduction & visualization",
-            pdf: `${BASE}/2020/05/en-cours-2019-lelec2870.pdf`
-          },
-          {
-            code: "INGI2261",
-            name: "Artificial intelligence: representation and reasoning",
-            pdf: `${BASE}/2020/05/en-cours-2019-lingi2261.pdf`
-          },
-          {code: "PHYS2143", name: "Optics and lasers", pdf: `${BASE}/2020/05/en-cours-2019-lphys2143.pdf`},
-          {
-            code: "TECO2300",
-            name: "Societies, cultures, religions: ethical questions",
-            pdf: `${BASE}/2020/05/en-cours-2019-lteco2300.pdf`
+            code: 'MECA2801',
+            name: 'Machine design',
+            pdf: `${BASE}/2020/05/en-cours-2018-lmeca2801.pdf`,
           },
         ],
       },
       {
-        term: "Spring 2020",
+        term: 'Spring 2019',
         courses: [
           {
-            code: "ELEC2532",
-            name: "Design and architecture of analog electronic systems",
-            pdf: `${BASE}/2020/05/en-cours-2019-lelec2532.pdf`
+            code: 'ELEC2103',
+            name: 'Project in electricity 3: electronic systems',
+            pdf: `${BASE}/2020/05/en-cours-2018-lelec2103.pdf`,
           },
-          {code: "ELME2990", name: "Master thesis", pdf: `${BASE}/2020/05/en-cours-2019-lelme2990.pdf`},
-          {code: "INMA2345", name: "Game theory", pdf: `${BASE}/2020/05/en-cours-2019-linma2345.pdf`},
-          {code: "PHYS1231", name: "Special relativity", pdf: `${BASE}/2020/05/en-cours-2019-lphys1231.pdf`},
+          {
+            code: 'ELEC2311',
+            name: 'Physics of electromechanical converters',
+            pdf: `${BASE}/2020/05/en-cours-2018-lelec2311.pdf`,
+          },
+          {
+            code: 'ELEC2590',
+            name: 'Seminar in electronics and communications',
+            pdf: `${BASE}/2020/05/en-cours-2018-lelec2590.pdf`,
+          },
+          {
+            code: 'ELEC2760',
+            name: 'Secure electronic circuits and systems',
+            pdf: `${BASE}/2020/05/en-cours-2018-lelec2760.pdf`,
+          },
+          {
+            code: 'ELME2002',
+            name: 'Project in mechatronics',
+            pdf: `${BASE}/2020/05/en-cours-2018-lelme2002.pdf`,
+          },
+          {
+            code: 'FSA2230',
+            name: 'Introduction to management and business economics',
+            pdf: `${BASE}/2020/05/en-cours-2018-lfsa2230.pdf`,
+          },
+          {
+            code: 'INGI2315',
+            name: 'Design of embedded and real-time systems',
+            pdf: `${BASE}/2020/05/en-cours-2018-lingi2315.pdf`,
+          },
+          {
+            code: 'INGI2347',
+            name: 'Computer system security',
+            pdf: `${BASE}/2020/05/en-cours-2018-lingi2347.pdf`,
+          },
+          {
+            code: 'MECA2732',
+            name: 'Introduction to robotics',
+            pdf: `${BASE}/2020/05/en-cours-2018-lmeca2732.pdf`,
+          },
+        ],
+      },
+      {
+        term: 'Fall 2019',
+        courses: [
+          {
+            code: 'ELEC2795',
+            name: 'Radiation and communication systems',
+            pdf: `${BASE}/2020/05/en-cours-2019-lelec2795.pdf`,
+          },
+          {
+            code: 'ELEC2870',
+            name: 'Machine learning: regression, dimensionality reduction & visualization',
+            pdf: `${BASE}/2020/05/en-cours-2019-lelec2870.pdf`,
+          },
+          {
+            code: 'INGI2261',
+            name: 'Artificial intelligence: representation and reasoning',
+            pdf: `${BASE}/2020/05/en-cours-2019-lingi2261.pdf`,
+          },
+          {
+            code: 'PHYS2143',
+            name: 'Optics and lasers',
+            pdf: `${BASE}/2020/05/en-cours-2019-lphys2143.pdf`,
+          },
+          {
+            code: 'TECO2300',
+            name: 'Societies, cultures, religions: ethical questions',
+            pdf: `${BASE}/2020/05/en-cours-2019-lteco2300.pdf`,
+          },
+        ],
+      },
+      {
+        term: 'Spring 2020',
+        courses: [
+          {
+            code: 'ELEC2532',
+            name: 'Design and architecture of analog electronic systems',
+            pdf: `${BASE}/2020/05/en-cours-2019-lelec2532.pdf`,
+          },
+          {
+            code: 'ELME2990',
+            name: 'Master thesis',
+            pdf: `${BASE}/2020/05/en-cours-2019-lelme2990.pdf`,
+          },
+          {
+            code: 'INMA2345',
+            name: 'Game theory',
+            pdf: `${BASE}/2020/05/en-cours-2019-linma2345.pdf`,
+          },
+          {
+            code: 'PHYS1231',
+            name: 'Special relativity',
+            pdf: `${BASE}/2020/05/en-cours-2019-lphys1231.pdf`,
+          },
         ],
       },
     ],
   },
   {
-    label: "Undergraduate",
-    title: "BSc in Electrical/Mechanical Engineering",
-    institution: "UCLouvain",
-    years: "2015 – 2018",
+    label: 'Undergraduate',
+    title: 'BSc in Electrical/Mechanical Engineering',
+    institution: 'UCLouvain',
+    years: '2015 – 2018',
     courseCount: 36,
     semesters: [
       {
-        term: "Fall 2015",
+        term: 'Fall 2015',
         courses: [
-          {code: "FSAB1101", name: "Mathematics 1", pdf: `${BASE}/2020/05/en-cours-2015-LFSAB1101.pdf`},
-          {code: "FSAB1201", name: "Physics 1", pdf: `${BASE}/2020/05/en-cours-2015-LFSAB1201.pdf`},
-          {code: "FSAB1401", name: "Computer science 1", pdf: `${BASE}/2020/05/en-cours-2015-LFSAB1401.pdf`},
-          {code: "FSAB1501", name: "Project 1", pdf: `${BASE}/2020/05/en-cours-2015-LFSAB1501.pdf`},
+          {
+            code: 'FSAB1101',
+            name: 'Mathematics 1',
+            pdf: `${BASE}/2020/05/en-cours-2015-LFSAB1101.pdf`,
+          },
+          {code: 'FSAB1201', name: 'Physics 1', pdf: `${BASE}/2020/05/en-cours-2015-LFSAB1201.pdf`},
+          {
+            code: 'FSAB1401',
+            name: 'Computer science 1',
+            pdf: `${BASE}/2020/05/en-cours-2015-LFSAB1401.pdf`,
+          },
+          {code: 'FSAB1501', name: 'Project 1', pdf: `${BASE}/2020/05/en-cours-2015-LFSAB1501.pdf`},
         ],
       },
       {
-        term: "Spring 2016",
-        courses: [
-          {code: "ANGL1871", name: "English for civil engineers", pdf: `${BASE}/2020/05/en-cours-2015-LANGL1871.pdf`},
-          {code: "FSAB1102", name: "Mathematics 2", pdf: `${BASE}/2020/05/en-cours-2015-LFSAB1102.pdf`},
-          {code: "FSAB1202", name: "Physics 2", pdf: `${BASE}/2020/05/en-cours-2015-LFSAB1202.pdf`},
-          {
-            code: "FSAB1301",
-            name: "Chemistry and physical chemistry",
-            pdf: `${BASE}/2020/05/en-cours-2015-LFSAB1301.pdf`
-          },
-          {code: "FSAB1502", name: "Project 2", pdf: `${BASE}/2020/05/en-cours-2015-LFSAB1502.pdf`},
-          {
-            code: "FSAB1801",
-            name: "Critical history of science and technology",
-            pdf: `${BASE}/2020/05/en-cours-2015-LFSAB1801.pdf`
-          },
-        ],
-      },
-      {
-        term: "Fall 2016",
-        courses: [
-          {code: "FSAB1103", name: "Mathematics 3", pdf: `${BASE}/2020/05/en-cours-2016-LFSAB1103.pdf`},
-          {code: "FSAB1203", name: "Physics 3", pdf: `${BASE}/2020/05/en-cours-2016-LFSAB1203.pdf`},
-          {
-            code: "FSAB1302",
-            name: "Chemistry and physical chemistry",
-            pdf: `${BASE}/2020/05/en-cours-2016-LFSAB1302.pdf`
-          },
-          {code: "FSAB1402", name: "Computer science 2", pdf: `${BASE}/2020/05/en-cours-2016-LFSAB1402.pdf`},
-          {code: "FSAB1503", name: "Project 3", pdf: `${BASE}/2020/05/en-cours-2016-LFSAB1503.pdf`},
-          {code: "FSAB1104", name: "Numerical methods", pdf: `${BASE}/2020/05/en-cours-2016-LFSAB1104.pdf`},
-        ],
-      },
-      {
-        term: "Spring 2017",
+        term: 'Spring 2016',
         courses: [
           {
-            code: "ANGL1872",
-            name: "English: listening comprehension",
-            pdf: `${BASE}/2020/05/en-cours-2016-LANGL1872.pdf`
+            code: 'ANGL1871',
+            name: 'English for civil engineers',
+            pdf: `${BASE}/2020/05/en-cours-2015-LANGL1871.pdf`,
           },
           {
-            code: "ELEC1101",
-            name: "Project in electricity 1: electrical circuits",
-            pdf: `${BASE}/2020/05/en-cours-2016-LELEC1101.pdf`
+            code: 'FSAB1102',
+            name: 'Mathematics 2',
+            pdf: `${BASE}/2020/05/en-cours-2015-LFSAB1102.pdf`,
           },
+          {code: 'FSAB1202', name: 'Physics 2', pdf: `${BASE}/2020/05/en-cours-2015-LFSAB1202.pdf`},
           {
-            code: "ELEC1370",
-            name: "Measurements and electrical circuits",
-            pdf: `${BASE}/2020/05/en-cours-2016-LELEC1370.pdf`
+            code: 'FSAB1301',
+            name: 'Chemistry and physical chemistry',
+            pdf: `${BASE}/2020/05/en-cours-2015-LFSAB1301.pdf`,
           },
+          {code: 'FSAB1502', name: 'Project 2', pdf: `${BASE}/2020/05/en-cours-2015-LFSAB1502.pdf`},
           {
-            code: "FSAB1106",
-            name: "Applied mathematics: signals and systems",
-            pdf: `${BASE}/2020/05/en-cours-2016-LFSAB1106.pdf`
-          },
-          {code: "FSAB1803", name: "Economy of the firm", pdf: `${BASE}/2020/05/en-cours-2016-LFSAB1803.pdf`},
-          {
-            code: "MECA1120",
-            name: "Introduction to finite element methods",
-            pdf: `${BASE}/2020/05/en-cours-2016-LMECA1120.pdf`
-          },
-          {
-            code: "MECA1210",
-            name: "Description and analysis of mechanisms",
-            pdf: `${BASE}/2020/05/en-cours-2016-LMECA1210.pdf`
+            code: 'FSAB1801',
+            name: 'Critical history of science and technology',
+            pdf: `${BASE}/2020/05/en-cours-2015-LFSAB1801.pdf`,
           },
         ],
       },
       {
-        term: "Fall 2017",
+        term: 'Fall 2016',
         courses: [
           {
-            code: "ANGL1873",
-            name: "English communication skills for engineers",
-            pdf: `${BASE}/2020/05/en-cours-2017-langl1873.pdf`
+            code: 'FSAB1103',
+            name: 'Mathematics 3',
+            pdf: `${BASE}/2020/05/en-cours-2016-LFSAB1103.pdf`,
+          },
+          {code: 'FSAB1203', name: 'Physics 3', pdf: `${BASE}/2020/05/en-cours-2016-LFSAB1203.pdf`},
+          {
+            code: 'FSAB1302',
+            name: 'Chemistry and physical chemistry',
+            pdf: `${BASE}/2020/05/en-cours-2016-LFSAB1302.pdf`,
           },
           {
-            code: "ELEC1530",
-            name: "Basic analog and digital electronic circuits",
-            pdf: `${BASE}/2020/05/en-cours-2017-lelec1530.pdf`
+            code: 'FSAB1402',
+            name: 'Computer science 2',
+            pdf: `${BASE}/2020/05/en-cours-2016-LFSAB1402.pdf`,
           },
-          {code: "ELEC1755", name: "Electricity: advanced topics", pdf: `${BASE}/2020/05/en-cours-2017-lelec1755.pdf`},
-          {code: "FSAB1105", name: "Probability and statistics", pdf: `${BASE}/2020/05/en-cours-2017-lfsab1105.pdf`},
-          {code: "MECA1451", name: "Mechanical manufacturing", pdf: `${BASE}/2020/05/en-cours-2017-lmeca1451.pdf`},
-          {code: "MECA1855", name: "Thermodynamics and energetics", pdf: `${BASE}/2020/05/en-cours-2017-lmeca1855.pdf`},
-          {code: "MECA1901", name: "Continuum mechanics", pdf: `${BASE}/2020/05/en-cours-2017-lmeca1901.pdf`},
+          {code: 'FSAB1503', name: 'Project 3', pdf: `${BASE}/2020/05/en-cours-2016-LFSAB1503.pdf`},
+          {
+            code: 'FSAB1104',
+            name: 'Numerical methods',
+            pdf: `${BASE}/2020/05/en-cours-2016-LFSAB1104.pdf`,
+          },
         ],
       },
       {
-        term: "Spring 2018",
+        term: 'Spring 2017',
         courses: [
-          {code: "ELEC1310", name: "Electromechanical converters", pdf: `${BASE}/2020/05/en-cours-2017-lelec1310.pdf`},
-          {code: "ELEC1360", name: "Telecommunications", pdf: `${BASE}/2020/05/en-cours-2017-lelec1360.pdf`},
-          {code: "INMA1510", name: "Linear control", pdf: `${BASE}/2020/05/en-cours-2017-linma1510.pdf`},
           {
-            code: "FSAB1504",
-            name: "Project 4 (mechanical engineering)",
-            pdf: `${BASE}/2020/05/en-cours-2017-lfsab1504.pdf`
+            code: 'ANGL1872',
+            name: 'English: listening comprehension',
+            pdf: `${BASE}/2020/05/en-cours-2016-LANGL1872.pdf`,
           },
-          {code: "MECA1100", name: "Deformable solid mechanics", pdf: `${BASE}/2020/05/en-cours-2017-lmeca1100.pdf`},
           {
-            code: "MECA1321",
-            name: "Fluid mechanics and transfer phenomena",
-            pdf: `${BASE}/2020/05/en-cours-2017-lmeca1321.pdf`
+            code: 'ELEC1101',
+            name: 'Project in electricity 1: electrical circuits',
+            pdf: `${BASE}/2020/05/en-cours-2016-LELEC1101.pdf`,
+          },
+          {
+            code: 'ELEC1370',
+            name: 'Measurements and electrical circuits',
+            pdf: `${BASE}/2020/05/en-cours-2016-LELEC1370.pdf`,
+          },
+          {
+            code: 'FSAB1106',
+            name: 'Applied mathematics: signals and systems',
+            pdf: `${BASE}/2020/05/en-cours-2016-LFSAB1106.pdf`,
+          },
+          {
+            code: 'FSAB1803',
+            name: 'Economy of the firm',
+            pdf: `${BASE}/2020/05/en-cours-2016-LFSAB1803.pdf`,
+          },
+          {
+            code: 'MECA1120',
+            name: 'Introduction to finite element methods',
+            pdf: `${BASE}/2020/05/en-cours-2016-LMECA1120.pdf`,
+          },
+          {
+            code: 'MECA1210',
+            name: 'Description and analysis of mechanisms',
+            pdf: `${BASE}/2020/05/en-cours-2016-LMECA1210.pdf`,
+          },
+        ],
+      },
+      {
+        term: 'Fall 2017',
+        courses: [
+          {
+            code: 'ANGL1873',
+            name: 'English communication skills for engineers',
+            pdf: `${BASE}/2020/05/en-cours-2017-langl1873.pdf`,
+          },
+          {
+            code: 'ELEC1530',
+            name: 'Basic analog and digital electronic circuits',
+            pdf: `${BASE}/2020/05/en-cours-2017-lelec1530.pdf`,
+          },
+          {
+            code: 'ELEC1755',
+            name: 'Electricity: advanced topics',
+            pdf: `${BASE}/2020/05/en-cours-2017-lelec1755.pdf`,
+          },
+          {
+            code: 'FSAB1105',
+            name: 'Probability and statistics',
+            pdf: `${BASE}/2020/05/en-cours-2017-lfsab1105.pdf`,
+          },
+          {
+            code: 'MECA1451',
+            name: 'Mechanical manufacturing',
+            pdf: `${BASE}/2020/05/en-cours-2017-lmeca1451.pdf`,
+          },
+          {
+            code: 'MECA1855',
+            name: 'Thermodynamics and energetics',
+            pdf: `${BASE}/2020/05/en-cours-2017-lmeca1855.pdf`,
+          },
+          {
+            code: 'MECA1901',
+            name: 'Continuum mechanics',
+            pdf: `${BASE}/2020/05/en-cours-2017-lmeca1901.pdf`,
+          },
+        ],
+      },
+      {
+        term: 'Spring 2018',
+        courses: [
+          {
+            code: 'ELEC1310',
+            name: 'Electromechanical converters',
+            pdf: `${BASE}/2020/05/en-cours-2017-lelec1310.pdf`,
+          },
+          {
+            code: 'ELEC1360',
+            name: 'Telecommunications',
+            pdf: `${BASE}/2020/05/en-cours-2017-lelec1360.pdf`,
+          },
+          {
+            code: 'INMA1510',
+            name: 'Linear control',
+            pdf: `${BASE}/2020/05/en-cours-2017-linma1510.pdf`,
+          },
+          {
+            code: 'FSAB1504',
+            name: 'Project 4 (mechanical engineering)',
+            pdf: `${BASE}/2020/05/en-cours-2017-lfsab1504.pdf`,
+          },
+          {
+            code: 'MECA1100',
+            name: 'Deformable solid mechanics',
+            pdf: `${BASE}/2020/05/en-cours-2017-lmeca1100.pdf`,
+          },
+          {
+            code: 'MECA1321',
+            name: 'Fluid mechanics and transfer phenomena',
+            pdf: `${BASE}/2020/05/en-cours-2017-lmeca1321.pdf`,
           },
         ],
       },
@@ -633,50 +630,6 @@ const TOTAL_COURSES = DEGREES.reduce((sum, d) => sum + d.courseCount, 0)
 
 // ── Reusable Components ───────────────────────────────────────────────────────
 
-interface NavLinkProps {
-  href: string
-  label: string
-}
-
-function NavLink({ href, label }: NavLinkProps) {
-  const [isHovered, setIsHovered] = useState(false)
-  
-  return (
-    <Link href={href} 
-          style={{
-            ...styles.navLink,
-            ...(isHovered ? styles.navLinkHover : {})
-          }}
-          onMouseEnter={() => setIsHovered(true)}
-          onMouseLeave={() => setIsHovered(false)}>
-      {label}
-    </Link>
-  )
-}
-
-interface NavProps {
-  scrolled: boolean
-}
-
-function Navigation({ scrolled }: NavProps) {
-  return (
-    <nav style={{
-      ...styles.nav,
-      ...(scrolled ? styles.navScrolled : {})
-    }}>
-      <Link href="/" style={styles.navBrand}>
-        Martin <span style={styles.navBrandAccent}>Braquet</span>
-      </Link>
-      <div style={styles.navLinks}>
-        <NavLink href="/#about" label="About" />
-        <NavLink href="/#academia" label="Academia" />
-        <NavLink href="/#publications" label="Publications" />
-        <NavLink href="/#contact" label="Contact" />
-      </div>
-    </nav>
-  )
-}
-
 interface HeroProps {
   title: string
   subtitle: string
@@ -684,7 +637,7 @@ interface HeroProps {
   accent?: string
 }
 
-function Hero({ title, subtitle, eyebrow, accent }: HeroProps) {
+function Hero({title, subtitle, eyebrow, accent}: HeroProps) {
   return (
     <header style={styles.hero}>
       <div style={styles.heroBg} />
@@ -694,7 +647,8 @@ function Hero({ title, subtitle, eyebrow, accent }: HeroProps) {
           <span style={styles.heroEyebrowText}>{eyebrow}</span>
         </div>
         <h1 style={styles.heroTitle}>
-          {title}<br/>
+          {title}
+          <br />
           {accent && <span style={styles.heroAccent}>{accent}</span>}
         </h1>
         <p style={styles.heroSub}>{subtitle}</p>
@@ -709,12 +663,14 @@ interface StatProps {
   isLast?: boolean
 }
 
-function Stat({ number, label, isLast }: StatProps) {
+function Stat({number, label, isLast}: StatProps) {
   return (
-    <div style={{
-      ...styles.stat,
-      ...(isLast ? styles.statLast : {})
-    }}>
+    <div
+      style={{
+        ...styles.stat,
+        ...(isLast ? styles.statLast : {}),
+      }}
+    >
       <span style={styles.statNumber}>{number}</span>
       <span style={styles.statLabel}>{label}</span>
     </div>
@@ -722,16 +678,16 @@ function Stat({ number, label, isLast }: StatProps) {
 }
 
 interface StatsBarProps {
-  stats: { number: string; label: string }[]
+  stats: {number: string; label: string}[]
 }
 
-function StatsBar({ stats }: StatsBarProps) {
+function StatsBar({stats}: StatsBarProps) {
   return (
     <div style={styles.statsBar}>
       {stats.map((stat, index) => (
-        <Stat 
-          key={stat.label} 
-          number={stat.number} 
+        <Stat
+          key={stat.label}
+          number={stat.number}
           label={stat.label}
           isLast={index === stats.length - 1}
         />
@@ -740,100 +696,30 @@ function StatsBar({ stats }: StatsBarProps) {
   )
 }
 
-interface FooterLinkProps {
-  href: string
-  label: string
-}
-
-function FooterLink({ href, label }: FooterLinkProps) {
-  const [isHovered, setIsHovered] = useState(false)
-  
-  return (
-    <Link href={href}
-          style={{
-            ...styles.footerLink,
-            ...(isHovered ? styles.footerLinkHover : {})
-          }}
-          onMouseEnter={() => setIsHovered(true)}
-          onMouseLeave={() => setIsHovered(false)}>
-      {label}
-    </Link>
-  )
-}
-
-function Footer() {
-  const [socialHovered, setSocialHovered] = useState<string | null>(null)
-  
-  return (
-    <footer style={styles.footer}>
-      <div style={styles.footerInner}>
-        <div style={styles.footerTop}>
-          <div>
-            <div style={styles.footerBrand}>
-              Martin <span style={styles.footerBrandAccent}>Braquet</span>
-            </div>
-            <p style={styles.footerTagline}>Researcher · Engineer</p>
-          </div>
-          <div style={styles.footerLinks}>
-            <FooterLink href="/#about" label="About" />
-            <FooterLink href="/#academia" label="Academia" />
-            <FooterLink href="/#publications" label="Publications" />
-            <FooterLink href="/#contact" label="Contact" />
-          </div>
-        </div>
-        
-        <div style={styles.footerBottom}>
-          <p style={styles.footerCopy}>© {new Date().getFullYear()} Martin Braquet</p>
-          <div style={styles.footerSocials}>
-            <a href="https://www.linkedin.com/in/martin-braquet/" 
-               target="_blank" 
-               rel="noopener noreferrer"
-               style={{
-                 ...styles.footerSocial,
-                 ...(socialHovered === 'linkedin' ? styles.footerSocialHover : {})
-               }}
-               onMouseEnter={() => setSocialHovered('linkedin')}
-               onMouseLeave={() => setSocialHovered(null)}>
-              LinkedIn
-            </a>
-            <a href="https://github.com/MartinBraquet" 
-               target="_blank" 
-               rel="noopener noreferrer"
-               style={{
-                 ...styles.footerSocial,
-                 ...(socialHovered === 'github' ? styles.footerSocialHover : {})
-               }}
-               onMouseEnter={() => setSocialHovered('github')}
-               onMouseLeave={() => setSocialHovered(null)}>
-              GitHub
-            </a>
-          </div>
-        </div>
-      </div>
-    </footer>
-  )
-}
-
 // ── Sub-components ────────────────────────────────────────────────────────────
 
-function CourseItem({course}: { course: Course }) {
+function CourseItem({course}: {course: Course}) {
   const [isHovered, setIsHovered] = useState(false)
-  
+
   return (
     <li>
-      <a href={course.pdf} 
-         target="_blank" 
-         rel="noopener noreferrer" 
-         style={{
-           ...styles.courseLink,
-           ...(isHovered ? styles.courseLinkHover : {})
-         }}
-         onMouseEnter={() => setIsHovered(true)}
-         onMouseLeave={() => setIsHovered(false)}>
-        <span style={{
-          ...styles.courseCode,
-          ...(isHovered ? styles.courseCodeHover : {})
-        }}>
+      <a
+        href={course.pdf}
+        target="_blank"
+        rel="noopener noreferrer"
+        style={{
+          ...styles.courseLink,
+          ...(isHovered ? styles.courseLinkHover : {}),
+        }}
+        onMouseEnter={() => setIsHovered(true)}
+        onMouseLeave={() => setIsHovered(false)}
+      >
+        <span
+          style={{
+            ...styles.courseCode,
+            ...(isHovered ? styles.courseCodeHover : {}),
+          }}
+        >
           {course.code}
         </span>
         {course.name}
@@ -842,71 +728,104 @@ function CourseItem({course}: { course: Course }) {
   )
 }
 
-function SemesterCard({semester, alt}: { semester: Semester; alt: boolean }) {
+function SemesterCard({semester, alt}: {semester: Semester; alt: boolean}) {
   const [isHovered, setIsHovered] = useState(false)
-  
+
   return (
-    <div style={{
-      ...styles.semesterCard,
-      ...(alt ? styles.semesterCardAlt : {}),
-      ...(isHovered ? styles.semesterCardHover : {})
-    }}
-         onMouseEnter={() => setIsHovered(true)}
-         onMouseLeave={() => setIsHovered(false)}>
+    <div
+      style={{
+        ...styles.semesterCard,
+        ...(alt ? styles.semesterCardAlt : {}),
+        ...(isHovered ? styles.semesterCardHover : {}),
+      }}
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+    >
       <div style={styles.semesterTitle}>{semester.term}</div>
-      <ul style={styles.courseList}>
+      <ul
+        style={{
+          listStyle: 'none',
+          display: 'flex',
+          flexDirection: 'column',
+          gap: '0.45rem',
+        }}
+      >
         {semester.courses.map((c) => (
-          <CourseItem key={c.code} course={c}/>
+          <CourseItem key={c.code} course={c} />
         ))}
       </ul>
     </div>
   )
 }
 
-function DegreeSection({degree, alt}: { degree: Degree; alt: boolean }) {
+function DegreeSection({degree, alt}: {degree: Degree; alt: boolean}) {
   const revealRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
     const el = revealRef.current
     if (!el) return
-    el.style.opacity = "0"
-    el.style.transform = "translateY(24px)"
-    el.style.transition = "opacity 0.7s ease, transform 0.7s ease"
+    el.style.opacity = '0'
+    el.style.transform = 'translateY(24px)'
+    el.style.transition = 'opacity 0.7s ease, transform 0.7s ease'
     const obs = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
-          el.style.opacity = "1"
-          el.style.transform = "translateY(0)"
+          el.style.opacity = '1'
+          el.style.transform = 'translateY(0)'
           obs.disconnect()
         }
       },
-      {threshold: 0.06}
+      {threshold: 0.06},
     )
     obs.observe(el)
     return () => obs.disconnect()
   }, [])
 
   return (
-    <section style={{
-      ...styles.section,
-      ...(alt ? styles.sectionAlt : {})
-    }}>
+    <section
+      style={{
+        ...styles.section,
+        ...(alt ? styles.sectionAlt : {}),
+      }}
+    >
       <div style={styles.sectionInner} ref={revealRef}>
-        <div style={styles.degreeHeader}>
+        <div
+          style={{
+            display: 'flex',
+            alignItems: 'flex-end',
+            justifyContent: 'space-between',
+            gap: '1rem',
+            flexWrap: 'wrap',
+            paddingBottom: '2rem',
+            marginBottom: '2.5rem',
+            borderBottom: '1px solid rgb(var(--color-canvas-100))',
+          }}
+        >
           <div>
             <span style={styles.sectionLabel}>{degree.label}</span>
             <h2 style={styles.degreeTitle}>{degree.title}</h2>
           </div>
-          <div style={styles.degreeMeta}>
-            <span>{degree.institution}</span><br/>
-            <span>{degree.years}</span><br/>
+          <div
+            style={{
+              fontFamily: "'DM Mono', monospace",
+              fontSize: '0.78rem',
+              color: 'rgb(var(--color-canvas-300))',
+              textAlign: 'right',
+              lineHeight: 1.7,
+              flexShrink: 0,
+            }}
+          >
+            <span>{degree.institution}</span>
+            <br />
+            <span>{degree.years}</span>
+            <br />
             <span>{degree.courseCount} courses</span>
           </div>
         </div>
 
         <div style={styles.semesterGrid}>
           {degree.semesters.map((sem) => (
-            <SemesterCard key={sem.term} semester={sem} alt={alt}/>
+            <SemesterCard key={sem.term} semester={sem} alt={alt} />
           ))}
         </div>
       </div>
@@ -917,46 +836,32 @@ function DegreeSection({degree, alt}: { degree: Degree; alt: boolean }) {
 // ── Page ──────────────────────────────────────────────────────────────────────
 
 export default function CoursesUniversity() {
-  const [scrolled, setScrolled] = useState(false)
-
-  useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 24)
-    window.addEventListener("scroll", onScroll)
-    return () => window.removeEventListener("scroll", onScroll)
-  }, [])
-
   const statsData = [
-    {number: "3", label: "Degrees"},
-    {number: TOTAL_COURSES.toString(), label: "Courses"},
-    {number: "2", label: "Universities"},
-    {number: "7", label: "Years"},
+    {number: '3', label: 'Degrees'},
+    {number: TOTAL_COURSES.toString(), label: 'Courses'},
+    {number: '2', label: 'Universities'},
+    {number: '7', label: 'Years'},
   ]
 
   return (
-    <div style={styles.page}>
+    <PageBase>
+      <div style={styles.page}>
+        {/* ── HERO ── */}
+        <Hero
+          title="Courses followed"
+          subtitle={`${TOTAL_COURSES} courses across three degrees spanning electrical, mechanical, and aerospace engineering — from UCLouvain to UT Austin.`}
+          eyebrow="Academia"
+          accent="at university"
+        />
 
-      {/* ── NAV ── */}
-      <Navigation scrolled={scrolled} />
+        {/* ── STATS BAR ── */}
+        <StatsBar stats={statsData} />
 
-      {/* ── HERO ── */}
-      <Hero 
-        title="Courses followed"
-        subtitle={`${TOTAL_COURSES} courses across three degrees spanning electrical, mechanical, and aerospace engineering — from UCLouvain to UT Austin.`}
-        eyebrow="Academia"
-        accent="at university"
-      />
-
-      {/* ── STATS BAR ── */}
-      <StatsBar stats={statsData} />
-
-      {/* ── DEGREE SECTIONS ── */}
-      {DEGREES.map((degree, i) => (
-        <DegreeSection key={degree.title} degree={degree} alt={i % 2 === 1}/>
-      ))}
-
-      {/* ── FOOTER ── */}
-      <Footer />
-
-    </div>
+        {/* ── DEGREE SECTIONS ── */}
+        {DEGREES.map((degree, i) => (
+          <DegreeSection key={degree.title} degree={degree} alt={i % 2 === 1} />
+        ))}
+      </div>
+    </PageBase>
   )
 }
