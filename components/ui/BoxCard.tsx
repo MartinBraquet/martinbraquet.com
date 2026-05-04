@@ -1,4 +1,5 @@
 import {JSX} from 'react'
+import {CustomLink} from 'web/components/links'
 import {C} from 'web/lib/colors'
 
 interface BoxCardProps {
@@ -28,9 +29,9 @@ export default function BoxCard({children, className = '', style, href}: BoxCard
           transform: translateX(5px);
         }
       `}</style>
-      <a className={`card-box ${className}`} style={style} href={href}>
+      <CustomLink className={`card-box ${className}`} style={style} href={href}>
         {children}
-      </a>
+      </CustomLink>
     </>
   )
 }
