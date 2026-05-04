@@ -1,5 +1,5 @@
 import {useRouter} from 'next/router'
-import {useState} from 'react'
+import {useEffect, useState} from 'react'
 import {CustomLink} from 'web/components/links'
 import {C} from 'web/lib/colors'
 import {PAGES} from 'web/lib/constants'
@@ -8,6 +8,23 @@ export default function Navigation() {
   const router = useRouter()
   const currentPath = router.pathname
   const [isMenuOpen, setIsMenuOpen] = useState(false)
+
+  // Close menu when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (isMenuOpen) {
+        const target = event.target as Element
+        const navElement = target.closest('nav')
+        if (!navElement) {
+          setIsMenuOpen(false)
+        }
+      }
+    }
+
+    document.addEventListener('click', handleClickOutside)
+    return () => document.removeEventListener('click', handleClickOutside)
+  }, [isMenuOpen])
+
   return (
     <>
       <style>{`
