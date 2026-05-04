@@ -27,7 +27,7 @@ export function Custom404Content(props: {customText?: string}) {
     <div className="flex h-[50vh] flex-col items-center justify-center">
       <Col className="mx-4">
         <Title>{t('404.title', 'Page Not Found')}</Title>
-        {customText&& (
+        {customText && (
           <p>
             {t(
               `custom404.${customText}`,
@@ -36,10 +36,7 @@ export function Custom404Content(props: {customText?: string}) {
           </p>
         )}
         <p className="custom-link">
-          {t(
-            '404.help_text',
-            "If you didn't expect this, try to reload the page in a few seconds or go back ",
-          )}
+          {t('404.help_text', "If you didn't expect this, try to reload the page or go back ")}
           <Link href={'/'}>{t('', 'home').toLowerCase()}</Link>.
         </p>
 
