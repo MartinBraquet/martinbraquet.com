@@ -8,7 +8,7 @@ import {C} from 'web/lib/colors'
 
 type Category = 'All' | 'ML / AI' | 'Web App' | 'Research' | 'Hardware'
 type SortKey = 'recent' | 'important'
-type BadgeKind = 'paper' | 'live' | 'extension' | 'thesis' | 'project'
+type BadgeKind = 'paper' | 'live' | 'thesis' | 'project'
 
 interface Project {
   id?: string
@@ -42,8 +42,9 @@ export const PROJECTS: Project[] = [
     badge: 'project',
     context: 'Clinical Trial · Maya Care and Grow · Agartala',
     description:
-      'Bayesian adaptive N-of-1 randomized crossover trial identifying the optimal pre-session warm-up (Stimulating, Calming, Child-Led, or None) for each child with autism. Hierarchical Bayesian model with adaptive stopping rules; 87% resolution rate by 32 sessions across 2,000 Monte Carlo simulations.',
+      'Bayesian adaptive N-of-1 randomized crossover trial identifying the optimal pre-session warm-up (Stimulating, Calming, Child-Led, or None) for each child with autism. Hierarchical Bayesian model with adaptive stopping rules; 87% resolution rate by 32 sessions.',
     tech: ['R', 'Stan', 'brms'],
+    // stat: '30% engagement increase',
     media: 'https://ez8ozeuiadnifqq8.public.blob.vercel-storage.com/peer-learning-riki.jpeg',
     links: {
       github: 'https://github.com/MartinBraquet/rct-autism',
@@ -79,10 +80,10 @@ export const PROJECTS: Project[] = [
       'AlphaZero variant using MCTS improved by a policy-value CNN trained purely by self-play. Outperforms all other available algorithms and average human players. Includes Elo tracking, experience replay, and cosine-annealed learning rate.',
     tech: ['Python', 'PyTorch'],
     stat: 'Outperforms Humans',
-    media: 'https://martinbraquet.com/wp-content/uploads/benchmark-scaled.png',
+    media: 'https://ez8ozeuiadnifqq8.public.blob.vercel-storage.com/squadro-spel-gigamic.png',
     links: {
       github: 'https://github.com/MartinBraquet/squadro',
-      live: 'https://dirdam.github.io/squadro.html',
+      live: '/projects/squadro',
     },
   },
   {
@@ -91,7 +92,7 @@ export const PROJECTS: Project[] = [
     year: 2024,
     importance: 1,
     category: 'Web App',
-    badge: 'extension',
+    badge: 'live',
     context: 'Firefox Extension',
     description:
       'Firefox add-on that removes login popups and access banners from social media and news sites, letting you read content without an account.',
@@ -136,7 +137,7 @@ export const PROJECTS: Project[] = [
     year: 2023,
     importance: 2,
     category: 'Web App',
-    badge: 'extension',
+    badge: 'live',
     context: 'Firefox Extension',
     description:
       'Firefox add-on that accelerates and skips YouTube ads in under two seconds. Fetches live statistics from the Mozilla API.',
@@ -235,7 +236,7 @@ export const PROJECTS: Project[] = [
     badge: 'paper',
     context: 'Graduate Research · UT Austin',
     description:
-      'Greedy Coalition Auction Algorithm (GCAA) assigning hundreds of drones to thousands of tasks in real time — applications in aerial firefighting, ride-sharing, and warehouse robotics. Dramatically outperforms brute force.',
+      'Greedy Coalition Auction Algorithm (GCAA) assigning hundreds of drones to thousands of tasks in real time — applications in aerial firefighting, ride-sharing, and warehouse robotics. One task assigment per auction phase; faster than traditional auction algorithms.',
     tech: ['MATLAB', 'Python'],
     media: 'https://martinbraquet.com/wp-content/uploads/Dynamic-Task-Agent-Allocation.gif',
     stat: '70+ citations',
@@ -320,7 +321,7 @@ function Badge({kind, children}: {kind: BadgeKind; children: React.ReactNode}) {
   const map: Record<BadgeKind, {bg: string; color: string; border?: string}> = {
     paper: {bg: C.redA10, color: C.red},
     live: {bg: 'rgb(29 158 117 / 0.10)', color: 'rgb(16 105 79)'},
-    extension: {bg: C.redA07, color: C.redMid, border: `1px solid ${C.redA15}`},
+    // extension: {bg: C.redA07, color: C.redMid, border: `1px solid ${C.redA15}`},
     thesis: {bg: C.inkA07, color: C.textSec},
     project: {bg: C.inkA04, color: C.textTert},
   }
@@ -349,7 +350,7 @@ function Badge({kind, children}: {kind: BadgeKind; children: React.ReactNode}) {
 const BADGE_LABELS: Record<BadgeKind, string> = {
   paper: 'Published Paper',
   live: 'Live Product',
-  extension: 'Firefox Extension',
+  // extension: 'Firefox Extension',
   thesis: "Master's Thesis",
   project: 'Project',
 }
@@ -640,7 +641,7 @@ function ProjectCard({p, statOverride}: {p: Project; statOverride?: string | nul
           justifyContent: 'space-between',
           alignItems: 'flex-start',
           gap: '0.5rem',
-          marginBottom: '0.75rem',
+          // marginBottom: '0.5rem',
         }}
       >
         <div style={{display: 'flex', gap: '0.4rem', flexWrap: 'wrap', flex: 1}}>
@@ -763,7 +764,7 @@ function ProjectCard({p, statOverride}: {p: Project; statOverride?: string | nul
         {p.links.live && (
           <CardLink href={p.links.live} primary>
             <ExternalIcon />
-            {p.badge === 'extension' ? 'Install' : 'Open'}
+            {'Visit'}
           </CardLink>
         )}
         {p.links.article && (
@@ -968,7 +969,7 @@ export default function ProjectsPage() {
   }, [])
 
   const published = PROJECTS.filter((p) => p.badge === 'paper').length
-  const live = PROJECTS.filter((p) => p.badge === 'live' || p.badge === 'extension').length
+  const live = PROJECTS.filter((p) => p.badge === 'live').length
   const years = Math.max(...PROJECTS.map((p) => p.year)) - Math.min(...PROJECTS.map((p) => p.year))
 
   const hasActiveFilter = category !== 'All' || search !== ''
