@@ -612,6 +612,7 @@ function ProjectCard({p, statOverride}: {p: Project; statOverride?: string | nul
         padding: '1.4rem 1.5rem',
         display: 'flex',
         flexDirection: 'column',
+        height: '100%', // 1. CRITICAL: Ensures card fills the grid height
         transition: 'border-color 0.2s, box-shadow 0.2s, transform 0.2s',
         transform: hovered ? 'translateY(-2px)' : 'none',
         boxShadow: hovered ? `0 10px 30px ${C.inkA07}` : 'none',
@@ -724,7 +725,7 @@ function ProjectCard({p, statOverride}: {p: Project; statOverride?: string | nul
           color: C.textSec,
           lineHeight: 1.65,
           marginBottom: '0.75rem',
-          flex: 1,
+          // flex: 1 removed from here to prevent text stretching
         }}
       >
         {p.description}
@@ -736,6 +737,9 @@ function ProjectCard({p, statOverride}: {p: Project; statOverride?: string | nul
           <StatBubble>{statOverride ?? p.stat}</StatBubble>
         </div>
       )}
+
+      {/* 2. THE SPACER: This pushes everything below it to the bottom */}
+      <div style={{flex: 1}} />
 
       {/* tech tags */}
       <div style={{display: 'flex', gap: '0.4rem', flexWrap: 'wrap', marginBottom: '0.9rem'}}>
@@ -753,7 +757,7 @@ function ProjectCard({p, statOverride}: {p: Project; statOverride?: string | nul
           flexWrap: 'wrap',
           paddingTop: '0.85rem',
           borderTop: `1px solid ${C.border}`,
-          marginTop: 'auto',
+          // marginTop: 'auto' is no longer strictly needed but good for safety
         }}
       >
         {p.links.live && (
