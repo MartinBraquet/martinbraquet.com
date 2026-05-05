@@ -1,5 +1,6 @@
 import {useEffect, useRef, useState} from 'react'
 import {PageBase} from 'web/components/page-base'
+import {C} from 'web/lib/colors'
 
 // ── Styles ─────────────────────────────────────────────────────────────────────
 
@@ -19,15 +20,6 @@ const styles = {
     position: 'relative' as const,
     overflow: 'hidden',
     borderBottom: '1px solid rgb(var(--color-canvas-100))',
-  },
-  heroBg: {
-    position: 'absolute' as const,
-    inset: 0,
-    pointerEvents: 'none' as const,
-    background: `
-      radial-gradient(ellipse 45% 70% at 100% 50%, rgb(var(--color-primary-800) / 0.06) 0%, transparent 60%),
-      radial-gradient(ellipse 30% 40% at 0% 80%, rgb(196 154 114 / 0.08) 0%, transparent 55%)
-    `,
   },
   heroInner: {maxWidth: '1100px', margin: '0 auto', position: 'relative' as const, zIndex: 1},
   heroEyebrow: {
@@ -635,7 +627,31 @@ interface HeroProps {
 function Hero({title, subtitle, eyebrow, accent}: HeroProps) {
   return (
     <header style={styles.hero}>
-      <div style={styles.heroBg} />
+      <div
+        style={{
+          position: 'absolute',
+          inset: 0,
+          pointerEvents: 'none',
+          background: `radial-gradient(ellipse 50% 65% at 100% 40%, ${C.redA07} 0%, transparent 60%), radial-gradient(ellipse 30% 40% at 0% 85%, rgba(196,154,114,0.08) 0%, transparent 55%)`,
+        }}
+      />
+      <div
+        style={{
+          position: 'absolute',
+          right: '3%',
+          top: '50%',
+          transform: 'translateY(-50%)',
+          fontFamily: "'Playfair Display', serif",
+          fontSize: 'clamp(10rem,18vw,22rem)',
+          fontWeight: 700,
+          color: C.redA045,
+          lineHeight: 1,
+          userSelect: 'none',
+          pointerEvents: 'none',
+        }}
+      >
+        C
+      </div>
       <div style={styles.heroInner}>
         <div style={styles.heroEyebrow}>
           <div style={styles.heroDot} />
