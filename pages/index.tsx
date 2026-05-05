@@ -1,6 +1,7 @@
 import {BookOpen, FileText, GraduationCap, Handshake} from 'lucide-react'
 import {useEffect, useRef} from 'react'
 import {PageBase} from 'web/components/page-base'
+import {SEO} from 'web/components/SEO'
 import {SOCIAL} from 'web/components/socials'
 import {C} from 'web/lib/colors'
 import {EMAIL} from 'web/lib/constants'
@@ -130,6 +131,7 @@ export default function Home() {
 
   return (
     <PageBase>
+      <SEO description={'Personal Website'} />
       <div
         style={{
           fontFamily: "'DM Sans', sans-serif",

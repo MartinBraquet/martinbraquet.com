@@ -2,7 +2,7 @@ import Head from 'next/head'
 import {DEPLOYED_WEB_URL} from 'web/lib/constants'
 
 export function SEO<P extends Record<string, string | undefined>>(props: {
-  title: string
+  title?: string
   description: string
   url?: string
   ogProps?: {props: P; endpoint: string}
@@ -14,7 +14,7 @@ export function SEO<P extends Record<string, string | undefined>>(props: {
 
   const absUrl = DEPLOYED_WEB_URL + url
 
-  const fullTitle = `${title}`
+  const fullTitle = title ? `${title} | Martin Braquet` : 'Martin Braquet'
 
   return (
     <Head>

@@ -1,5 +1,6 @@
 import {useEffect, useRef, useState} from 'react'
 import {PageBase} from 'web/components/page-base'
+import {SEO} from 'web/components/SEO'
 import {C} from 'web/lib/colors'
 
 // ── Styles ─────────────────────────────────────────────────────────────────────
@@ -859,13 +860,16 @@ export default function CoursesUniversity() {
     {number: '7', label: 'Years'},
   ]
 
+  const description = `${TOTAL_COURSES} courses across three degrees spanning electrical, mechanical, and aerospace engineering — from UCLouvain to UT Austin.`
+
   return (
     <PageBase>
+      <SEO title={'University Courses'} description={description} />
       <div style={styles.page}>
         {/* ── HERO ── */}
         <Hero
           title="Courses followed"
-          subtitle={`${TOTAL_COURSES} courses across three degrees spanning electrical, mechanical, and aerospace engineering — from UCLouvain to UT Austin.`}
+          subtitle={description}
           eyebrow="Academia"
           accent="at university"
         />
