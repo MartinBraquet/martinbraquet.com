@@ -9,6 +9,7 @@ import BoxCard from '../components/ui/BoxCard'
 import Button from '../components/ui/Button'
 import PublicationCard from '../components/ui/PublicationCard'
 import SocialButton from '../components/ui/SocialButton'
+import {PROJECTS} from './projects'
 
 // ── Data ──────────────────────────────────────────────────────────────────────
 
@@ -629,6 +630,50 @@ export default function Home() {
                   </div>
                 </PublicationCard>
               ))}
+            </div>
+          </div>
+        </section>
+
+        <div className="divider" />
+
+        {/* ── PROJECTS CTA ── */}
+        <section style={{padding: '70px 2.5rem'}}>
+          <div style={{maxWidth: 1100, margin: '0 auto'}}>
+            <div
+              {...R()}
+              style={{
+                ...rs,
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'space-between',
+                gap: '2rem',
+                flexWrap: 'wrap',
+                background: C.bgAlt,
+                border: `1px solid ${C.border}`,
+                borderRadius: 20,
+                padding: '2.5rem 3rem',
+              }}
+            >
+              <div>
+                <span className="section-label">Portfolio</span>
+                <h2
+                  style={{
+                    fontFamily: "'Playfair Display', serif",
+                    fontSize: 'clamp(1.5rem, 3vw, 2.2rem)',
+                    fontWeight: 700,
+                    color: C.text,
+                    lineHeight: 1.2,
+                    marginBottom: '0.6rem',
+                  }}
+                >
+                  Projects & Research
+                </h2>
+                <p style={{fontSize: '0.9rem', color: C.textSec, lineHeight: 1.75, maxWidth: 480}}>
+                  {PROJECTS.length} projects spanning published papers, live products, ML systems,
+                  and hardware builds — browsable, filterable, and sortable.
+                </p>
+              </div>
+              <Button href="/projects">View All Projects →</Button>
             </div>
           </div>
         </section>

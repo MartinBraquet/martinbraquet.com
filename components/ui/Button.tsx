@@ -1,3 +1,4 @@
+import {CustomLink} from 'web/components/links'
 import {C} from 'web/lib/colors'
 
 interface ButtonProps {
@@ -15,54 +16,53 @@ export default function Button({
   onClick,
   variant = 'primary',
   className = '',
-  style,
 }: ButtonProps) {
-  const baseStyles = {
-    display: 'inline-block',
-    cursor: 'pointer',
-    textDecoration: 'none',
-    fontSize: '0.85rem',
-    fontWeight: 500,
-    letterSpacing: '0.04em',
-    transition: 'all 0.2s',
-  }
+  // const baseStyles = {
+  //   display: 'inline-block',
+  //   cursor: 'pointer',
+  //   textDecoration: 'none',
+  //   fontSize: '0.85rem',
+  //   fontWeight: 500,
+  //   letterSpacing: '0.04em',
+  //   transition: 'all 0.2s',
+  // }
+  //
+  // const primaryStyles = {
+  //   background: C.red,
+  //   color: C.bg,
+  //   border: 'none',
+  //   borderRadius: '100px',
+  //   padding: '14px 30px',
+  // }
+  //
+  // const outlineStyles = {
+  //   background: 'transparent',
+  //   color: C.text,
+  //   border: '1.5px solid ' + C.borderMd,
+  //   borderRadius: '100px',
+  //   padding: '13px 29px',
+  // }
 
-  const primaryStyles = {
-    background: C.red,
-    color: C.bg,
-    border: 'none',
-    borderRadius: '100px',
-    padding: '14px 30px',
-  }
+  // const styles = {
+  //   ...baseStyles,
+  //   ...(variant === 'primary' ? primaryStyles : outlineStyles),
+  //   ...style,
+  // }
+  //
+  // const hoverStyles =
+  //   variant === 'primary'
+  //     ? {
+  //         background: C.redDark,
+  //         transform: 'translateY(-2px)',
+  //         boxShadow: `0 8px 24px ${C.redA25}`,
+  //       }
+  //     : {
+  //         borderColor: C.text,
+  //         background: C.inkA04,
+  //       }
 
-  const outlineStyles = {
-    background: 'transparent',
-    color: C.text,
-    border: '1.5px solid ' + C.borderMd,
-    borderRadius: '100px',
-    padding: '13px 29px',
-  }
-
-  const styles = {
-    ...baseStyles,
-    ...(variant === 'primary' ? primaryStyles : outlineStyles),
-    ...style,
-  }
-
-  const hoverStyles =
-    variant === 'primary'
-      ? {
-          background: C.redDark,
-          transform: 'translateY(-2px)',
-          boxShadow: `0 8px 24px ${C.redA25}`,
-        }
-      : {
-          borderColor: C.text,
-          background: C.inkA04,
-        }
-
-  const Component = href ? 'a' : 'button'
-  const props = href ? {href, target: '_blank', rel: 'noopener noreferrer'} : {onClick}
+  const Component = href ? CustomLink : 'button'
+  const props = href ? {href} : {onClick}
 
   return (
     <>
