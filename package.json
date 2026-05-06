@@ -37,6 +37,7 @@
     "@tiptap/react": "2.10.4",
     "@tiptap/starter-kit": "2.10.4",
     "@tiptap/suggestion": "2.10.4",
+    "@vercel/analytics": "2.0.1",
     "@vercel/og": "0.5.20",
     "clsx": "2.1.1",
     "compressorjs": "1.1.1",

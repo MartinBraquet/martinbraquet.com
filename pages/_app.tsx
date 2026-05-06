@@ -1,6 +1,7 @@
 import '../styles/globals.css'
 import 'web/lib/dayjs'
 
+import {Analytics} from '@vercel/analytics/next'
 import clsx from 'clsx'
 import type {AppProps} from 'next/app'
 import Head from 'next/head'
@@ -92,6 +93,7 @@ function MyApp(props: AppProps<PageProps>) {
         <div id="headlessui-portal-root">
           <div />
         </div>
+        <Analytics />
       </div>
     </>
   )
