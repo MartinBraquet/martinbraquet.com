@@ -38,7 +38,7 @@ export default function Navigation() {
       `}</style>
       <nav
         style={{
-          position: 'sticky',
+          // position: 'sticky',
           top: 0,
           zIndex: 100,
           background: C.bgA80,
