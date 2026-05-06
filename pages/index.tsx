@@ -129,9 +129,12 @@ export default function Home() {
     }
   }
 
+  const description =
+    "What's here reflects pieces of me, but not the full constellation. Explore as you like; fill in the gaps at your own risk."
+
   return (
     <PageBase>
-      <SEO description={'Personal Website'} />
+      <SEO description={description} />
       <div
         style={{
           fontFamily: "'DM Sans', sans-serif",
@@ -257,8 +260,7 @@ export default function Home() {
                   animation: 'fadeUp 0.55s 0.16s ease both',
                 }}
               >
-                "What's here reflects pieces of me, but not the full constellation. Explore as you
-                like; fill in the gaps at your own risk."
+                "{description}"
               </p>
 
               <SocialButtons withEmail />
