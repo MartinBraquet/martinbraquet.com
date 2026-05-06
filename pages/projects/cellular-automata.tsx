@@ -211,7 +211,7 @@ export default function CellularAutomataPage() {
               }}
             >
               <ActionBtn href="https://github.com/MartinBraquet/cellular-automata" primary>
-                <GithubIcon /> View on GitHub
+                <GithubIcon /> View Code
               </ActionBtn>
             </div>
           </div>

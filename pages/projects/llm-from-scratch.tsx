@@ -334,7 +334,7 @@ export default function LLMPage() {
               }}
             >
               <ActionBtn href="https://github.com/MartinBraquet/llm" primary>
-                <GithubIcon /> GitHub
+                <GithubIcon /> View Code
               </ActionBtn>
             </div>
           </div>

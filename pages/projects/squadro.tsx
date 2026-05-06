@@ -473,7 +473,7 @@ export default function SquadroPage() {
                 <PlayIcon /> Official Rules
               </ActionBtn>
               <ActionBtn href="https://github.com/MartinBraquet/squadro">
-                <GithubIcon /> GitHub
+                <GithubIcon /> Code
               </ActionBtn>
             </div>
           </div>

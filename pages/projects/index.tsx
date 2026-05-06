@@ -1,3 +1,4 @@
+import {keyBy} from 'lodash'
 import {useEffect, useMemo, useRef, useState} from 'react'
 import {
   Badge,
@@ -36,10 +37,11 @@ interface Project {
   media?: string // image / gif URL shown in card
   links: {
     github?: string
-    pdf?: string
-    live?: string
     article?: string
+    live?: string
     report?: string
+    paper?: string
+    thesis?: string
   }
 }
 
@@ -54,7 +56,7 @@ export const PROJECTS: Project[] = [
     badge: 'project',
     context: 'Clinical Trial · Maya Care and Grow · Agartala',
     description:
-      'Bayesian adaptive N-of-1 randomized crossover trial identifying the optimal pre-session warm-up (Stimulating, Calming, Child-Led, or None) for each child with autism. Hierarchical Bayesian model with adaptive stopping rules; 87% resolution rate by 32 sessions.',
+      'Hierarchical Bayesian adaptive N-of-1 randomized crossover trial identifying the optimal pre-session warm-up (Stimulating, Calming, Child-Led, or None) for each child with autism.',
     tech: ['R', 'Stan', 'brms'],
     // stat: '30% engagement increase',
     media: 'https://ez8ozeuiadnifqq8.public.blob.vercel-storage.com/peer-learning-riki.jpeg',
@@ -74,7 +76,7 @@ export const PROJECTS: Project[] = [
     description:
       'Free, open-source platform to help people form deep connections — platonic, romantic, or collaborative. Keyword search, transparent database, no ads, no hidden algorithms.',
     tech: ['TypeScript', 'React', 'Next.js'],
-    stat: '600+ members',
+    stat: '600+ members', // fallback if dynamic fetch fails
     media: 'https://ewdq9sshhf9cseit.public.blob.vercel-storage.com/profiles-page-with-filters.png',
     links: {
       live: 'https://www.compassmeet.com/',
@@ -89,7 +91,7 @@ export const PROJECTS: Project[] = [
     badge: 'project',
     context: 'Personal Project',
     description:
-      'AlphaZero variant using MCTS improved by a policy-value CNN trained purely by self-play. Outperforms all other available algorithms and average human players. Includes Elo tracking, experience replay, and cosine-annealed learning rate.',
+      'AlphaZero variant using MCTS improved by a policy-value CNN trained purely by self-play. Includes Elo tracking, experience replay, and cosine-annealed learning rate.',
     tech: ['Python', 'PyTorch'],
     stat: 'Outperforms Humans',
     media: 'https://ewdq9sshhf9cseit.public.blob.vercel-storage.com/squadro-spel-gigamic.png',
@@ -110,7 +112,7 @@ export const PROJECTS: Project[] = [
       'Firefox add-on that removes login popups and access banners from social media and news sites (Facebook, LinkedIn, Instagram), letting you read content without an account.',
     tech: ['JavaScript'],
     media: 'https://ewdq9sshhf9cseit.public.blob.vercel-storage.com/no-login.png',
-    stat: '1600+ users',
+    stat: '1600+ users', // fallback if dynamic fetch fails
     links: {
       github: 'https://github.com/MartinBraquet/no-login',
       live: 'https://addons.mozilla.org/addon/no-login',
@@ -158,7 +160,7 @@ export const PROJECTS: Project[] = [
     description:
       'Firefox add-on that accelerates and skips YouTube ads in under two seconds. Prioritizes user security by operating entirely within the local browser environment without collecting data or storing external cookies.',
     tech: ['JavaScript'],
-    stat: '6500+ users',
+    stat: '6500+ users', // fallback if dynamic fetch fails
     media: 'https://ewdq9sshhf9cseit.public.blob.vercel-storage.com/youtube-adblock.png',
     links: {
       github: 'https://github.com/MartinBraquet/youtube-adblock',
@@ -190,11 +192,11 @@ export const PROJECTS: Project[] = [
     badge: 'project',
     context: 'Graduate Research · UT Austin · Army Research Lab',
     description:
-      'Dijkstra-based path planning over military terrain meshes with multi-objective cost functions: 3D distance, energy, and valence (favourable zones). Coarse-to-fine acceleration cuts compute time significantly.',
+      'Dijkstra-based path planning over military terrain — obstacles, elevation, and valence maps. Runs a fast global route over a downsampled mesh, then refines only the next executed segment at full resolution, cutting compute time significantly without sacrificing local path quality.',
     tech: ['Python'],
     media: 'https://ewdq9sshhf9cseit.public.blob.vercel-storage.com/arl-motion-planning.png',
     links: {
-      live: '/multi-agent-motion-planning', // TODO
+      live: '/projects/multi-agent-motion-planning',
     },
   },
   {
@@ -207,9 +209,10 @@ export const PROJECTS: Project[] = [
     description:
       'Two algorithms for discrete-time linear covariance steering dynamic games. Iterative best response and LQG reformulation via Riccati equations, evaluated on convergence and solution quality.',
     tech: ['Python'],
+    media: 'https://martinbraquet.com/wp-content/uploads/ut-ase389-stoch-games.gif',
     links: {
-      pdf: 'https://martinbraquet.com/wp-content/uploads/Game_Theory_Class_Project.pdf',
-      article: 'https://sites.google.com/view/ut-ase389-stoch-games',
+      report: 'https://martinbraquet.com/wp-content/uploads/Game_Theory_Class_Project.pdf',
+      live: 'https://sites.google.com/view/ut-ase389-stoch-games',
       github: 'https://github.com/MartinBraquet/mod-multi-agent-systems-project',
     },
   },
@@ -225,11 +228,14 @@ export const PROJECTS: Project[] = [
     tech: ['Python', 'PyTorch'],
     media: 'https://martinbraquet.com/wp-content/uploads/fetch-pick-and-place-openAI-final.gif',
     links: {
-      pdf: 'https://martinbraquet.com/wp-content/uploads/CS391R___Robot_Learning__Final_report__Braquet___Patrick.pdf',
+      live: '/projects/robot-learning',
+      report:
+        'https://martinbraquet.com/wp-content/uploads/CS391R___Robot_Learning__Final_report__Braquet___Patrick.pdf',
       github: 'https://github.com/MartinBraquet/Robot-Learning-UT',
     },
   },
   {
+    id: 'thzpnRoAAAAJ:d1gkVwhDpl0C',
     title: 'Collision Avoidance for Moving Obstacles',
     year: 2022,
     importance: 2,
@@ -243,12 +249,13 @@ export const PROJECTS: Project[] = [
       'https://raw.githubusercontent.com/MartinBraquet/vector-field-obstacle-avoidance/refs/heads/main/videos/7%20moving_multiple_ellipsoids.gif',
     stat: '15+ citations',
     links: {
-      pdf: 'https://martinbraquet.com/wp-content/uploads/braquet_2022.pdf',
+      paper: 'https://martinbraquet.com/wp-content/uploads/braquet_2022.pdf',
       article: 'https://www.sciencedirect.com/science/article/pii/S2405896322028890',
       github: 'https://github.com/MartinBraquet/vector-field-obstacle-avoidance',
     },
   },
   {
+    id: 'thzpnRoAAAAJ:u-x6o8ySG0sC',
     title: 'Greedy Decentralized Auction-based Task Allocation',
     year: 2021,
     importance: 3,
@@ -256,12 +263,13 @@ export const PROJECTS: Project[] = [
     badge: 'paper',
     context: 'Graduate Research · UT Austin',
     description:
-      'Greedy Coalition Auction Algorithm (GCAA) assigning hundreds of drones to thousands of tasks in real time — applications in aerial firefighting, ride-sharing, and warehouse robotics. One task assigment per auction phase; faster than traditional auction algorithms.',
+      'Greedy Coalition Auction Algorithm (GCAA) assigning hundreds of agents to thousands of tasks in real time — applications in aerial firefighting, ride-sharing, and warehouse robotics. One task assigment per auction phase; faster than traditional auction algorithms.',
     tech: ['MATLAB', 'Python'],
     media: 'https://martinbraquet.com/wp-content/uploads/Dynamic-Task-Agent-Allocation.gif',
     stat: '70+ citations',
     links: {
-      pdf: 'https://martinbraquet.com/wp-content/uploads/Greedy-Decentralized-Auction-based-Task-Allocation-for-Multi-Age_2021_IFAC-P.pdf',
+      paper:
+        'https://martinbraquet.com/wp-content/uploads/Greedy-Decentralized-Auction-based-Task-Allocation-for-Multi-Age_2021_IFAC-P.pdf',
       article: 'https://www.sciencedirect.com/science/article/pii/S240589632102293X',
       github: 'https://github.com/MartinBraquet/task-allocation-auctions',
     },
@@ -277,10 +285,11 @@ export const PROJECTS: Project[] = [
       'Ultra-low-power audio IoT sensor harvesting solar energy via supercapacitor. Runs a KNN classifier on-device to discriminate four Belgian bird species at 94% precision. 15+ year lifetime, LoRaWAN communication.',
     tech: ['C', 'Embedded', 'LoRaWAN'],
     stat: '94% accuracy',
-    media: 'https://martinbraquet.com/wp-content/uploads/sensor_Bol_no_background.png',
+    media: 'https://martinbraquet.com/wp-content/uploads/real_PCB_with_MCU.png',
     links: {
-      pdf: 'https://martinbraquet.com/wp-content/uploads/EPL-master-thesis-Martin-Braquet.pdf',
-      report: 'https://martinbraquet.com/wp-content/uploads/Presentation-master-thesis.pdf',
+      live: '/projects/smart-sensor',
+      thesis: 'https://martinbraquet.com/wp-content/uploads/EPL-master-thesis-Martin-Braquet.pdf',
+      // report: 'https://martinbraquet.com/wp-content/uploads/Presentation-master-thesis.pdf',
       github: 'https://github.com/MartinBraquet/master-thesis-UCLouvain',
     },
   },
@@ -294,15 +303,17 @@ export const PROJECTS: Project[] = [
     description:
       'PM2.5 concentration prediction using regression models on meteorological data. Covers feature selection (Mutual Information), extraction (PCA), error estimation (Bootstrap 632), and Neural Network / KNN / Lasso / tree models.',
     tech: ['Python', 'PyTorch', 'Sklearn'],
+    media: 'https://ewdq9sshhf9cseit.public.blob.vercel-storage.com/air-quality-prediction.png',
     links: {
-      pdf: 'https://martinbraquet.com/wp-content/uploads/LELEC2870-Project_groupAM-1.pdf',
+      live: '/projects/air-quality-prediction',
+      report: 'https://martinbraquet.com/wp-content/uploads/LELEC2870-Project_groupAM-1.pdf',
       github: 'https://github.com/MartinBraquet/machine-learning-ELEC2870',
     },
   },
   {
     title: 'Building of Astrobee',
     year: 2019,
-    importance: 1,
+    importance: 2,
     category: 'Hardware',
     badge: 'project',
     context: 'Space Systems Laboratory · MIT',
@@ -311,6 +322,7 @@ export const PROJECTS: Project[] = [
     tech: ['Electronics', 'PCB Design'],
     media: 'https://martinbraquet.com/wp-content/uploads/2019/09/dA9jU8cXH9pB5edo4ZJnEC.jpg',
     links: {
+      live: '/projects/astrobee',
       report: 'https://martinbraquet.com/wp-content/uploads/work_report_non_confidential.pdf',
     },
   },
@@ -327,7 +339,8 @@ export const PROJECTS: Project[] = [
     stat: '2nd place Belgium',
     media: 'https://martinbraquet.com/wp-content/uploads/2020/03/JGO_8611-scaled.jpg',
     links: {
-      pdf: 'https://martinbraquet.com/wp-content/uploads/LELME2002___Final_report.pdf',
+      live: '/projects/eurobot',
+      report: 'https://martinbraquet.com/wp-content/uploads/LELME2002___Final_report.pdf',
       github: 'https://github.com/MartinBraquet/ELME2002',
     },
   },
@@ -483,7 +496,12 @@ function ProjectCard({p, statOverride}: {p: Project; statOverride?: string | nul
   const [hovered, setHovered] = useState(false)
   const accentColor = p.importance === 3 ? C.red : p.importance === 2 ? C.borderMd : C.border
   const primaryLink =
-    p.links.live ?? p.links.article ?? p.links.report ?? p.links.pdf ?? p.links.github
+    p.links.live ??
+    p.links.article ??
+    p.links.report ??
+    p.links.paper ??
+    p.links.thesis ??
+    p.links.github
 
   return (
     <div
@@ -615,13 +633,6 @@ function ProjectCard({p, statOverride}: {p: Project; statOverride?: string | nul
         {p.description}
       </p>
 
-      {/* stat */}
-      {(statOverride ?? p.stat) && (
-        <div style={{marginBottom: '0.75rem'}}>
-          <StatBubble>{statOverride ?? p.stat}</StatBubble>
-        </div>
-      )}
-
       {/* 2. THE SPACER: This pushes everything below it to the bottom */}
       <div style={{flex: 1}} />
 
@@ -630,6 +641,13 @@ function ProjectCard({p, statOverride}: {p: Project; statOverride?: string | nul
         {p.tech.map((t) => (
           <TechTag key={t}>{t}</TechTag>
         ))}
+        <div style={{flex: 1}} />
+        {/* stat */}
+        {(statOverride ?? p.stat) && (
+          <div>
+            <StatBubble>{statOverride ?? p.stat}</StatBubble>
+          </div>
+        )}
       </div>
 
       {/* links footer */}
@@ -656,16 +674,22 @@ function ProjectCard({p, statOverride}: {p: Project; statOverride?: string | nul
             Article
           </CardLink>
         )}
-        {p.links.pdf && (
-          <CardLink href={p.links.pdf}>
-            <DownloadIcon />
-            PDF
-          </CardLink>
-        )}
         {p.links.report && (
           <CardLink href={p.links.report}>
             <DownloadIcon />
             Report
+          </CardLink>
+        )}
+        {p.links.paper && (
+          <CardLink href={p.links.paper}>
+            <DownloadIcon />
+            Paper
+          </CardLink>
+        )}
+        {p.links.thesis && (
+          <CardLink href={p.links.thesis}>
+            <DownloadIcon />
+            Thesis
           </CardLink>
         )}
         {p.links.github && (
@@ -781,11 +805,39 @@ function Reveal({children, delay = 0}: {children: React.ReactNode; delay?: numbe
   return <div ref={ref}>{children}</div>
 }
 
-// ── Page ──────────────────────────────────────────────────────────────────────
+export async function getStaticProps() {
+  try {
+    const res = await fetch(
+      `https://serpapi.com/search.json?engine=google_scholar_author&author_id=thzpnRoAAAAJ&api_key=${process.env.SERPAPI_KEY}`,
+    )
+    const data = await res.json()
 
-export default function ProjectsPage() {
+    for (const a of data.articles) {
+      a.citationStat = `${a?.cited_by?.value} citations`
+    }
+
+    return {
+      props: {
+        // googleScholarData: data,
+        googleScholarArticles: keyBy(data.articles, 'citation_id'),
+      },
+      // Optional: Regenerate the page once every 24 hours if someone visits
+      revalidate: 86400,
+    }
+  } catch (e) {
+    console.error('Error fetching SerpAPI data:', e)
+    return {props: {}} // Fallback to your current stat
+  }
+}
+
+// ── Page ──────────────────────────────────────────────────────────────────────
+interface Props {
+  googleScholarArticles?: Record<string, any>
+}
+
+export default function ProjectPage({googleScholarArticles}: Props) {
   const [category, setCategory] = usePersistentInMemoryState<Category>('All', 'projects-category')
-  const [sort, setSort] = usePersistentInMemoryState<SortKey>('recent', 'projects-sort')
+  const [sort, setSort] = usePersistentInMemoryState<SortKey>('important', 'projects-sort')
   const [search, setSearch] = useState('')
   const isMobile = useIsMobile()
   const [compassStat, setCompassStat] = useState<string | null>(null)
@@ -1114,7 +1166,10 @@ export default function ProjectsPage() {
                     <ProjectCard
                       p={p}
                       statOverride={
-                        p.id === 'compass' ? compassStat : p.id ? addonStats[p.id] : undefined
+                        p.id === 'compass'
+                          ? compassStat
+                          : (addonStats?.[p.id ?? ''] ??
+                            googleScholarArticles?.[p.id ?? '']?.citationStat)
                       }
                     />
                   </Reveal>

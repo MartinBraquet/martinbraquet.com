@@ -233,11 +233,13 @@ export function Section({
   title,
   children,
   noBorder,
+  intro,
 }: {
   label: string
   title: string
   children: React.ReactNode
   noBorder?: boolean
+  intro?: string
 }) {
   return (
     <section
@@ -248,7 +250,7 @@ export function Section({
         margin: '0 auto',
       }}
     >
-      <div style={{marginBottom: '2rem'}}>
+      <div style={{marginBottom: intro ? '1rem' : '2rem'}}>
         <span
           style={{
             fontSize: '0.65rem',
@@ -274,6 +276,19 @@ export function Section({
           {title}
         </h2>
       </div>
+      {intro && (
+        <p
+          style={{
+            fontSize: '0.88rem',
+            color: C.textSec,
+            lineHeight: 1.75,
+            maxWidth: 700,
+            marginBottom: '1.75rem',
+          }}
+        >
+          {intro}
+        </p>
+      )}
       {children}
     </section>
   )
@@ -330,6 +345,127 @@ export function CodeBlock({label, code, note}: {label: string; code: string; not
         <div style={{padding: '0.6rem 1rem', borderTop: `1px solid ${C.border}`}}>
           <span style={{fontSize: '0.7rem', color: C.textTert, fontStyle: 'italic'}}>{note}</span>
         </div>
+      )}
+    </div>
+  )
+}
+
+// ── Labelled image ────────────────────────────────────────────────────────────
+
+export function LabelledImg({
+  label,
+  src,
+  alt,
+  aspect = '4/3',
+}: {
+  label: string
+  src: string
+  alt: string
+  aspect?: string
+}) {
+  return (
+    <div>
+      <p
+        style={{
+          fontSize: '0.65rem',
+          fontWeight: 600,
+          letterSpacing: '0.1em',
+          textTransform: 'uppercase',
+          color: C.textTert,
+          marginBottom: '0.75rem',
+        }}
+      >
+        {label}
+      </p>
+      <div
+        style={{
+          borderRadius: 14,
+          overflow: 'hidden',
+          border: `1px solid ${C.border}`,
+          background: C.bgCard,
+        }}
+      >
+        <img
+          src={src}
+          alt={alt}
+          style={{width: '100%', display: 'block', objectFit: 'cover', aspectRatio: aspect}}
+        />
+      </div>
+    </div>
+  )
+}
+
+// ── Algorithm comparison card ─────────────────────────────────────────────────
+
+export function AlgoCard({
+  name,
+  label,
+  labelColor,
+  labelBg,
+  labelBorder,
+  desc,
+  detail,
+}: {
+  name: string
+  label: string
+  labelColor: string
+  labelBg: string
+  labelBorder: string
+  desc: string
+  detail?: string
+}) {
+  return (
+    <div
+      style={{
+        background: C.bgCard,
+        border: `1px solid ${C.border}`,
+        borderRadius: 14,
+        padding: '1.25rem 1.4rem',
+        display: 'flex',
+        flexDirection: 'column',
+        gap: '0.45rem',
+      }}
+    >
+      <div
+        style={{
+          display: 'flex',
+          justifyContent: 'space-between',
+          alignItems: 'flex-start',
+          gap: '0.5rem',
+        }}
+      >
+        <span style={{fontSize: '0.82rem', fontWeight: 600, color: C.text}}>{name}</span>
+        <span
+          style={{
+            fontSize: '0.6rem',
+            fontWeight: 600,
+            letterSpacing: '0.08em',
+            textTransform: 'uppercase',
+            padding: '0.2rem 0.55rem',
+            borderRadius: 100,
+            background: labelBg,
+            color: labelColor,
+            border: `1px solid ${labelBorder}`,
+            whiteSpace: 'nowrap',
+            flexShrink: 0,
+          }}
+        >
+          {label}
+        </span>
+      </div>
+      <p style={{fontSize: '0.78rem', color: C.textSec, lineHeight: 1.6, margin: 0}}>{desc}</p>
+      {detail && (
+        <p
+          style={{
+            fontSize: '0.73rem',
+            color: C.textTert,
+            lineHeight: 1.55,
+            fontStyle: 'italic',
+            margin: 0,
+          }}
+        >
+          {detail}
+        </p>
       )}
     </div>
   )
