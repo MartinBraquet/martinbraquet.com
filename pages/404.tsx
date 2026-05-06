@@ -12,7 +12,7 @@ export const NOT_FOUND_TEXTS = {
 export default function Custom404(props: {customText?: string}) {
   // console.log('props:', props)
   return (
-    <PageBase hideSidebar={true}>
+    <PageBase hideSidebar={true} className={'bg-canvas-25'}>
       <SEO title={'Not Found'} description={'Not Found'} url={`/404`} />
       <Custom404Content customText={props.customText} />
     </PageBase>
