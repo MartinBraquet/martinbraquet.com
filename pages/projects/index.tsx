@@ -862,12 +862,12 @@ export default function ProjectPage({googleScholarArticles}: Props) {
         .then((res) => res.json())
         .then((data) => {
           const users = data.average_daily_users
-          const rating = Number(data.ratings?.average).toFixed(1)
-          const ratingCount = data.ratings?.count
+          // const rating = Number(data.ratings?.average).toFixed(1)
+          // const ratingCount = data.ratings?.count
           if (typeof users === 'number') {
             setAddonStats((prev) => ({
               ...prev,
-              [slug]: `${Math.round(users / 1000)}k+ daily users · ${rating} ★ (${ratingCount})`,
+              [slug]: `${Math.round(users / 1000)}k+ daily users`,
             }))
           }
         })
