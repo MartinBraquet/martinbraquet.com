@@ -11,7 +11,7 @@ export default function PublicationCard({
   children,
   className = '',
   style,
-  R,
+  // R,
 }: PublicationCardProps) {
   return (
     <>
