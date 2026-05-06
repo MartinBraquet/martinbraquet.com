@@ -62,14 +62,9 @@ const styles = {
     animation: 'fadeUp 0.55s 0.16s ease both',
   },
 
-  // Stats bar
-  statsBar: {
-    display: 'flex',
-    background: 'rgb(var(--color-canvas-0))',
-    borderBottom: '1px solid rgb(var(--color-canvas-100))',
-  },
   stat: {
     flex: 1,
+    minWidth: '150px',
     padding: '1.25rem 2.5rem',
     borderRight: '1px solid rgb(var(--color-canvas-100))',
   },
@@ -695,7 +690,14 @@ interface StatsBarProps {
 
 function StatsBar({stats}: StatsBarProps) {
   return (
-    <div style={styles.statsBar}>
+    <div
+      style={{
+        display: 'flex',
+        flexWrap: 'wrap',
+        background: 'rgb(var(--color-canvas-0))',
+        borderBottom: '1px solid rgb(var(--color-canvas-100))',
+      }}
+    >
       {stats.map((stat, index) => (
         <Stat
           key={stat.label}
