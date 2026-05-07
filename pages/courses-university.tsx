@@ -2,7 +2,7 @@ import {useEffect, useRef, useState} from 'react'
 import {PageBase} from 'web/components/page-base'
 import {SEO} from 'web/components/SEO'
 import {C} from 'web/lib/colors'
-import {Course, Degree, DEGREES, Semester, TOTAL_COURSES} from 'web/lib/degrees'
+import {Course, Degree, DEGREES, Semester, TOTAL_COURSES} from 'web/lib/courses'
 
 // ── Reusable Components ───────────────────────────────────────────────────────
 
