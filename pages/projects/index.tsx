@@ -77,7 +77,8 @@ export const PROJECTS: Project[] = [
       'Free, open-source platform to help people form deep connections — platonic, romantic, or collaborative. Keyword search, transparent database, no ads, no hidden algorithms.',
     tech: ['TypeScript', 'React', 'Next.js'],
     stat: '600+ members', // fallback if dynamic fetch fails
-    media: 'https://ewdq9sshhf9cseit.public.blob.vercel-storage.com/profiles-page-with-filters.png',
+    media:
+      'https://ewdq9sshhf9cseit.public.blob.vercel-storage.com/projects/profiles-page-with-filters.png',
     links: {
       live: 'https://www.compassmeet.com/',
       github: 'https://github.com/CompassConnections/Compass',
@@ -94,7 +95,8 @@ export const PROJECTS: Project[] = [
       'AlphaZero variant using MCTS improved by a policy-value CNN trained purely by self-play. Includes Elo tracking, experience replay, and cosine-annealed learning rate.',
     tech: ['Python', 'PyTorch'],
     stat: 'Outperforms Humans',
-    media: 'https://ewdq9sshhf9cseit.public.blob.vercel-storage.com/squadro-spel-gigamic.png',
+    media:
+      'https://ewdq9sshhf9cseit.public.blob.vercel-storage.com/projects/squadro-spel-gigamic.png',
     links: {
       github: 'https://github.com/MartinBraquet/squadro',
       live: '/projects/squadro',
@@ -111,7 +113,7 @@ export const PROJECTS: Project[] = [
     description:
       'Firefox add-on that removes login popups and access banners from social media and news sites (Facebook, LinkedIn, Instagram), letting you read content without an account.',
     tech: ['JavaScript'],
-    media: 'https://ewdq9sshhf9cseit.public.blob.vercel-storage.com/no-login.png',
+    media: 'https://ewdq9sshhf9cseit.public.blob.vercel-storage.com/projects/no-login.png',
     stat: '1600+ users', // fallback if dynamic fetch fails
     links: {
       github: 'https://github.com/MartinBraquet/no-login',
@@ -129,7 +131,7 @@ export const PROJECTS: Project[] = [
       'Full transformer implementation including encoding, embedding, multi-head attention, and MLP layers. Trains an LLM of any size on arbitrary text, and fine-tunes GPT-2 on custom corpora for text generation.',
     tech: ['Python', 'PyTorch'],
     stat: 'Full Transformer Implementation',
-    media: 'https://ewdq9sshhf9cseit.public.blob.vercel-storage.com/llm-from-scratch.png',
+    media: 'https://ewdq9sshhf9cseit.public.blob.vercel-storage.com/projects/llm-from-scratch.png',
     links: {github: 'https://github.com/MartinBraquet/llm', live: '/projects/llm-from-scratch'},
   },
   {
@@ -161,7 +163,7 @@ export const PROJECTS: Project[] = [
       'Firefox add-on that accelerates and skips YouTube ads in under two seconds. Prioritizes user security by operating entirely within the local browser environment without collecting data or storing external cookies.',
     tech: ['JavaScript'],
     stat: '6500+ users', // fallback if dynamic fetch fails
-    media: 'https://ewdq9sshhf9cseit.public.blob.vercel-storage.com/youtube-adblock.png',
+    media: 'https://ewdq9sshhf9cseit.public.blob.vercel-storage.com/projects/youtube-adblock.png',
     links: {
       github: 'https://github.com/MartinBraquet/youtube-adblock',
       live: 'https://addons.mozilla.org/addon/youtube_adblock',
@@ -178,7 +180,7 @@ export const PROJECTS: Project[] = [
       'Handwritten digit recognition using a CNN trained on the MNIST dataset. The model processes images through feature extraction and a multilayer perceptron to output the most likely digit.',
     tech: ['Python', 'PyTorch', 'Torchvision'],
     stat: '95% accuracy',
-    media: 'https://ewdq9sshhf9cseit.public.blob.vercel-storage.com/digit-recognition.gif',
+    media: 'https://ewdq9sshhf9cseit.public.blob.vercel-storage.com/projects/digit-recognition.gif',
     links: {
       live: 'https://ml-digits-recognition.readthedocs.io/',
       github: 'https://github.com/MartinBraquet/ml-digits-recognition',
@@ -194,7 +196,8 @@ export const PROJECTS: Project[] = [
     description:
       'Dijkstra-based path planning over military terrain — obstacles, elevation, and valence maps. Runs a fast global route over a downsampled mesh, then refines only the next executed segment at full resolution, cutting compute time significantly without sacrificing local path quality.',
     tech: ['Python'],
-    media: 'https://ewdq9sshhf9cseit.public.blob.vercel-storage.com/arl-motion-planning.png',
+    media:
+      'https://ewdq9sshhf9cseit.public.blob.vercel-storage.com/projects/arl-motion-planning.png',
     links: {
       live: '/projects/multi-agent-motion-planning',
     },
@@ -209,9 +212,11 @@ export const PROJECTS: Project[] = [
     description:
       'Two algorithms for discrete-time linear covariance steering dynamic games. Iterative best response and LQG reformulation via Riccati equations, evaluated on convergence and solution quality.',
     tech: ['Python'],
-    media: 'https://martinbraquet.com/wp-content/uploads/ut-ase389-stoch-games.gif',
+    media:
+      'https://ewdq9sshhf9cseit.public.blob.vercel-storage.com/projects/ut-ase389-stoch-games.gif',
     links: {
-      report: 'https://martinbraquet.com/wp-content/uploads/Game_Theory_Class_Project.pdf',
+      report:
+        'https://ewdq9sshhf9cseit.public.blob.vercel-storage.com/projects/Game_Theory_Class_Project.pdf',
       live: 'https://sites.google.com/view/ut-ase389-stoch-games',
       github: 'https://github.com/MartinBraquet/mod-multi-agent-systems-project',
     },
@@ -226,11 +231,12 @@ export const PROJECTS: Project[] = [
     description:
       'DDPG agent with Hindsight Experience Replay (HER) for robotic manipulation tasks. Demonstrated on OpenAI Fetch pick-and-place and Robosuite two-arm lifting.',
     tech: ['Python', 'PyTorch'],
-    media: 'https://martinbraquet.com/wp-content/uploads/fetch-pick-and-place-openAI-final.gif',
+    media:
+      'https://ewdq9sshhf9cseit.public.blob.vercel-storage.com/projects/fetch-pick-and-place-openAI-final.gif',
     links: {
       live: '/projects/robot-learning',
       report:
-        'https://martinbraquet.com/wp-content/uploads/CS391R___Robot_Learning__Final_report__Braquet___Patrick.pdf',
+        'https://ewdq9sshhf9cseit.public.blob.vercel-storage.com/projects/CS391R___Robot_Learning__Final_report__Braquet___Patrick.pdf',
       github: 'https://github.com/MartinBraquet/Robot-Learning-UT',
     },
   },
@@ -249,7 +255,7 @@ export const PROJECTS: Project[] = [
       'https://raw.githubusercontent.com/MartinBraquet/vector-field-obstacle-avoidance/refs/heads/main/videos/7%20moving_multiple_ellipsoids.gif',
     stat: '15+ citations',
     links: {
-      paper: 'https://martinbraquet.com/wp-content/uploads/braquet_2022.pdf',
+      paper: 'https://ewdq9sshhf9cseit.public.blob.vercel-storage.com/projects/braquet_2022.pdf',
       article: 'https://www.sciencedirect.com/science/article/pii/S2405896322028890',
       github: 'https://github.com/MartinBraquet/vector-field-obstacle-avoidance',
     },
@@ -265,11 +271,12 @@ export const PROJECTS: Project[] = [
     description:
       'Greedy Coalition Auction Algorithm (GCAA) assigning hundreds of agents to thousands of tasks in real time — applications in aerial firefighting, ride-sharing, and warehouse robotics. One task assigment per auction phase; faster than traditional auction algorithms.',
     tech: ['MATLAB', 'Python'],
-    media: 'https://martinbraquet.com/wp-content/uploads/Dynamic-Task-Agent-Allocation.gif',
+    media:
+      'https://ewdq9sshhf9cseit.public.blob.vercel-storage.com/projects/Dynamic-Task-Agent-Allocation.gif',
     stat: '70+ citations',
     links: {
       paper:
-        'https://martinbraquet.com/wp-content/uploads/Greedy-Decentralized-Auction-based-Task-Allocation-for-Multi-Age_2021_IFAC-P.pdf',
+        'https://ewdq9sshhf9cseit.public.blob.vercel-storage.com/projects/Greedy-Decentralized-Auction-based-Task-Allocation-for-Multi-Age_2021_IFAC-P.pdf',
       article: 'https://www.sciencedirect.com/science/article/pii/S240589632102293X',
       github: 'https://github.com/MartinBraquet/task-allocation-auctions',
     },
@@ -285,11 +292,12 @@ export const PROJECTS: Project[] = [
       'Ultra-low-power audio IoT sensor harvesting solar energy via supercapacitor. Runs a KNN classifier on-device to discriminate four Belgian bird species at 94% precision. 15+ year lifetime, LoRaWAN communication.',
     tech: ['C', 'Embedded', 'LoRaWAN'],
     stat: '94% accuracy',
-    media: 'https://martinbraquet.com/wp-content/uploads/real_PCB_with_MCU.png',
+    media: 'https://ewdq9sshhf9cseit.public.blob.vercel-storage.com/projects/real_PCB_with_MCU.png',
     links: {
       live: '/projects/smart-sensor',
-      thesis: 'https://martinbraquet.com/wp-content/uploads/EPL-master-thesis-Martin-Braquet.pdf',
-      // report: 'https://martinbraquet.com/wp-content/uploads/Presentation-master-thesis.pdf',
+      thesis:
+        'https://ewdq9sshhf9cseit.public.blob.vercel-storage.com/projects/EPL-master-thesis-Martin-Braquet.pdf',
+      // report: 'https://ewdq9sshhf9cseit.public.blob.vercel-storage.com/projects/Presentation-master-thesis.pdf',
       github: 'https://github.com/MartinBraquet/master-thesis-UCLouvain',
     },
   },
@@ -303,10 +311,12 @@ export const PROJECTS: Project[] = [
     description:
       'PM2.5 concentration prediction using regression models on meteorological data. Covers feature selection (Mutual Information), extraction (PCA), error estimation (Bootstrap 632), and Neural Network / KNN / Lasso / tree models.',
     tech: ['Python', 'PyTorch', 'Sklearn'],
-    media: 'https://ewdq9sshhf9cseit.public.blob.vercel-storage.com/air-quality-prediction.png',
+    media:
+      'https://ewdq9sshhf9cseit.public.blob.vercel-storage.com/projects/air-quality-prediction.png',
     links: {
       live: '/projects/air-quality-prediction',
-      report: 'https://martinbraquet.com/wp-content/uploads/LELEC2870-Project_groupAM-1.pdf',
+      report:
+        'https://ewdq9sshhf9cseit.public.blob.vercel-storage.com/projects/LELEC2870-Project_groupAM-1.pdf',
       github: 'https://github.com/MartinBraquet/machine-learning-ELEC2870',
     },
   },
@@ -320,10 +330,11 @@ export const PROJECTS: Project[] = [
     description:
       "Built the avionics of NASA's Astrobee robot (ISS crew assistant) during a UCLouvain–MIT exchange. Designed avionics diagrams, sourced components, soldered PCBs, and tested sensors and development boards.",
     tech: ['Electronics', 'PCB Design'],
-    media: 'https://martinbraquet.com/wp-content/uploads/2019/09/dA9jU8cXH9pB5edo4ZJnEC.jpg',
+    media: 'https://ewdq9sshhf9cseit.public.blob.vercel-storage.com/projects/astrobee.jpg',
     links: {
       live: '/projects/astrobee',
-      report: 'https://martinbraquet.com/wp-content/uploads/work_report_non_confidential.pdf',
+      report:
+        'https://ewdq9sshhf9cseit.public.blob.vercel-storage.com/projects/work_report_non_confidential.pdf',
     },
   },
   {
@@ -337,10 +348,11 @@ export const PROJECTS: Project[] = [
       'Fully autonomous robot for the Eurobot contest. Implemented path planning (potential fields), Kalman-filtered LIDAR localisation, low-level wheel control, and an Android Wi-Fi remote — running on Raspberry Pi + FPGA.',
     tech: ['C++', 'SystemVerilog', 'FPGA'],
     stat: '2nd place Belgium',
-    media: 'https://martinbraquet.com/wp-content/uploads/2020/03/JGO_8611-scaled.jpg',
+    media: 'https://ewdq9sshhf9cseit.public.blob.vercel-storage.com/projects/robotix.jpg',
     links: {
       live: '/projects/eurobot',
-      report: 'https://martinbraquet.com/wp-content/uploads/LELME2002___Final_report.pdf',
+      report:
+        'https://ewdq9sshhf9cseit.public.blob.vercel-storage.com/projects/LELME2002___Final_report.pdf',
       github: 'https://github.com/MartinBraquet/ELME2002',
     },
   },

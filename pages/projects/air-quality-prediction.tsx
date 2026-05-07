@@ -308,7 +308,7 @@ export default function BeijingAirQualityPage() {
               }}
             >
               <ActionBtn
-                href="https://martinbraquet.com/wp-content/uploads/LELEC2870-Project_groupAM-1.pdf"
+                href="https://ewdq9sshhf9cseit.public.blob.vercel-storage.com/projects/LELEC2870-Project_groupAM-1.pdf"
                 primary
               >
                 <DownloadIcon /> Full Report
@@ -336,17 +336,17 @@ export default function BeijingAirQualityPage() {
             {[
               // {
               //   label: 'Model error summary',
-              //   src: 'https://martinbraquet.com/wp-content/uploads/Error_Summary.png',
+              //   src: 'https://ewdq9sshhf9cseit.public.blob.vercel-storage.com/projects/Error_Summary.png',
               //   alt: 'Bar chart comparing bootstrap 632 errors across all models and feature sets',
               // },
               {
                 label: 'MLP error vs neurons per layer',
-                src: 'https://martinbraquet.com/wp-content/uploads/Error_neurons.png',
+                src: 'https://ewdq9sshhf9cseit.public.blob.vercel-storage.com/projects/Error_neurons.png',
                 alt: 'Line chart of MLP error against number of neurons per hidden layer',
               },
               {
                 label: 'Mutual information matrix',
-                src: 'https://martinbraquet.com/wp-content/uploads/Mutual_Information.png',
+                src: 'https://ewdq9sshhf9cseit.public.blob.vercel-storage.com/projects/Mutual_Information.png',
                 alt: 'Heatmap of mutual information between all input features and the PM2.5 output',
               },
             ].map(({label, src, alt}) => (
@@ -598,7 +598,7 @@ export default function BeijingAirQualityPage() {
 
           <div style={{display: 'flex', gap: '0.6rem', flexWrap: 'wrap'}}>
             <ActionBtn
-              href="https://martinbraquet.com/wp-content/uploads/LELEC2870-Project_groupAM-1.pdf"
+              href="https://ewdq9sshhf9cseit.public.blob.vercel-storage.com/projects/LELEC2870-Project_groupAM-1.pdf"
               primary
             >
               <DownloadIcon /> Read the Report

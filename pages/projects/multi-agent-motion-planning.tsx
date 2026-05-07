@@ -307,7 +307,7 @@ export default function MotionPlanningPage() {
                 }}
               >
                 <img
-                  src="https://martinbraquet.com/wp-content/uploads/Screenshot-from-2022-06-23-10-47-02.png"
+                  src="https://ewdq9sshhf9cseit.public.blob.vercel-storage.com/projects/military-map.png"
                   alt="Multi-layer terrain mesh showing planned agent paths"
                   style={{width: '100%', height: '100%', display: 'block', objectFit: 'cover'}}
                 />
@@ -337,7 +337,7 @@ export default function MotionPlanningPage() {
                 }}
               >
                 <img
-                  src="https://martinbraquet.com/wp-content/uploads/Screenshot-from-2022-06-23-10-56-18.png"
+                  src="https://ewdq9sshhf9cseit.public.blob.vercel-storage.com/projects/arl-motion-planning-elevation.png"
                   alt="Coarse-to-fine path planning showing mesh resolution comparison"
                   style={{width: '100%', height: '100%', display: 'block', objectFit: 'cover'}}
                 />
@@ -722,75 +722,76 @@ export default function MotionPlanningPage() {
                 </div>
               </div>
             </div>
-
-            {/* tradeoff */}
-            <div
+          </div>
+          {/* tradeoff */}
+          <div
+            style={{
+              background: C.bgCard,
+              border: `1px solid ${C.border}`,
+              borderRadius: 14,
+              padding: '1.25rem',
+              gridColumn: 'span 1',
+              marginTop: '1rem',
+            }}
+          >
+            <h3
               style={{
-                background: C.bgCard,
-                border: `1px solid ${C.border}`,
-                borderRadius: 14,
-                padding: '1.25rem',
-                gridColumn: 'span 1',
+                fontSize: '0.88rem',
+                fontWeight: 600,
+                color: C.text,
+                marginBottom: '0.75rem',
               }}
             >
-              <h3
-                style={{
-                  fontSize: '0.88rem',
-                  fontWeight: 600,
-                  color: C.text,
-                  marginBottom: '0.75rem',
-                }}
-              >
-                Why this works
-              </h3>
-              <div style={{display: 'flex', flexDirection: 'column', gap: '0.55rem'}}>
-                {[
-                  [
-                    'Computation savings',
-                    'The coarse pass covers the full route at a fraction of the node count — most of the compute is saved here.',
-                  ],
-                  [
-                    'No loss where it matters',
-                    'The agent only ever executes the fine-resolution segment, so the path it actually follows is globally optimized.',
-                  ],
-                  [
-                    'Receding horizon',
-                    'As the agent reaches each coarse checkpoint, the fine pass is re-run for the next segment, adapting to dynamic changes in the environment.',
-                  ],
-                ].map(([title, body]) => (
-                  <div
-                    key={title as string}
+              Why this works
+            </h3>
+            <div style={{display: 'flex', flexDirection: 'row', gap: '0.55rem', flexWrap: 'wrap'}}>
+              {[
+                [
+                  'Computation savings',
+                  'The coarse pass covers the full route at a fraction of the node count — most of the compute is saved here.',
+                ],
+                [
+                  'No loss where it matters',
+                  'The agent only ever executes the fine-resolution segment, so the path it actually follows is globally optimized.',
+                ],
+                [
+                  'Receding horizon',
+                  'As the agent reaches each coarse checkpoint, the fine pass is re-run for the next segment, adapting to dynamic changes in the environment.',
+                ],
+              ].map(([title, body]) => (
+                <div
+                  key={title as string}
+                  style={{
+                    display: 'flex',
+                    gap: '0.75rem',
+                    padding: '0.7rem 0.9rem',
+                    background: C.bg,
+                    border: `1px solid ${C.border}`,
+                    borderRadius: 10,
+                    maxWidth: '300px',
+                  }}
+                >
+                  <span
                     style={{
-                      display: 'flex',
-                      gap: '0.75rem',
-                      padding: '0.7rem 0.9rem',
-                      background: C.bg,
-                      border: `1px solid ${C.border}`,
-                      borderRadius: 10,
+                      color: C.red,
+                      fontSize: '0.7rem',
+                      paddingTop: '0.15rem',
+                      flexShrink: 0,
                     }}
                   >
-                    <span
-                      style={{
-                        color: C.red,
-                        fontSize: '0.7rem',
-                        paddingTop: '0.15rem',
-                        flexShrink: 0,
-                      }}
-                    >
-                      ▸
+                    ▸
+                  </span>
+                  <div>
+                    <span style={{fontSize: '0.78rem', fontWeight: 600, color: C.text}}>
+                      {title as string}
                     </span>
-                    <div>
-                      <span style={{fontSize: '0.78rem', fontWeight: 600, color: C.text}}>
-                        {title as string}
-                      </span>
-                      <span style={{fontSize: '0.75rem', color: C.textTert}}>
-                        {'  —  '}
-                        {body as string}
-                      </span>
-                    </div>
+                    <span style={{fontSize: '0.75rem', color: C.textTert}}>
+                      {'  —  '}
+                      {body as string}
+                    </span>
                   </div>
-                ))}
-              </div>
+                </div>
+              ))}
             </div>
           </div>
         </Section>

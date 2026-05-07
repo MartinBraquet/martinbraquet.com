@@ -251,7 +251,7 @@ export default function WheeledRobotPage() {
               }}
             >
               <ActionBtn
-                href="https://martinbraquet.com/wp-content/uploads/LELME2002___Final_report.pdf"
+                href="https://ewdq9sshhf9cseit.public.blob.vercel-storage.com/projects/LELME2002___Final_report.pdf"
                 primary
               >
                 <DownloadIcon /> Final Report
@@ -297,7 +297,7 @@ export default function WheeledRobotPage() {
                 }}
               >
                 <img
-                  src="https://martinbraquet.com/wp-content/uploads/2020/03/JGO_8611-scaled.jpg"
+                  src="https://ewdq9sshhf9cseit.public.blob.vercel-storage.com/projects/robotix.jpg"
                   alt="Robot competing at Robotix Belgian contest"
                   style={{width: '100%', display: 'block', objectFit: 'cover', aspectRatio: '16/9'}}
                 />
@@ -325,7 +325,7 @@ export default function WheeledRobotPage() {
                 }}
               >
                 <img
-                  src="https://martinbraquet.com/wp-content/uploads/2020/03/59353382_355551865166777_2157624911894413312_n2.jpg"
+                  src="https://ewdq9sshhf9cseit.public.blob.vercel-storage.com/projects/wheeled-robot-cup.jpg"
                   alt="Assembled wheeled robot showing mechanical and electronic components"
                   style={{width: '100%', display: 'block', objectFit: 'cover', aspectRatio: '16/9'}}
                 />

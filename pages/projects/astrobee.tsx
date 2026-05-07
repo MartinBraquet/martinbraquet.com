@@ -232,7 +232,7 @@ export default function AstrobeePage() {
               }}
             >
               <ActionBtn
-                href="https://martinbraquet.com/wp-content/uploads/work_report_non_confidential.pdf"
+                href="https://ewdq9sshhf9cseit.public.blob.vercel-storage.com/projects/work_report_non_confidential.pdf"
                 primary
               >
                 <DownloadIcon /> Full Report
@@ -276,7 +276,7 @@ export default function AstrobeePage() {
                 }}
               >
                 <img
-                  src="https://martinbraquet.com/wp-content/uploads/2019/09/dA9jU8cXH9pB5edo4ZJnEC.jpg"
+                  src="https://ewdq9sshhf9cseit.public.blob.vercel-storage.com/projects/astrobee.jpg"
                   alt="Astrobee robot at MIT Space Systems Laboratory"
                   style={{width: '100%', display: 'block', objectFit: 'cover'}}
                 />
@@ -476,7 +476,7 @@ export default function AstrobeePage() {
 
           <div style={{display: 'flex', gap: '0.6rem', flexWrap: 'wrap'}}>
             <ActionBtn
-              href="https://martinbraquet.com/wp-content/uploads/work_report_non_confidential.pdf"
+              href="https://ewdq9sshhf9cseit.public.blob.vercel-storage.com/projects/work_report_non_confidential.pdf"
               primary
             >
               <DownloadIcon /> Read the Report

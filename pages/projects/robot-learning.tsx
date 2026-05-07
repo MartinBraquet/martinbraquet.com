@@ -273,7 +273,7 @@ export default function RobotLearningPage() {
               }}
             >
               <ActionBtn
-                href="https://martinbraquet.com/wp-content/uploads/CS391R___Robot_Learning__Final_report__Braquet___Patrick.pdf"
+                href="https://ewdq9sshhf9cseit.public.blob.vercel-storage.com/projects/CS391R___Robot_Learning__Final_report__Braquet___Patrick.pdf"
                 primary
               >
                 <DownloadIcon /> Final Report
@@ -299,7 +299,7 @@ export default function RobotLearningPage() {
           >
             <LabelledImg
               label="Pick-and-place demo (learned policy)"
-              src="https://martinbraquet.com/wp-content/uploads/fetch-pick-and-place-openAI-final.gif"
+              src="https://ewdq9sshhf9cseit.public.blob.vercel-storage.com/projects/fetch-pick-and-place-openAI-final.gif"
               alt="Fetch robot arm performing pick-and-place with learned DDPG-HER policy"
               aspect="4/3"
             />

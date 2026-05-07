@@ -232,7 +232,7 @@ function BenchmarkTable() {
                       borderBottom: `1px solid ${C.border}`,
                       background: v === null ? 'transparent' : cellColor(v),
                       color: cellTextColor(v),
-                      fontWeight: v !== null && (v >= 0.9 || v <= 0.1) ? 600 : 400,
+                      fontWeight: 400,
                       transition: 'background 0.15s',
                     }}
                   >
@@ -564,7 +564,7 @@ export default function SquadroPage() {
             {/*    }}*/}
             {/*  >*/}
             {/*    <img*/}
-            {/*      src="https://martinbraquet.com/wp-content/uploads/benchmark-scaled.png"*/}
+            {/*      src="https://ewdq9sshhf9cseit.public.blob.vercel-storage.com/projects/benchmark-scaled.png"*/}
             {/*      alt="Algorithm benchmark comparison"*/}
             {/*      style={{width: '100%', display: 'block', objectFit: 'cover'}}*/}
             {/*    />*/}
@@ -871,7 +871,7 @@ export default function SquadroPage() {
                 }}
               >
                 <img
-                  src="https://martinbraquet.com/wp-content/uploads/training_plots.png"
+                  src="https://ewdq9sshhf9cseit.public.blob.vercel-storage.com/projects/training_plots.png"
                   alt="Training metrics: win rate, buffer diversity, policy/value loss, Elo"
                   style={{width: '100%', display: 'block'}}
                 />

@@ -285,12 +285,12 @@ export default function AudioSensorThesisPage() {
               }}
             >
               <ActionBtn
-                href="https://martinbraquet.com/wp-content/uploads/EPL-master-thesis-Martin-Braquet.pdf"
+                href="https://ewdq9sshhf9cseit.public.blob.vercel-storage.com/projects/EPL-master-thesis-Martin-Braquet.pdf"
                 primary
               >
                 <DownloadIcon /> Thesis Document
               </ActionBtn>
-              <ActionBtn href="https://martinbraquet.com/wp-content/uploads/Presentation-master-thesis.pdf">
+              <ActionBtn href="https://ewdq9sshhf9cseit.public.blob.vercel-storage.com/projects/Presentation-master-thesis.pdf">
                 <DownloadIcon /> Presentation
               </ActionBtn>
               <ActionBtn href="https://github.com/MartinBraquet/master-thesis-UCLouvain">
@@ -315,13 +315,13 @@ export default function AudioSensorThesisPage() {
             {[
               {
                 label: 'Final PCB with MCU & RF board',
-                src: 'https://martinbraquet.com/wp-content/uploads/real_PCB_with_MCU.png',
+                src: 'https://ewdq9sshhf9cseit.public.blob.vercel-storage.com/projects/real_PCB_with_MCU.png',
                 alt: 'Photograph of the final sensor PCB with microcontroller and RF board attached',
                 aspect: '3/2',
               },
               {
                 label: 'System block diagram',
-                src: 'https://martinbraquet.com/wp-content/uploads/sensor_Bol_no_background.png',
+                src: 'https://ewdq9sshhf9cseit.public.blob.vercel-storage.com/projects/sensor_Bol_no_background.png',
                 alt: 'Block diagram of the complete sensor system showing all five subsystems',
                 aspect: '3/2',
               },
@@ -856,12 +856,12 @@ export default function AudioSensorThesisPage() {
 
           <div style={{display: 'flex', gap: '0.6rem', flexWrap: 'wrap'}}>
             <ActionBtn
-              href="https://martinbraquet.com/wp-content/uploads/EPL-master-thesis-Martin-Braquet.pdf"
+              href="https://ewdq9sshhf9cseit.public.blob.vercel-storage.com/projects/EPL-master-thesis-Martin-Braquet.pdf"
               primary
             >
               <DownloadIcon /> Thesis Document
             </ActionBtn>
-            <ActionBtn href="https://martinbraquet.com/wp-content/uploads/Presentation-master-thesis.pdf">
+            <ActionBtn href="https://ewdq9sshhf9cseit.public.blob.vercel-storage.com/projects/Presentation-master-thesis.pdf">
               <DownloadIcon /> Presentation Slides
             </ActionBtn>
             <ActionBtn href="https://github.com/MartinBraquet/master-thesis-UCLouvain">
