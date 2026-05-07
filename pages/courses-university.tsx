@@ -106,7 +106,9 @@ const styles = {
   // Semester grid
   semesterCard: {
     background: 'rgb(var(--color-canvas-0))',
-    border: '1px solid rgb(var(--color-canvas-100))',
+    borderWidth: '1px',
+    borderStyle: 'solid',
+    borderColor: 'rgb(var(--color-canvas-100))',
     borderRadius: '16px',
     padding: '1.5rem 1.75rem',
     transition: 'border-color 0.2s, box-shadow 0.2s',
@@ -144,7 +146,9 @@ const styles = {
     fontFamily: "'DM Mono', monospace",
     fontSize: '0.7rem',
     color: 'rgb(var(--color-canvas-300))',
-    border: '1px solid rgb(var(--color-canvas-100))',
+    borderWidth: '1px',
+    borderStyle: 'solid',
+    borderColor: 'rgb(var(--color-canvas-100))',
     borderRadius: '4px',
     padding: '1px 6px',
     whiteSpace: 'nowrap',
