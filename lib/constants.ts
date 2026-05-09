@@ -1,8 +1,7 @@
 export const MIN_INT = Number.MIN_SAFE_INTEGER
 export const MAX_INT = Number.MAX_SAFE_INTEGER
 
-// export const supportEmail = 'martin.braquet@hotmail.com'
-export const EMAIL = 'martin.braquet@gmail.com'
+export const EMAIL = '4wh6ecfn@anonaddy.me'
 
 export const githubRepoSlug = 'MartinBraquet/martinbraquet.com'
 export const githubRepo = `https://github.com/${githubRepoSlug}`
