@@ -43,9 +43,9 @@ if (IS_LOCAL && !process.env.ENVIRONMENT) {
   process.env.ENVIRONMENT = 'DEV'
 }
 
-export const PNG_LOGO = 'https://martinbraquet.vercel.app/favicon.png'
+export const PNG_LOGO = 'https://www.martinbraquet.com/favicon.png'
 
-export const DEPLOYED_DOMAIN = 'martinbraquet.vercel.app'
+export const DEPLOYED_DOMAIN = 'www.martinbraquet.com'
 export const LOCAL_WEB_DOMAIN = `localhost:3000`
 export const DOMAIN = IS_LOCAL ? LOCAL_WEB_DOMAIN : DEPLOYED_DOMAIN
 export const DEPLOYED_WEB_URL = `https://${DEPLOYED_DOMAIN}`
