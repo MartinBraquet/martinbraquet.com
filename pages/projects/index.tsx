@@ -879,7 +879,7 @@ export default function ProjectPage({googleScholarArticles}: Props) {
           if (typeof users === 'number') {
             setAddonStats((prev) => ({
               ...prev,
-              [slug]: `${Math.round(users / 1000)}k+ daily users`,
+              [slug]: `${Math.round(users / 1000)}k daily users`,
             }))
           }
         })
