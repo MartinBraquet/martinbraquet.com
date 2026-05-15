@@ -62,7 +62,13 @@ const nextConfig: NextConfig = {
     })
   },
   async redirects() {
-    return []
+    return [
+      {
+        source: '/research',
+        destination: '/projects',
+        permanent: true,
+      },
+    ]
   },
 }
 
