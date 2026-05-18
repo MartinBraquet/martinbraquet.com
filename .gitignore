@@ -13,3 +13,4 @@ testing
 /styles/compiled.css
 /.idea/
 /martin/
+/next-env.d.ts
