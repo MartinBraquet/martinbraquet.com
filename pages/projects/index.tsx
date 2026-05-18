@@ -16,6 +16,7 @@ import {SEO} from 'web/components/SEO'
 import {useIsMobile} from 'web/hooks/use-is-mobile'
 import {usePersistentInMemoryState} from 'web/hooks/use-persistent-in-memory-state'
 import {C} from 'web/lib/colors'
+import {IS_LOCAL} from 'web/lib/constants'
 
 // ── Types ───────────── ────────────────────────────────────────────────────────
 
@@ -819,8 +820,13 @@ function Reveal({children, delay = 0}: {children: React.ReactNode; delay?: numbe
 
 export async function getStaticProps() {
   try {
+    const serpApiKey = process.env.SERPAPI_KEY
+    if (!serpApiKey) {
+      if (IS_LOCAL) return {props: {}}
+      throw new Error('SERPAPI_KEY is not set in environment variables')
+    }
     const res = await fetch(
-      `https://serpapi.com/search.json?engine=google_scholar_author&author_id=thzpnRoAAAAJ&api_key=${process.env.SERPAPI_KEY}`,
+      `https://serpapi.com/search.json?engine=google_scholar_author&author_id=thzpnRoAAAAJ&api_key=${serpApiKey}`,
     )
     const data = await res.json()
 
@@ -1056,7 +1062,7 @@ export default function ProjectPage({googleScholarArticles}: Props) {
         {/* ── CONTROLS ── */}
         <div
           style={{
-            padding: '1.25rem 2.5rem',
+            padding: '1.25rem 1.5rem',
             background: C.bgCard,
             borderBottom: `1px solid ${C.border}`,
             display: 'flex',
