@@ -434,7 +434,10 @@ export default function Home() {
                     }}
                   >
                     {item.cta}
-                    <span className="cta-arrow" style={{transition: 'transform 0.2s'}}>
+                    <span
+                      className="group-hover:translate-x-[5px]"
+                      style={{transition: 'transform 0.2s ease-out'}}
+                    >
                       →
                     </span>
                   </div>
@@ -481,30 +484,26 @@ export default function Home() {
                       marginBottom: '0.75rem',
                     }}
                   >
-                    <style>
-                      {`
-                      .pill-label {
-                        display: inline-block; 
-                        font-size: 0.62rem; 
-                        font-weight: 600;
-                        letter-spacing: 0.1em; 
-                        text-transform: uppercase;
-                        padding: 0.28rem 0.7rem; 
-                        border-radius: 100px;
-                      }
-                      .pill-thesis { 
-                        background: rgb(var(--color-primary-800) / 0.10); 
-                        color: rgb(var(--color-primary-800)); 
-                      }
-                      .pill-conf   { 
-                        background: rgb(var(--color-primary-800) / 0.07); 
-                        color: rgb(var(--color-primary-600)); 
-                        border: 1px solid rgb(var(--color-primary-800) / 0.15); 
-                      }
-                      `}
-                    </style>
                     <span
-                      className={`pill-label ${p.tag === 'Thesis' ? 'pill-thesis' : 'pill-conf'}`}
+                      style={{
+                        display: 'inline-block',
+                        fontSize: '0.62rem',
+                        fontWeight: 600,
+                        letterSpacing: '0.1em',
+                        textTransform: 'uppercase',
+                        padding: '0.28rem 0.7rem',
+                        borderRadius: '100px',
+                        ...(p.tag === 'Thesis'
+                          ? {
+                              background: `rgb(var(--color-primary-800) / 0.10)`,
+                              color: `rgb(var(--color-primary-800))`,
+                            }
+                          : {
+                              background: `rgb(var(--color-primary-800) / 0.07)`,
+                              color: `rgb(var(--color-primary-600))`,
+                              border: `1px solid rgb(var(--color-primary-800) / 0.15)`,
+                            }),
+                      }}
                     >
                       {p.tag}
                     </span>

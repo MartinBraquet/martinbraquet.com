@@ -1,4 +1,4 @@
-import {C} from 'web/lib/colors'
+import clsx from 'clsx'
 
 interface SocialButtonProps {
   children: React.ReactNode
@@ -9,30 +9,25 @@ interface SocialButtonProps {
 
 export default function SocialButton({children, href, className = '', style}: SocialButtonProps) {
   return (
-    <>
-      <style>{`
-        .social-btn {
-          display: flex; align-items: center; gap: 0.55rem;
-          padding: 0.6rem 1.1rem; border-radius: 100px;
-          border: 1px solid ${C.border}; background: ${C.bgCard};
-          color: ${C.textSec}; text-decoration: none; font-size: 0.8rem;
-          font-weight: 500; transition: all 0.2s;
-        }
-        .social-btn:hover {
-          border-color: ${C.redA30}; color: ${C.red};
-          background: ${C.redA04};
-          box-shadow: 0 4px 12px ${C.redA07};
-        }
-      `}</style>
-      <a
-        href={href}
-        target="_blank"
-        rel="noopener noreferrer"
-        className={`social-btn ${className}`}
-        style={style}
-      >
-        {children}
-      </a>
-    </>
+    <a
+      href={href}
+      target="_blank"
+      rel="noopener noreferrer"
+      style={style}
+      className={clsx(
+        `
+      flex items-center gap-[0.55rem]
+      px-[1.1rem] py-[0.6rem] rounded-full
+      border border-canvas-100 bg-canvas-0 text-canvas-400
+      no-underline text-[0.8rem] font-medium transition-all duration-200
+      hover:border-primary-800/30 hover:text-primary-800
+      hover:bg-primary-800/[0.04]
+      hover:shadow-[0_4px_12px_rgb(var(--color-primary-800)/0.07)]
+      `,
+        className,
+      )}
+    >
+      {children}
+    </a>
   )
 }

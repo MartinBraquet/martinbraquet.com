@@ -1,8 +1,15 @@
 import {useRouter} from 'next/router'
 import {useEffect, useState} from 'react'
 import {CustomLink} from 'web/components/links'
-import {C} from 'web/lib/colors'
 import {PAGES} from 'web/lib/constants'
+
+const linkBase = `
+  text-[0.72rem] font-medium tracking-[0.08em] uppercase no-underline
+  pb-[2px] border-b transition-colors duration-200
+`
+const linkActive = `${linkBase} text-canvas-900 border-b-primary-800 cursor-default`
+const linkInactive = `${linkBase} text-canvas-400 border-b-transparent
+                      hover:text-canvas-900 hover:border-b-primary-800`
 
 export default function Navigation() {
   const router = useRouter()
@@ -26,169 +33,82 @@ export default function Navigation() {
   }, [isMenuOpen])
 
   return (
-    <>
-      <style>{`
-        .nav-link {
-          font-size: 0.72rem; font-weight: 500; letter-spacing: 0.08em;
-          text-transform: uppercase; color: ${C.textSec}; text-decoration: none;
-          transition: color 0.2s; padding-bottom: 2px;
-          border-bottom: 1px solid transparent;
-        }
-        .nav-link:hover, .nav-link.active { color: ${C.text}; border-bottom-color: ${C.red}; }
-      `}</style>
-      <nav
-        style={{
-          // position: 'sticky',
-          top: 0,
-          zIndex: 100,
-          background: C.bgA80,
-          backdropFilter: 'blur(16px)',
-          borderBottom: `1px solid 'transparent'`,
-          padding: '0 2.5rem',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'space-between',
-          height: 62,
-          transition: 'all 0.3s',
-        }}
-      >
-        <a href="/" style={{textDecoration: 'none'}}>
-          <span
-            style={{
-              fontFamily: "'Playfair Display', serif",
-              fontSize: '1rem',
-              fontWeight: 700,
-              color: C.text,
-              letterSpacing: '-0.01em',
-            }}
+    <nav
+      className="
+      top-0 z-[100] h-[62px] px-10
+      flex items-center justify-between
+      bg-canvas-25/80 backdrop-blur-lg
+      border-b border-transparent
+      transition-all duration-300
+    "
+    >
+      {/* Logo */}
+      <a href="/" className="no-underline">
+        <span className="font-['Playfair_Display',serif] text-base font-bold tracking-[-0.01em] text-canvas-900">
+          Martin <span className="text-primary-800">Braquet</span>
+        </span>
+      </a>
+
+      {/* Mobile hamburger */}
+      <div className="relative flex lg:hidden">
+        <button
+          onClick={() => setIsMenuOpen(!isMenuOpen)}
+          className="flex cursor-pointer flex-col gap-[3px] border-none bg-transparent p-2"
+        >
+          {/* Inline style kept intentionally: CSS transform order matters —       */}
+          {/* rotate(45deg) translate(5px,5px) ≠ translate then rotate (Tailwind)  */}
+          <div
+            className="h-[2px] w-5 bg-canvas-900 transition-transform duration-300 ease-in-out"
+            style={{transform: isMenuOpen ? 'rotate(45deg) translate(5px, 5px)' : 'none'}}
+          />
+          <div
+            className={`h-[2px] w-5 bg-canvas-900 transition-opacity duration-300
+                           ${isMenuOpen ? 'opacity-0' : 'opacity-100'}`}
+          />
+          <div
+            className="h-[2px] w-5 bg-canvas-900 transition-transform duration-300 ease-in-out"
+            style={{transform: isMenuOpen ? 'rotate(-45deg) translate(7px, -6px)' : 'none'}}
+          />
+        </button>
+
+        {isMenuOpen && (
+          <div
+            className="
+            absolute right-0 top-full mt-2
+            min-w-[200px] rounded-lg py-2
+            border border-canvas-100 bg-canvas-25
+            shadow-[0_8px_24px_rgb(var(--color-canvas-900)/0.07)]
+          "
           >
-            Martin <span style={{color: C.red}}>Braquet</span>
-          </span>
-        </a>
-
-        {/* Mobile Hamburger Menu */}
-        <div style={{position: 'relative'}} className="flex lg:hidden">
-          <button
-            onClick={() => setIsMenuOpen(!isMenuOpen)}
-            style={{
-              background: 'none',
-              border: 'none',
-              cursor: 'pointer',
-              padding: '0.5rem',
-              display: 'flex',
-              flexDirection: 'column',
-              gap: '3px',
-            }}
-          >
-            <div
-              style={{
-                width: '20px',
-                height: '2px',
-                background: C.text,
-                transition: 'transform 0.3s ease',
-                transform: isMenuOpen ? 'rotate(45deg) translate(5px, 5px)' : 'none',
-              }}
-            />
-            <div
-              style={{
-                width: '20px',
-                height: '2px',
-                background: C.text,
-                transition: 'opacity 0.3s ease',
-                opacity: isMenuOpen ? 0 : 1,
-              }}
-            />
-            <div
-              style={{
-                width: '20px',
-                height: '2px',
-                background: C.text,
-                transition: 'transform 0.3s ease',
-                transform: isMenuOpen ? 'rotate(-45deg) translate(7px, -6px)' : 'none',
-              }}
-            />
-          </button>
-
-          {isMenuOpen && (
-            <div
-              style={{
-                position: 'absolute',
-                top: '100%',
-                right: 0,
-                background: C.bg,
-                border: `1px solid ${C.border}`,
-                borderRadius: '8px',
-                boxShadow: `0 8px 24px ${C.inkA07}`,
-                minWidth: '200px',
-                padding: '0.5rem 0',
-                marginTop: '0.5rem',
-              }}
-            >
-              {PAGES.map(([href, label]) => {
-                const isActive = href === currentPath
-
-                if (isActive) {
-                  return (
-                    <span
-                      key={label}
-                      className="nav-link active"
-                      style={{
-                        display: 'block',
-                        padding: '0.75rem 1.5rem',
-                        cursor: 'default',
-                        borderBottom: `0px solid ${C.red}`,
-                      }}
-                    >
-                      {label}
-                    </span>
-                  )
-                }
-
-                return (
-                  <CustomLink
-                    key={label}
-                    href={href}
-                    className="nav-link"
-                    style={{
-                      display: 'block',
-                      padding: '0.75rem 1.5rem',
-                    }}
-                  >
-                    {label}
-                  </CustomLink>
-                )
-              })}
-            </div>
-          )}
-        </div>
-
-        {/* Desktop Navigation */}
-        <div style={{gap: '2rem'}} className="hidden lg:flex">
-          {PAGES.map(([href, label]) => {
-            const isActive = href === currentPath
-
-            if (isActive) {
-              return (
-                <span
-                  key={label}
-                  className="nav-link active"
-                  style={{
-                    cursor: 'default',
-                  }}
-                >
+            {PAGES.map(([href, label]) =>
+              href === currentPath ? (
+                <span key={label} className={`${linkActive} block px-6 py-3`}>
                   {label}
                 </span>
-              )
-            }
+              ) : (
+                <CustomLink key={label} href={href} className={`${linkInactive} block px-6 py-3`}>
+                  {label}
+                </CustomLink>
+              ),
+            )}
+          </div>
+        )}
+      </div>
 
-            return (
-              <CustomLink key={label} href={href} className="nav-link">
-                {label}
-              </CustomLink>
-            )
-          })}
-        </div>
-      </nav>
-    </>
+      {/* Desktop nav */}
+      <div className="hidden gap-8 lg:flex">
+        {PAGES.map(([href, label]) =>
+          href === currentPath ? (
+            <span key={label} className={linkActive}>
+              {label}
+            </span>
+          ) : (
+            <CustomLink key={label} href={href} className={linkInactive}>
+              {label}
+            </CustomLink>
+          ),
+        )}
+      </div>
+    </nav>
   )
 }
