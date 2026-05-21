@@ -347,7 +347,7 @@ export default function Home() {
                     marginBottom: '0.85rem',
                   }}
                 >
-                  Quantitative engineer and full-stack developer with 6 years of experience across
+                  Quantitative engineer and full-stack developer with 4 years of experience across
                   aerospace robotics, climate-risk finance, and humanitarian open-source software.
                 </p>
                 <p
