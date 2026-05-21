@@ -287,7 +287,8 @@ export default function Home() {
               className="two-col"
               style={{display: 'flex', gap: '5rem', alignItems: 'flex-start'}}
             >
-              <div {...R()} style={{...rs, flex: '1 1 280px'}}>
+              {/* LEFT — Personal (existing) */}
+              <div {...R()} style={{...rs, flex: '0 0 35%'}}>
                 <span className="section-label">About</span>
                 <h2
                   style={{
@@ -321,6 +322,50 @@ export default function Home() {
                 {/*    Connect with Martin*/}
                 {/*  </a>*/}
                 {/*</div>*/}
+              </div>
+
+              {/* RIGHT — Professional (new) */}
+              <div {...R()} style={{...rs, flex: '1 1 280px'}}>
+                <span className="section-label">Professional</span>
+                <h2
+                  style={{
+                    fontFamily: "'Playfair Display', serif",
+                    fontSize: 'clamp(1.9rem, 3.5vw, 2.8rem)',
+                    fontWeight: 700,
+                    color: C.text,
+                    lineHeight: 1.15,
+                    marginBottom: '1.5rem',
+                  }}
+                >
+                  Open to Work
+                </h2>
+                <p
+                  style={{
+                    fontSize: '1rem',
+                    lineHeight: 1.85,
+                    color: C.textSec,
+                    marginBottom: '0.85rem',
+                  }}
+                >
+                  Quantitative engineer and full-stack developer with 6 years of experience across
+                  aerospace robotics, climate-risk finance, and humanitarian open-source software.
+                </p>
+                <p
+                  style={{
+                    fontSize: '1rem',
+                    lineHeight: 1.85,
+                    color: C.textSec,
+                    marginBottom: '1.75rem',
+                  }}
+                >
+                  Seeking nonprofit roles with human interaction at organizations driving measurable
+                  impact on humanitarian causes such as extreme poverty and global health.
+                </p>
+                <div style={{display: 'flex', gap: '0.75rem', flexWrap: 'wrap'}}>
+                  <Button href="https://ewdq9sshhf9cseit.public.blob.vercel-storage.com/Braquet-Martin-resume.pdf">
+                    Download CV →
+                  </Button>
+                </div>
               </div>
 
               {/* Right — identity card */}
