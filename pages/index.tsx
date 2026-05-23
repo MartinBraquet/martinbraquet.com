@@ -363,7 +363,7 @@ export default function Home() {
                 </p>
                 <div style={{display: 'flex', gap: '0.75rem', flexWrap: 'wrap'}}>
                   <Button href="https://ewdq9sshhf9cseit.public.blob.vercel-storage.com/Braquet-Martin-resume.pdf">
-                    Download CV →
+                    Download Resume →
                   </Button>
                 </div>
               </div>
