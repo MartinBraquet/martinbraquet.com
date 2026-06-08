@@ -5,9 +5,9 @@ import {PAGES} from 'web/lib/constants'
 
 const linkBase = `
   text-[0.72rem] font-medium tracking-[0.08em] uppercase no-underline
-  pb-[2px] border-b transition-colors duration-200
+  pb-[2px] sm:border-b transition-colors duration-200
 `
-const linkActive = `${linkBase} text-canvas-900 border-b-primary-800 cursor-default`
+const linkActive = `${linkBase} text-canvas-900 sm:border-b-primary-800 cursor-default`
 const linkInactive = `${linkBase} text-canvas-400 border-b-transparent
                       hover:text-canvas-900 hover:border-b-primary-800`
 
@@ -67,7 +67,7 @@ export default function Navigation() {
           />
           <div
             className="h-[2px] w-5 bg-canvas-900 transition-transform duration-300 ease-in-out"
-            style={{transform: isMenuOpen ? 'rotate(-45deg) translate(7px, -6px)' : 'none'}}
+            style={{transform: isMenuOpen ? 'rotate(-45deg) translate(2px, -3px)' : 'none'}}
           />
         </button>
 
