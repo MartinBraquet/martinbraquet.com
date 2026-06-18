@@ -93,6 +93,21 @@ function SocialButtons({withEmail = false}: {withEmail?: boolean}) {
 
 // ── Main component ────────────────────────────────────────────────────────────
 
+function AboutParagraph({children}: {children: string | React.ReactElement}) {
+  return (
+    <p
+      style={{
+        fontSize: '1rem',
+        lineHeight: 1.85,
+        color: C.textSec,
+        marginBottom: '0.85rem',
+      }}
+    >
+      {children}
+    </p>
+  )
+}
+
 export default function Home() {
   const revealRefs = useRef<HTMLElement[]>([])
 
@@ -288,7 +303,7 @@ export default function Home() {
               style={{display: 'flex', gap: '5rem', alignItems: 'flex-start'}}
             >
               {/* LEFT — Personal (existing) */}
-              <div {...R()} style={{...rs, flex: '0 0 35%'}}>
+              <div {...R()} style={{...rs, flex: '0 0 45%'}}>
                 <span className="section-label">About</span>
                 <h2
                   style={{
@@ -302,17 +317,17 @@ export default function Home() {
                 >
                   Personal Life
                 </h2>
-                <p
-                  style={{
-                    fontSize: '1rem',
-                    lineHeight: 1.85,
-                    color: C.textSec,
-                    marginBottom: '1.75rem',
-                  }}
-                >
-                  To find out who I am as a person, feel free to explore my Compass profile — a
-                  space designed for deeper connection.
-                </p>
+                <AboutParagraph>
+                  I find as much awe in a contemplative walk through the woods as I do in a complex
+                  physics paper. I'm drawn to exploring the world by living as a local for extensive
+                  periods of time — a pull that has taken me to Belgium, the US, and India. In my
+                  free time, you'll most likely find me running, reading nonfiction books,
+                  discussing philosophy, or bonding with my loved ones.
+                </AboutParagraph>
+                <AboutParagraph>
+                  To find out more, feel free to explore my Compass profile — a space designed for
+                  deeper connection.
+                </AboutParagraph>
                 <Button href="https://compassmeet.com/Martin">Compass Profile →</Button>
                 {/*<div style={{ marginTop: "3rem", paddingTop: "2rem", borderTop: "1px solid #e8dece" }}>*/}
                 {/*  <p style={{ fontSize: "0.9rem", color: "#7a7060", lineHeight: 1.75, marginBottom: "1.25rem" }}>*/}
@@ -339,28 +354,17 @@ export default function Home() {
                 >
                   Open to Work
                 </h2>
-                <p
-                  style={{
-                    fontSize: '1rem',
-                    lineHeight: 1.85,
-                    color: C.textSec,
-                    marginBottom: '0.85rem',
-                  }}
-                >
+                <AboutParagraph>
                   Quantitative engineer and full-stack developer with 4 years of experience across
-                  aerospace robotics, climate-risk finance, and humanitarian open-source software.
-                </p>
-                <p
-                  style={{
-                    fontSize: '1rem',
-                    lineHeight: 1.85,
-                    color: C.textSec,
-                    marginBottom: '1.75rem',
-                  }}
-                >
-                  Seeking nonprofit roles with human interaction at organizations driving measurable
-                  impact on humanitarian causes such as extreme poverty and global health.
-                </p>
+                  aerospace robotics, climate-risk finance, humanitarian software, and open-source
+                  science.
+                </AboutParagraph>
+                <AboutParagraph>
+                  Questioning the relationship between technological and moral progress, I'm drawn
+                  to technologies deliberately scoped to purposeful, laudable ends. I'm seeking
+                  nonprofit roles with human interaction at organizations driving measurable impact
+                  on humanitarian causes such as global development.
+                </AboutParagraph>
                 <div style={{display: 'flex', gap: '0.75rem', flexWrap: 'wrap'}}>
                   <Button href="https://ewdq9sshhf9cseit.public.blob.vercel-storage.com/Braquet-Martin-resume.pdf">
                     Download Resume →
@@ -763,6 +767,7 @@ export default function Home() {
 
                 <a
                   href={`mailto:${EMAIL}`}
+                  // className={'w-fit'}
                   style={{
                     display: 'flex',
                     alignItems: 'center',
