@@ -1146,7 +1146,7 @@ export default function ProjectPage({googleScholarArticles}: Props) {
         </div>
 
         {/* ── GRID ── */}
-        <section style={{padding: '2.5rem 2.5rem 5rem'}}>
+        <section className="px-4 sm:px-10" style={{paddingTop: '2.5rem', paddingBottom: '5rem'}}>
           <div style={{maxWidth: 1800, margin: '0 auto'}}>
             <p
               style={{
