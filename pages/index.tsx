@@ -321,8 +321,8 @@ export default function Home() {
                   I find as much awe in a contemplative walk through the woods as I do in a complex
                   physics paper. I'm drawn to exploring the world by living as a local for extensive
                   periods of time — a pull that has taken me to Belgium, the US, and India. In my
-                  free time, you'll most likely find me running, reading nonfiction books,
-                  discussing philosophy, or bonding with my loved ones.
+                  free time, you'll most likely find me helping people in need, running, reading
+                  nonfiction, or bonding with my loved ones.
                 </AboutParagraph>
                 <AboutParagraph>
                   To find out more, feel free to explore my Compass profile — a space designed for
