@@ -866,7 +866,7 @@ export default function ProjectPage({googleScholarArticles}: Props) {
       .then((res) => res.json())
       .then((data) => {
         if (typeof data.profiles === 'number') {
-          const rounded = Math.round(data.profiles / 100) * 100
+          const rounded = Math.floor(data.profiles / 100) * 100
           setCompassStat(`${rounded}+ members`)
         }
       })
