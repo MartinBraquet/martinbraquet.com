@@ -50,9 +50,25 @@ interface Project {
 
 export const PROJECTS: Project[] = [
   {
-    title: 'Personalized Preparation in Early Autism Intervention',
+    title: 'TraceGiving — Donate & See the Real Impact of your Gift',
     year: 2026,
     importance: 3,
+    category: 'Web App',
+    badge: 'live',
+    context: 'Demo-only',
+    description:
+      "You choose someone living in poverty — verified in person by our local field staff. We deliver your gift, then show you in video how it was used, and the difference it made a year later. All with minimal fees thanks to today's technologies.",
+    tech: ['TypeScript', 'React', 'Next.js'],
+    media: 'https://ewdq9sshhf9cseit.public.blob.vercel-storage.com/projects/tracegiving.png',
+    links: {
+      // github: 'https://github.com/MartinBraquet/TraceGiving',
+      live: 'https://tracegiving.vercel.app/',
+    },
+  },
+  {
+    title: 'Personalized Preparation in Early Autism Intervention',
+    year: 2026,
+    importance: 2,
     category: 'Research',
     badge: 'project',
     context: 'Clinical Trial · Maya Care and Grow · Agartala',
