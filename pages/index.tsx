@@ -51,7 +51,7 @@ const ACADEMIA_LINKS = [
 ]
 
 const LEDE =
-  'I build technologies for purposeful ends — aerospace robotics, climate-risk finance, humanitarian tools, and open-source science. Now looking for nonprofit work with measurable human impact.'
+  'I build technologies for purposeful ends — climate-risk finance, humanitarian tools, and open-source science. Now looking for nonprofit work with measurable human impact.'
 
 const CLOSING_NOTE =
   "What's here reflects pieces of me, but not the full constellation. Explore as you like; fill in the gaps at your own risk."
@@ -752,7 +752,7 @@ export default function Home() {
         <section id="work" style={{padding: '90px 2.5rem', background: C.bgAlt}}>
           <div style={{maxWidth: 1100, margin: '0 auto'}}>
             <div {...R()} style={{...rs, marginBottom: '3rem'}}>
-              <SectionHeading label="Selected Work" title="Featured Projects">
+              <SectionHeading label="Portfolio" title="Selected Work">
                 <p style={{fontSize: '0.95rem', color: C.textSec, maxWidth: 740, lineHeight: 1.8}}>
                   Three of the {PROJECTS.length} projects I built — a live product, a platform I
                   founded, and influential research I published.
@@ -778,6 +778,26 @@ export default function Home() {
           </div>
         </section>
 
+        {/* ── ACADEMIA ── */}
+        <section id="academia" style={{padding: '90px 2.5rem'}}>
+          <div style={{maxWidth: 1100, margin: '0 auto'}}>
+            <div {...R()} style={{...rs, marginBottom: '2rem'}}>
+              <SectionHeading label="Academia" title="Research & Education">
+                <p style={{fontSize: '0.95rem', color: C.textSec, maxWidth: 540, lineHeight: 1.8}}>
+                  Trained across engineering and sciences, with graduate research spanning task
+                  allocation, controls, and energy-efficient sensing.
+                </p>
+              </SectionHeading>
+            </div>
+
+            <div {...R()} style={{...rs}}>
+              <AcademiaRow />
+            </div>
+          </div>
+        </section>
+
+        <div className="divider" />
+
         {/* ── NATURE (full-bleed) ── */}
         <section id="nature" style={{paddingTop: '90px'}}>
           <div {...R()} style={{...rs, maxWidth: 640, margin: '0 auto 3rem', padding: '0 2.5rem'}}>
@@ -800,26 +820,6 @@ export default function Home() {
 
           <NatureStrip />
         </section>
-
-        {/* ── ACADEMIA ── */}
-        <section id="academia" style={{padding: '90px 2.5rem'}}>
-          <div style={{maxWidth: 1100, margin: '0 auto'}}>
-            <div {...R()} style={{...rs, marginBottom: '2rem'}}>
-              <SectionHeading label="Academia" title="Research & Education">
-                <p style={{fontSize: '0.95rem', color: C.textSec, maxWidth: 540, lineHeight: 1.8}}>
-                  Trained across engineering and sciences, with graduate research spanning task
-                  allocation, controls, and energy-efficient sensing.
-                </p>
-              </SectionHeading>
-            </div>
-
-            <div {...R()} style={{...rs}}>
-              <AcademiaRow />
-            </div>
-          </div>
-        </section>
-
-        <div className="divider" />
 
         {/* ── CONTACT ── */}
         <section id="contact" style={{padding: '90px 2.5rem 110px', background: C.bgAlt}}>

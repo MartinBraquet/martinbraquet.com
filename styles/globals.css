@@ -85,6 +85,9 @@
 
   html {
     -webkit-tap-highlight-color: transparent;
+    /* Eases the hero's #work / #contact jumps. Next only forces scroll-behavior
+       to auto when more than the hash changes, so same-page anchors stay smooth. */
+    scroll-behavior: smooth;
   }
 
   :root {
@@ -737,5 +740,8 @@ select {
 @media (prefers-reduced-motion: reduce) {
   .hero-portrait * {
     animation: none !important;
+  }
+  html {
+    scroll-behavior: auto;
   }
 }
