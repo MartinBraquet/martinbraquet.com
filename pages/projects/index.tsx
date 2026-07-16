@@ -377,7 +377,7 @@ export const PROJECTS: Project[] = [
 
 const CATEGORIES: Category[] = ['All', 'ML / AI', 'Web App', 'Research', 'Hardware']
 
-const BADGE_LABELS: Record<BadgeKind, string> = {
+export const BADGE_LABELS: Record<BadgeKind, string> = {
   paper: 'Published Paper',
   live: 'Live Product',
   // extension: 'Firefox Extension',

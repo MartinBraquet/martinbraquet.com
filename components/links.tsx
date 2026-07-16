@@ -18,7 +18,7 @@ export const CustomLink = ({
   if (!href) return <>{children}</>
 
   // If href is internal, use Next.js Link
-  if (href.startsWith('/')) {
+  if (href.startsWith('/') || href.startsWith('#')) {
     return (
       <Link
         href={href}

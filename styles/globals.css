@@ -622,6 +622,14 @@ select {
   margin: 0 2.5rem;
 }
 
+/* Keeps featured project cards the same height regardless of blurb length */
+.clamp-3 {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
 /* Responsive utilities */
 @media (max-width: 768px) {
   .two-col {
@@ -629,6 +637,37 @@ select {
   }
   .pub-links {
     flex-wrap: wrap !important;
+  }
+}
+
+@media (max-width: 900px) {
+  .featured-grid {
+    flex-wrap: wrap;
+  }
+  /* Four compact links side by side get too narrow to read below this width */
+  .academia-row {
+    flex-direction: column;
+  }
+  .academia-row > * {
+    border-left: none !important;
+    border-top: 1px solid rgb(var(--color-canvas-100));
+  }
+  .academia-row > *:first-child {
+    border-top: none;
+  }
+}
+
+/* The strip's expand-on-hover has no touch equivalent, so narrow screens just
+   show fewer, wider frames instead of five slivers. */
+@media (max-width: 900px) {
+  .nature-strip > *:nth-child(n + 4) {
+    display: none;
+  }
+}
+
+@media (max-width: 560px) {
+  .nature-strip > *:nth-child(n + 3) {
+    display: none;
   }
 }
 

@@ -1,18 +1,21 @@
+import {Ref} from 'react'
+
 interface PublicationCardProps {
   children: React.ReactNode
   className?: string
   style?: React.CSSProperties
-  R?: any
+  ref?: Ref<HTMLDivElement>
 }
 
 export default function PublicationCard({
   children,
   className = '',
   style,
-  // R,
+  ref,
 }: PublicationCardProps) {
   return (
     <div
+      ref={ref}
       style={style}
       className={`
         relative overflow-hidden
