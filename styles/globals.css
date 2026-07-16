@@ -9,7 +9,7 @@
   --tnh: env(safe-area-inset-top); /* native top nav height */
   --hloss: calc(var(--bnh) + var(--tnh)); /* mobile height loss due to native top and bottom bars */
   --filter-offset: 0px; /* padding for filters on mobile */
-  --banner-h: clamp(190px, 30vh, 320px); /* home hero banner; hero height subtracts this */
+  --banner-h: clamp(220px, 35vh, 380px); /* home hero banner; hero height subtracts this */
   touch-action: pan-y;
 }
 
@@ -630,6 +630,55 @@ select {
   .pub-links {
     flex-wrap: wrap !important;
   }
+}
+
+/* Nature gallery — masonry columns keep the mixed portrait/landscape crops intact */
+.nature-masonry {
+  columns: 3;
+  column-gap: 1.5rem;
+}
+
+.nature-card {
+  break-inside: avoid;
+  margin: 0 0 1.5rem;
+}
+
+@media (max-width: 1000px) {
+  .nature-masonry {
+    columns: 2;
+  }
+}
+
+@media (max-width: 640px) {
+  .nature-masonry {
+    columns: 1;
+  }
+  .nature-featured {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 2.5rem !important;
+  }
+  /* In a column flex the shorthand basis would size the height, not the width */
+  .nature-video-frame {
+    flex: none !important;
+    width: min(320px, 100%);
+  }
+}
+
+/* Fullscreen: hand sizing back to the browser so the source ratio is never
+   cropped or stretched. Separate rules — one unknown pseudo drops the whole list. */
+.nature-video:fullscreen {
+  width: 100% !important;
+  height: 100% !important;
+  aspect-ratio: auto !important;
+  object-fit: contain !important;
+}
+
+.nature-video:-webkit-full-screen {
+  width: 100% !important;
+  height: 100% !important;
+  aspect-ratio: auto !important;
+  object-fit: contain !important;
 }
 
 /* Hero stacks with the portrait below the text on narrow screens */

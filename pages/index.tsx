@@ -97,6 +97,75 @@ const PROFILE_PIC =
 const BANNER_PIC =
   'https://ewdq9sshhf9cseit.public.blob.vercel-storage.com/profile-media/banner.jpg'
 
+const NATURE_BASE = 'https://ewdq9sshhf9cseit.public.blob.vercel-storage.com/nature'
+
+const NATURE_THUMBS = [
+  {
+    src: `${NATURE_BASE}/dragonfly.jpg`,
+    alt: 'A dragonfly resting on an open hand',
+    position: 'center',
+    tilt: -4,
+  },
+  {
+    src: `${NATURE_BASE}/cow.jpg`,
+    alt: 'Cows gathering at a fence in Belgium',
+    position: 'center',
+    tilt: 2.5,
+  },
+  {
+    src: `${NATURE_BASE}/cat.jpg`,
+    alt: 'A black cat held close to my shoulder',
+    position: '50% 30%',
+    tilt: -2,
+  },
+]
+
+function NatureThumbs() {
+  const [hovered, setHovered] = useState(false)
+
+  return (
+    <div
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
+      aria-hidden="true"
+      style={{display: 'flex', flexShrink: 0}}
+    >
+      {NATURE_THUMBS.map((t, i) => (
+        <div
+          key={t.src}
+          style={{
+            width: 'clamp(86px, 9vw, 116px)',
+            aspectRatio: '1/1',
+            borderRadius: 16,
+            overflow: 'hidden',
+            border: `3px solid ${C.bgAlt}`,
+            marginLeft: i ? '-18px' : 0,
+            zIndex: i,
+            transform: hovered
+              ? `rotate(0deg) translate(${(i - 1) * 10}px, -6px)`
+              : `rotate(${t.tilt}deg)`,
+            boxShadow: `0 10px 28px ${C.inkA07}`,
+            transition: 'transform 0.4s ease',
+          }}
+        >
+          <img
+            src={t.src}
+            alt={t.alt}
+            loading="lazy"
+            style={{
+              width: '100%',
+              height: '100%',
+              objectFit: 'cover',
+              objectPosition: t.position,
+              display: 'block',
+            }}
+          />
+        </div>
+      ))}
+    </div>
+  )
+}
+
 function HeroBanner() {
   const [offset, setOffset] = useState(0)
 
@@ -137,7 +206,7 @@ function HeroBanner() {
             width: '100%',
             height: '128%',
             objectFit: 'cover',
-            objectPosition: 'center 58%',
+            objectPosition: '30% 58%',
             display: 'block',
             transform: `translate3d(0, ${offset}px, 0)`,
             willChange: 'transform',
@@ -255,16 +324,6 @@ function HeroPortrait() {
               display: 'block',
               transform: hovered ? 'scale(1.05)' : 'scale(1)',
               transition: 'transform 0.7s ease-out',
-            }}
-          />
-
-          {/* Bottom scrim for pill legibility */}
-          <div
-            style={{
-              position: 'absolute',
-              inset: 0,
-              background: `linear-gradient(to top, rgb(var(--color-canvas-900) / 0.45) 0%, transparent 42%)`,
-              pointerEvents: 'none',
             }}
           />
 
@@ -428,7 +487,7 @@ export default function Home() {
               width: '100%',
               position: 'relative',
               zIndex: 1,
-              paddingTop: '4rem',
+              paddingTop: '2rem',
               paddingBottom: '4rem',
             }}
           >
@@ -436,13 +495,13 @@ export default function Home() {
               className="hero-grid"
               style={{display: 'flex', alignItems: 'center', gap: '4.5rem'}}
             >
-              <div style={{flex: '1 1 480px', maxWidth: 620}}>
+              <div style={{flex: '1 1 340px', maxWidth: 620}}>
                 <div
                   style={{
                     display: 'flex',
                     alignItems: 'center',
                     gap: '0.75rem',
-                    marginBottom: '2.5rem',
+                    marginBottom: '1rem',
                     animation: 'fadeUp 0.5s ease both',
                   }}
                 >
@@ -951,6 +1010,60 @@ export default function Home() {
                 </p>
               </div>
               <Button href="/projects">View All Projects →</Button>
+            </div>
+          </div>
+        </section>
+
+        <div className="divider" />
+
+        {/* ── NATURE CTA ── */}
+        <section style={{padding: '70px 2.5rem'}}>
+          <div style={{maxWidth: 1100, margin: '0 auto'}}>
+            <div
+              {...R()}
+              style={{
+                ...rs,
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'space-between',
+                gap: '2.5rem',
+                flexWrap: 'wrap',
+                background: C.bgAlt,
+                border: `1px solid ${C.border}`,
+                borderRadius: 20,
+                padding: '2.5rem 3rem',
+              }}
+            >
+              <div>
+                <span className="section-label">Beyond the Work</span>
+                <h2
+                  style={{
+                    fontFamily: "'Playfair Display', serif",
+                    fontSize: 'clamp(1.5rem, 3vw, 2.2rem)',
+                    fontWeight: 700,
+                    color: C.text,
+                    lineHeight: 1.2,
+                    marginBottom: '0.6rem',
+                  }}
+                >
+                  Nature
+                </h2>
+                <p
+                  style={{
+                    fontSize: '0.9rem',
+                    color: C.textSec,
+                    lineHeight: 1.75,
+                    maxWidth: 480,
+                    marginBottom: '1.5rem',
+                  }}
+                >
+                  Nature is beautiful when we have the eyes to appreciate it. Encounters with the
+                  animals who decided to come closer — a sparrow on my lap, a dragonfly at rest,
+                  cows who walk over to the fence.
+                </p>
+                <Button href="/nature">Explore Nature →</Button>
+              </div>
+              <NatureThumbs />
             </div>
           </div>
         </section>

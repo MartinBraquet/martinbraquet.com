@@ -54,4 +54,5 @@ export const WEB_URL = IS_LOCAL ? `http://${LOCAL_WEB_DOMAIN}` : `https://${DOMA
 export const PAGES = [
   ['/', 'Home'],
   ['/projects', 'Projects & Research'],
+  ['/nature', 'Nature'],
 ]
