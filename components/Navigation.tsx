@@ -35,7 +35,7 @@ export default function Navigation() {
   return (
     <nav
       className="
-      top-0 z-[100] h-[62px] px-10
+      top-0 z-[100] h-[52px] px-10
       flex items-center justify-between
       bg-canvas-25/80 backdrop-blur-lg
       border-b border-transparent

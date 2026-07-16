@@ -9,6 +9,7 @@
   --tnh: env(safe-area-inset-top); /* native top nav height */
   --hloss: calc(var(--bnh) + var(--tnh)); /* mobile height loss due to native top and bottom bars */
   --filter-offset: 0px; /* padding for filters on mobile */
+  --banner-h: clamp(190px, 30vh, 320px); /* home hero banner; hero height subtracts this */
   touch-action: pan-y;
 }
 
@@ -90,48 +91,48 @@
     touch-action: pan-y;
 
     /* ── Text / Ink scale (warm, not neutral) ── */
-    --color-ink-0:     255 254 249;   /* #fffef9  card surface */
-    --color-ink-50:    250 246 240;   /* #faf6f0  main bg */
-    --color-ink-100:   232 222 206;   /* #e8dece  border */
-    --color-ink-200:   200 184 154;   /* #c8b89a  mid border */
-    --color-ink-300:   186 178 160;   /* #bab2a0  text-tertiary */
-    --color-ink-400:   122 112 96;    /* #7a7060  text-secondary */
-    --color-ink-500:   90  78  60;
-    --color-ink-600:   60  50  38;
-    --color-ink-700:   45  38  28;
-    --color-ink-800:   35  30  20;
-    --color-ink-900:   30  26  20;    /* #1e1a14  text-primary */
-    --color-ink-950:   18  14  10;
-    --color-ink-1000:  0   0   0;
+    --color-ink-0: 255 254 249; /* #fffef9  card surface */
+    --color-ink-50: 250 246 240; /* #faf6f0  main bg */
+    --color-ink-100: 232 222 206; /* #e8dece  border */
+    --color-ink-200: 200 184 154; /* #c8b89a  mid border */
+    --color-ink-300: 186 178 160; /* #bab2a0  text-tertiary */
+    --color-ink-400: 122 112 96; /* #7a7060  text-secondary */
+    --color-ink-500: 90 78 60;
+    --color-ink-600: 60 50 38;
+    --color-ink-700: 45 38 28;
+    --color-ink-800: 35 30 20;
+    --color-ink-900: 30 26 20; /* #1e1a14  text-primary */
+    --color-ink-950: 18 14 10;
+    --color-ink-1000: 0 0 0;
 
     /* ── Background / Canvas scale (warm cream → near-black) ── */
-    --color-canvas-0:     255 254 249;   /* #fffef9  card / panel surface */
-    --color-canvas-25:    250 246 240;   /* #faf6f0  main page background */
-    --color-canvas-50:    255 255 255;   /* #ffffff  alternate section bg */
-    --color-canvas-100:   232 222 206;   /* #e8dece  borders, dividers */
-    --color-canvas-200:   200 184 154;   /* #c8b89a  outline-btn border */
-    --color-canvas-300:   186 178 160;   /* #bab2a0  text-tertiary / muted */
-    --color-canvas-400:   122 112 96;    /* #7a7060  text-secondary */
-    --color-canvas-500:   90  78  60;
-    --color-canvas-600:   60  50  38;
-    --color-canvas-700:   45  38  28;
-    --color-canvas-800:   35  30  20;
-    --color-canvas-900:   30  26  20;    /* #1e1a14  text-primary + footer bg */
-    --color-canvas-950:   18  14  10;
-    --color-canvas-1000:  0   0   0;
+    --color-canvas-0: 255 254 249; /* #fffef9  card / panel surface */
+    --color-canvas-25: 250 246 240; /* #faf6f0  main page background */
+    --color-canvas-50: 255 255 255; /* #ffffff  alternate section bg */
+    --color-canvas-100: 232 222 206; /* #e8dece  borders, dividers */
+    --color-canvas-200: 200 184 154; /* #c8b89a  outline-btn border */
+    --color-canvas-300: 186 178 160; /* #bab2a0  text-tertiary / muted */
+    --color-canvas-400: 122 112 96; /* #7a7060  text-secondary */
+    --color-canvas-500: 90 78 60;
+    --color-canvas-600: 60 50 38;
+    --color-canvas-700: 45 38 28;
+    --color-canvas-800: 35 30 20;
+    --color-canvas-900: 30 26 20; /* #1e1a14  text-primary + footer bg */
+    --color-canvas-950: 18 14 10;
+    --color-canvas-1000: 0 0 0;
 
     /* ── Primary / Brand Red ── */
-    --color-primary-950:  61  0   0;
-    --color-primary-900:  112 0   0;    /* #700000  hover / pressed */
-    --color-primary-800:  139 0   0;    /* #8B0000  brand red — main */
-    --color-primary-700:  155 50  50;
-    --color-primary-600:  155 68  68;   /* #9b4444  conference pill text */
-    --color-primary-500:  180 90  90;
-    --color-primary-400:  196 112 110;  /* #c4706e  footer name accent */
-    --color-primary-300:  210 140 140;
-    --color-primary-200:  225 170 170;
-    --color-primary-100:  240 210 210;
-    --color-primary-50:   250 238 238;
+    --color-primary-950: 61 0 0;
+    --color-primary-900: 112 0 0; /* #700000  hover / pressed */
+    --color-primary-800: 139 0 0; /* #8B0000  brand red — main */
+    --color-primary-700: 155 50 50;
+    --color-primary-600: 155 68 68; /* #9b4444  conference pill text */
+    --color-primary-500: 180 90 90;
+    --color-primary-400: 196 112 110; /* #c4706e  footer name accent */
+    --color-primary-300: 210 140 140;
+    --color-primary-200: 225 170 170;
+    --color-primary-100: 240 210 210;
+    --color-primary-50: 250 238 238;
 
     --color-yes-0: 255 255 255;
     --color-yes-50: 249 249 249;
@@ -547,45 +548,106 @@ select {
 /* Font imports */
 
 /* Global reset and base styles */
-*, *::before, *::after { 
-  box-sizing: border-box; 
-  margin: 0; 
-  padding: 0; 
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
 
 /* Global animations */
-@keyframes fadeUp   { 
-  from { opacity:0; transform:translateY(28px) } 
-  to { opacity:1; transform:none } 
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(28px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
 }
-@keyframes fadeIn   { 
-  from { opacity:0 } 
-  to { opacity:1 } 
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
-@keyframes drift    { 
-  0%,100% { transform: translateY(0) } 
-  50% { transform: translateY(-10px) } 
+@keyframes drift {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
 }
-
+@keyframes pulseDot {
+  0%,
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.45;
+    transform: scale(0.8);
+  }
+}
+@keyframes bannerReveal {
+  from {
+    opacity: 0;
+    transform: scale(1.08);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
 
 .section-label {
-  font-size: 0.65rem; 
-  font-weight: 600; 
+  font-size: 0.65rem;
+  font-weight: 600;
   letter-spacing: 0.14em;
-  text-transform: uppercase; 
+  text-transform: uppercase;
   color: rgb(var(--color-primary-800));
-  display: block; 
+  display: block;
   margin-bottom: 0.65rem;
 }
 
-.divider { 
-  height: 1px; 
-  background: rgb(var(--color-canvas-100)); 
-  margin: 0 2.5rem; 
+.divider {
+  height: 1px;
+  background: rgb(var(--color-canvas-100));
+  margin: 0 2.5rem;
 }
 
 /* Responsive utilities */
 @media (max-width: 768px) {
-  .two-col   { flex-direction: column !important; }
-  .pub-links { flex-wrap: wrap !important; }
+  .two-col {
+    flex-direction: column !important;
+  }
+  .pub-links {
+    flex-wrap: wrap !important;
+  }
+}
+
+/* Hero stacks with the portrait below the text on narrow screens */
+@media (max-width: 900px) {
+  .hero-grid {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 2.75rem !important;
+  }
+  .hero-portrait {
+    flex: none !important;
+    width: 100%;
+    max-width: 560px; /* matches the hero paragraph's max width */
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-portrait * {
+    animation: none !important;
+  }
 }

@@ -1,5 +1,5 @@
 import {BookOpen, FileText, GraduationCap, Handshake} from 'lucide-react'
-import {useEffect, useRef} from 'react'
+import {useEffect, useRef, useState} from 'react'
 import {PageBase} from 'web/components/page-base'
 import {SEO} from 'web/components/SEO'
 import {SOCIAL} from 'web/components/socials'
@@ -91,6 +91,221 @@ function SocialButtons({withEmail = false}: {withEmail?: boolean}) {
   )
 }
 
+const PROFILE_PIC =
+  'https://ewdq9sshhf9cseit.public.blob.vercel-storage.com/profile-media/martin-indoor.jpg'
+
+const BANNER_PIC =
+  'https://ewdq9sshhf9cseit.public.blob.vercel-storage.com/profile-media/banner.jpg'
+
+function HeroBanner() {
+  const [offset, setOffset] = useState(0)
+
+  useEffect(() => {
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
+    let raf = 0
+    const onScroll = () => {
+      cancelAnimationFrame(raf)
+      raf = requestAnimationFrame(() => setOffset(Math.min(window.scrollY, 700) * 0.3))
+    }
+    window.addEventListener('scroll', onScroll, {passive: true})
+    return () => {
+      window.removeEventListener('scroll', onScroll)
+      cancelAnimationFrame(raf)
+    }
+  }, [])
+
+  return (
+    <section
+      className="hero-banner"
+      aria-hidden="true"
+      style={{
+        position: 'relative',
+        height: 'var(--banner-h)',
+        overflow: 'hidden',
+        background: C.bg,
+      }}
+    >
+      {/* Reveal wrapper — animation owns the scale, the img owns the parallax */}
+      <div style={{position: 'absolute', inset: 0, animation: 'bannerReveal 1.3s ease-out both'}}>
+        <img
+          src={BANNER_PIC}
+          alt=""
+          style={{
+            position: 'absolute',
+            top: '-14%',
+            left: 0,
+            width: '100%',
+            height: '128%',
+            objectFit: 'cover',
+            objectPosition: 'center 58%',
+            display: 'block',
+            transform: `translate3d(0, ${offset}px, 0)`,
+            willChange: 'transform',
+          }}
+        />
+      </div>
+
+      {/* Warm tint — marries the cool photo to the brand palette */}
+      <div
+        style={{
+          position: 'absolute',
+          inset: 0,
+          background: `linear-gradient(to bottom, ${C.redA25} 0%, transparent 45%)`,
+          pointerEvents: 'none',
+        }}
+      />
+
+      {/* Bottom fade — dissolves the banner into the hero */}
+      <div
+        style={{
+          position: 'absolute',
+          inset: 0,
+          background: `linear-gradient(to top, ${C.bg} 0%, rgb(var(--color-canvas-25) / 0.6) 22%, transparent 62%)`,
+          pointerEvents: 'none',
+        }}
+      />
+    </section>
+  )
+}
+
+function HeroPortrait() {
+  const [tilt, setTilt] = useState({rx: 0, ry: 0})
+  const [hovered, setHovered] = useState(false)
+
+  const handleMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    const r = e.currentTarget.getBoundingClientRect()
+    const px = (e.clientX - r.left) / r.width - 0.5
+    const py = (e.clientY - r.top) / r.height - 0.5
+    setTilt({rx: -py * 9, ry: px * 11})
+  }
+
+  const reset = () => {
+    setHovered(false)
+    setTilt({rx: 0, ry: 0})
+  }
+
+  return (
+    <div
+      className="hero-portrait"
+      style={{
+        flex: '0 0 clamp(260px, 30vw, 350px)',
+        perspective: 1100,
+        animation: 'fadeUp 0.7s 0.2s ease both',
+      }}
+    >
+      <div
+        onMouseMove={handleMove}
+        onMouseEnter={() => setHovered(true)}
+        onMouseLeave={reset}
+        style={{
+          position: 'relative',
+          transform: `rotateX(${tilt.rx}deg) rotateY(${tilt.ry}deg) scale(${hovered ? 1.02 : 1})`,
+          transformStyle: 'preserve-3d',
+          transition: hovered ? 'transform 0.1s ease-out' : 'transform 0.6s ease-out',
+        }}
+      >
+        {/* Warm glow behind the frame */}
+        <div
+          style={{
+            position: 'absolute',
+            inset: '-12%',
+            borderRadius: '50%',
+            background: `radial-gradient(circle at 50% 45%, ${C.redA15} 0%, transparent 65%)`,
+            filter: 'blur(28px)',
+            pointerEvents: 'none',
+          }}
+        />
+
+        {/* Offset outline — editorial accent */}
+        <div
+          style={{
+            position: 'absolute',
+            inset: 0,
+            borderRadius: 26,
+            border: `1px solid ${C.redA30}`,
+            transform: `translate3d(${16 + tilt.ry}px, ${16 - tilt.rx}px, -40px)`,
+            transition: hovered ? 'transform 0.1s ease-out' : 'transform 0.6s ease-out',
+            pointerEvents: 'none',
+          }}
+        />
+
+        {/* Photo frame */}
+        <div
+          style={{
+            position: 'relative',
+            aspectRatio: '4/5',
+            borderRadius: 26,
+            overflow: 'hidden',
+            border: `1px solid ${C.border}`,
+            background: C.bgAlt,
+            boxShadow: hovered
+              ? `0 30px 70px ${C.redA25}, 0 6px 18px ${C.inkA07}`
+              : `0 18px 45px ${C.redA15}, 0 4px 12px ${C.inkA04}`,
+            transition: 'box-shadow 0.4s ease',
+          }}
+        >
+          <img
+            src={PROFILE_PIC}
+            alt="Portrait of Martin Braquet"
+            style={{
+              width: '100%',
+              height: '100%',
+              objectFit: 'cover',
+              objectPosition: '50% 18%',
+              display: 'block',
+              transform: hovered ? 'scale(1.05)' : 'scale(1)',
+              transition: 'transform 0.7s ease-out',
+            }}
+          />
+
+          {/* Bottom scrim for pill legibility */}
+          <div
+            style={{
+              position: 'absolute',
+              inset: 0,
+              background: `linear-gradient(to top, rgb(var(--color-canvas-900) / 0.45) 0%, transparent 42%)`,
+              pointerEvents: 'none',
+            }}
+          />
+
+          {/* Status pill */}
+          {/*<div*/}
+          {/*  style={{*/}
+          {/*    position: 'absolute',*/}
+          {/*    left: '1rem',*/}
+          {/*    bottom: '1rem',*/}
+          {/*    display: 'flex',*/}
+          {/*    alignItems: 'center',*/}
+          {/*    gap: '0.5rem',*/}
+          {/*    padding: '0.45rem 0.85rem',*/}
+          {/*    borderRadius: 100,*/}
+          {/*    background: C.bgA80,*/}
+          {/*    border: `1px solid ${C.border}`,*/}
+          {/*    backdropFilter: 'blur(10px)',*/}
+          {/*    fontSize: '0.7rem',*/}
+          {/*    fontWeight: 600,*/}
+          {/*    letterSpacing: '0.06em',*/}
+          {/*    textTransform: 'uppercase',*/}
+          {/*    color: C.text,*/}
+          {/*  }}*/}
+          {/*>*/}
+          {/*  <span*/}
+          {/*    style={{*/}
+          {/*      width: 7,*/}
+          {/*      height: 7,*/}
+          {/*      borderRadius: '50%',*/}
+          {/*      background: C.red,*/}
+          {/*      animation: 'pulseDot 2.2s ease-in-out infinite',*/}
+          {/*    }}*/}
+          {/*  />*/}
+          {/*  Open to Work*/}
+          {/*</div>*/}
+        </div>
+      </div>
+    </div>
+  )
+}
+
 // ── Main component ────────────────────────────────────────────────────────────
 
 function AboutParagraph({children}: {children: string | React.ReactElement}) {
@@ -158,10 +373,13 @@ export default function Home() {
           overflowX: 'hidden',
         }}
       >
+        {/* ── BANNER ── */}
+        <HeroBanner />
+
         {/* ── HERO ── */}
         <section
           style={{
-            minHeight: '92vh',
+            minHeight: 'max(430px, calc(92vh - var(--banner-h)))',
             padding: '0 2.5rem',
             display: 'flex',
             alignItems: 'center',
@@ -184,24 +402,24 @@ export default function Home() {
           />
 
           {/* Decorative large letter */}
-          <div
-            style={{
-              position: 'absolute',
-              right: '5%',
-              top: '50%',
-              transform: 'translateY(-50%)',
-              fontFamily: "'Playfair Display', serif",
-              fontSize: 'clamp(14rem, 22vw, 26rem)',
-              fontWeight: 700,
-              color: C.redA045,
-              lineHeight: 1,
-              userSelect: 'none',
-              pointerEvents: 'none',
-              animation: 'drift 7s ease-in-out infinite',
-            }}
-          >
-            B
-          </div>
+          {/*<div*/}
+          {/*  style={{*/}
+          {/*    position: 'absolute',*/}
+          {/*    right: '5%',*/}
+          {/*    top: '50%',*/}
+          {/*    transform: 'translateY(-50%)',*/}
+          {/*    fontFamily: "'Playfair Display', serif",*/}
+          {/*    fontSize: 'clamp(14rem, 22vw, 26rem)',*/}
+          {/*    fontWeight: 700,*/}
+          {/*    color: C.redA045,*/}
+          {/*    lineHeight: 1,*/}
+          {/*    userSelect: 'none',*/}
+          {/*    pointerEvents: 'none',*/}
+          {/*    animation: 'drift 7s ease-in-out infinite',*/}
+          {/*  }}*/}
+          {/*>*/}
+          {/*  B*/}
+          {/*</div>*/}
 
           <div
             style={{
@@ -214,71 +432,78 @@ export default function Home() {
               paddingBottom: '4rem',
             }}
           >
-            <div style={{maxWidth: 720}}>
-              <div
-                style={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: '0.75rem',
-                  marginBottom: '2.5rem',
-                  animation: 'fadeUp 0.5s ease both',
-                }}
-              >
+            <div
+              className="hero-grid"
+              style={{display: 'flex', alignItems: 'center', gap: '4.5rem'}}
+            >
+              <div style={{flex: '1 1 480px', maxWidth: 620}}>
                 <div
                   style={{
-                    width: 8,
-                    height: 8,
-                    borderRadius: '50%',
-                    background: C.red,
-                    animation: 'fadeIn 1s 0.8s ease both',
-                  }}
-                />
-                <span
-                  style={{
-                    fontSize: '0.7rem',
-                    fontWeight: 500,
-                    letterSpacing: '0.12em',
-                    textTransform: 'uppercase',
-                    color: C.textTert,
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '0.75rem',
+                    marginBottom: '2.5rem',
+                    animation: 'fadeUp 0.5s ease both',
                   }}
                 >
-                  Personal Website
-                </span>
+                  <div
+                    style={{
+                      width: 8,
+                      height: 8,
+                      borderRadius: '50%',
+                      background: C.red,
+                      animation: 'fadeIn 1s 0.8s ease both',
+                    }}
+                  />
+                  <span
+                    style={{
+                      fontSize: '0.7rem',
+                      fontWeight: 500,
+                      letterSpacing: '0.12em',
+                      textTransform: 'uppercase',
+                      color: C.textTert,
+                    }}
+                  >
+                    Personal Website
+                  </span>
+                </div>
+
+                <h1
+                  style={{
+                    fontFamily: "'Playfair Display', serif",
+                    fontSize: 'clamp(3rem, 7vw, 6rem)',
+                    lineHeight: 1.0,
+                    fontWeight: 700,
+                    color: C.text,
+                    marginBottom: '1rem',
+                    animation: 'fadeUp 0.55s 0.08s ease both',
+                  }}
+                >
+                  Martin
+                  <br />
+                  <span style={{color: C.red}}>Braquet</span>
+                </h1>
+
+                <p
+                  style={{
+                    fontFamily: "'Playfair Display', serif",
+                    fontSize: 'clamp(1.05rem, 2vw, 1.3rem)',
+                    lineHeight: 1.75,
+                    color: C.textSec,
+                    fontStyle: 'italic',
+                    fontWeight: 400,
+                    maxWidth: 560,
+                    marginBottom: '3rem',
+                    animation: 'fadeUp 0.55s 0.16s ease both',
+                  }}
+                >
+                  "{description}"
+                </p>
+
+                <SocialButtons withEmail />
               </div>
 
-              <h1
-                style={{
-                  fontFamily: "'Playfair Display', serif",
-                  fontSize: 'clamp(3rem, 7vw, 6rem)',
-                  lineHeight: 1.0,
-                  fontWeight: 700,
-                  color: C.text,
-                  marginBottom: '1rem',
-                  animation: 'fadeUp 0.55s 0.08s ease both',
-                }}
-              >
-                Martin
-                <br />
-                <span style={{color: C.red}}>Braquet</span>
-              </h1>
-
-              <p
-                style={{
-                  fontFamily: "'Playfair Display', serif",
-                  fontSize: 'clamp(1.05rem, 2vw, 1.3rem)',
-                  lineHeight: 1.75,
-                  color: C.textSec,
-                  fontStyle: 'italic',
-                  fontWeight: 400,
-                  maxWidth: 560,
-                  marginBottom: '3rem',
-                  animation: 'fadeUp 0.55s 0.16s ease both',
-                }}
-              >
-                "{description}"
-              </p>
-
-              <SocialButtons withEmail />
+              <HeroPortrait />
             </div>
           </div>
 
