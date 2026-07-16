@@ -512,7 +512,7 @@ export default function Nature() {
                   color: C.textTert,
                 }}
               >
-                Field Notes
+                Mindfulness
               </span>
             </div>
 
