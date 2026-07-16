@@ -29,21 +29,22 @@ const ENCOUNTERS: Encounter[] = [
     alt: 'A red dragonfly resting on an open hand above grass',
   },
   {
-    id: 'cat',
-    src: `${BASE}/cat.jpg`,
-    title: 'My Travel Partner',
-    caption:
-      'My cat, and my travel partner. Quiet, yet curious and obsessed with the little details. One of the dearest beings to me.',
-    alt: 'A black cat held close to my shoulder',
-  },
-  {
-    id: 'bee',
-    src: `${BASE}/bee.jpg`,
-    title: 'A Hive Splitting',
+    id: 'donkey',
+    src: `${BASE}/donkey.jpg`,
+    title: 'Always Asking for a Hug',
     tag: 'Family',
     caption:
-      'A beehive in my family garden splitting in spring to find a new home. Every dot in the air is a bee.',
-    alt: 'A garden filled with a swarm of bees in flight, each one a small dot against the trees',
+      'Our family donkey. Endlessly curious, always following me, always asking for a hug. We take care of him because we like animals — and in return his manure fertilizes the garden.',
+    alt: 'A donkey standing close to the camera in a field',
+  },
+  {
+    id: 'horse',
+    src: `${BASE}/horse.jpg`,
+    title: 'The Greener Grass',
+    tag: 'Belgium',
+    caption:
+      'An elegant horse in my neighborhood. He follows me when I walk along his street and never forgets to beg for the greener grass on my side of the fence.',
+    alt: 'A black and white horse walking toward the camera beside a wooden barn',
   },
   {
     id: 'cow',
@@ -64,22 +65,21 @@ const ENCOUNTERS: Encounter[] = [
     alt: 'Sitting beside a cow resting on the ground in a sanctuary in India',
   },
   {
-    id: 'donkey',
-    src: `${BASE}/donkey.jpg`,
-    title: 'Always Asking for a Hug',
+    id: 'bee',
+    src: `${BASE}/bee.jpg`,
+    title: 'A Hive Splitting',
     tag: 'Family',
     caption:
-      'Our family donkey. Endlessly curious, always following me, always asking for a hug. We take care of him because we like animals — and in return his manure fertilizes the garden.',
-    alt: 'A donkey standing close to the camera in a field',
+      'A beehive in my family garden splitting in spring to find a new home. Every dot in the air is a bee.',
+    alt: 'A garden filled with a swarm of bees in flight, each one a small dot against the trees',
   },
   {
-    id: 'horse',
-    src: `${BASE}/horse.jpg`,
-    title: 'The Greener Grass',
-    tag: 'Belgium',
+    id: 'cat',
+    src: `${BASE}/cat.jpg`,
+    title: 'My Travel Partner',
     caption:
-      'An elegant horse in my neighborhood. He follows me when I walk along his street and never forgets to beg for the greener grass on my side of the fence.',
-    alt: 'A black and white horse walking toward the camera beside a wooden barn',
+      'My cat, and my travel partner. Quiet, yet curious and obsessed with the little details. One of the dearest beings to me.',
+    alt: 'A black cat held close to my shoulder',
   },
 ]
 
@@ -592,9 +592,9 @@ export default function Nature() {
                 Encounters
               </h2>
               <p style={{fontSize: '0.95rem', color: C.textSec, maxWidth: 740, lineHeight: 1.8}}>
-                None of these {ENCOUNTERS.length} encounters were arranged. Each one happened
-                because an animal decided, for a few seconds, that I was worth approaching — and
-                because I happened to be paying attention.
+                Most of these {ENCOUNTERS.length} encounters were spontaneous. They emerged because
+                an animal decided, for a few seconds, that I was worth approaching — and because I
+                happened to be paying attention.
               </p>
             </div>
 

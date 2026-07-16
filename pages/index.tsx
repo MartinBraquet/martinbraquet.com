@@ -25,11 +25,13 @@ const NATURE_BASE = 'https://ewdq9sshhf9cseit.public.blob.vercel-storage.com/nat
 /** The strip is decorative — the /nature page carries the real captions. */
 const NATURE_STRIP = [
   {src: `${NATURE_BASE}/dragonfly.jpg`, position: 'center'},
-  {src: `${NATURE_BASE}/cow.jpg`, position: 'center'},
-  {src: `${NATURE_BASE}/cow-india.jpg`, position: 'center'},
   {src: `${NATURE_BASE}/horse.jpg`, position: 'center'},
+  {src: `${NATURE_BASE}/donkey.jpg`, position: 'center'},
+  // {src: `${NATURE_BASE}/cow.jpg`, position: 'center'},
+  {src: `${NATURE_BASE}/cow-india.jpg`, position: 'center'},
+  {src: `${NATURE_BASE}/bee.jpg`, position: 'center'},
   // Subject sits high in the frame; a plain centre crop cuts the face.
-  {src: `${NATURE_BASE}/cat.jpg`, position: '50% 30%'},
+  // {src: `${NATURE_BASE}/cat.jpg`, position: '50% 30%'},
 ]
 
 /** Featured = highest-importance projects, in PROJECTS order (newest first). */
@@ -459,7 +461,7 @@ function NatureStrip() {
               objectFit: 'cover',
               objectPosition: n.position,
               display: 'block',
-              filter: hovered === null || hovered === i ? 'none' : 'saturate(0.6) brightness(0.92)',
+              filter: hovered === null || hovered === i ? 'none' : 'saturate(0.6) brightness(0.5)',
               transition: 'filter 0.55s ease',
             }}
           />
@@ -811,10 +813,10 @@ export default function Home() {
                 }}
               >
                 Nature is beautiful when we have the eyes to appreciate it. Encounters with the
-                animals who decided to come closer — a sparrow on my lap, a dragonfly at rest, cows
-                who walk over to the fence.
+                animals who decided to come closer — a sparrow on my lap, a dragonfly at rest, a
+                horse begging for food.
               </p>
-              <Button href="/nature">Explore Nature →</Button>
+              <Button href="/nature">Explore →</Button>
             </SectionHeading>
           </div>
 
