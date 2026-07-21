@@ -93,7 +93,7 @@ export const PROJECTS: Project[] = [
     description:
       'Free, open-source platform to help people form deep connections — platonic, romantic, or collaborative. Keyword search, transparent database, no ads, no hidden algorithms.',
     tech: ['TypeScript', 'React', 'Next.js'],
-    stat: '600+ members', // fallback if dynamic fetch fails
+    stat: '700+ members', // fallback if dynamic fetch fails
     media:
       'https://ewdq9sshhf9cseit.public.blob.vercel-storage.com/projects/profiles-page-with-filters.png',
     links: {
@@ -290,7 +290,7 @@ export const PROJECTS: Project[] = [
     tech: ['MATLAB', 'Python'],
     media:
       'https://ewdq9sshhf9cseit.public.blob.vercel-storage.com/projects/Dynamic-Task-Agent-Allocation.gif',
-    stat: '70+ citations',
+    stat: '80+ citations',
     links: {
       paper:
         'https://ewdq9sshhf9cseit.public.blob.vercel-storage.com/projects/Greedy-Decentralized-Auction-based-Task-Allocation-for-Multi-Age_2021_IFAC-P.pdf',
