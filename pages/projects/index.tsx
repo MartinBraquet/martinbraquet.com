@@ -84,14 +84,14 @@ export const PROJECTS: Project[] = [
   },
   {
     id: 'compass',
-    title: 'Compass — Platform for Intentional Human Connections',
+    title: 'Compass — Directory to Find Your People',
     year: 2025,
     importance: 3,
     category: 'Web App',
     badge: 'live',
     context: 'Founder & Maintainer',
     description:
-      'Free, open-source platform to help people form deep connections — platonic, romantic, or collaborative. Keyword search, transparent database, no ads, no hidden algorithms.',
+      'Free, open-source directory to help people form deep connections — platonic, romantic, or collaborative. Keyword search, transparent userbase, no ads, no hidden algorithms.',
     tech: ['TypeScript', 'React', 'Next.js'],
     stat: '700+ members', // fallback if dynamic fetch fails
     media:
