@@ -84,7 +84,7 @@ export const PROJECTS: Project[] = [
   },
   {
     id: 'compass',
-    title: 'Compass — Directory to Find Your People',
+    title: 'Compass — Directory to Find Your People by Values',
     year: 2025,
     importance: 3,
     category: 'Web App',
