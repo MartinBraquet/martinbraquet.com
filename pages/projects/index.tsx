@@ -93,7 +93,7 @@ export const PROJECTS: Project[] = [
     description:
       'Free, open-source directory to help people form deep connections — platonic, romantic, or collaborative. Keyword search, transparent userbase, no ads, no hidden algorithms.',
     tech: ['TypeScript', 'React', 'Next.js'],
-    stat: '700+ members', // fallback if dynamic fetch fails
+    stat: '800+ members', // fallback if dynamic fetch fails
     media:
       'https://ewdq9sshhf9cseit.public.blob.vercel-storage.com/projects/profiles-page-with-filters.png',
     links: {
