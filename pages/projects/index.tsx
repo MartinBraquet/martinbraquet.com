@@ -97,7 +97,7 @@ export const PROJECTS: Project[] = [
     media:
       'https://ewdq9sshhf9cseit.public.blob.vercel-storage.com/projects/profiles-page-with-filters.png',
     links: {
-      live: 'https://www.compassmeet.com/',
+      live: 'https://www.compassmeet.com/?referrer=Martin',
       github: 'https://github.com/CompassConnections/Compass',
     },
   },
