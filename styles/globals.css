@@ -9,7 +9,6 @@
   --tnh: env(safe-area-inset-top); /* native top nav height */
   --hloss: calc(var(--bnh) + var(--tnh)); /* mobile height loss due to native top and bottom bars */
   --filter-offset: 0px; /* padding for filters on mobile */
-  --banner-h: clamp(220px, 35vh, 380px); /* home hero banner; hero height subtracts this */
   touch-action: pan-y;
 }
 
@@ -721,6 +720,66 @@ select {
   height: 100% !important;
   aspect-ratio: auto !important;
   object-fit: contain !important;
+}
+
+/* Home hero banner — full-screen photo with the copy over the forest on the right.
+   Text colors are vars so the narrow layout (copy below the photo) can soften them. */
+.hero-banner {
+  position: relative;
+  height: 100svh;
+  min-height: 560px;
+  overflow: hidden;
+}
+.hero-banner-media {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+}
+.hero-banner-content {
+  --hero-fg: #fff;
+  --hero-fg-sec: rgb(255 255 255 / 0.9);
+  --hero-fg-muted: rgb(255 255 255 / 0.8);
+  --hero-accent: #fff;
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding: 52px clamp(2.5rem, 7vw, 8rem) 0;
+  text-shadow:
+    0 1px 3px rgb(0 0 0 / 0.5),
+    0 2px 24px rgb(0 0 0 / 0.45);
+}
+.hero-banner-content > div {
+  width: min(560px, 48%);
+}
+
+@media (max-width: 900px) {
+  /* Photo grows to fill whatever the copy leaves of the screen, so the hero
+     ends exactly at the bottom edge; never shorter than the 16:9 crop. */
+  .hero-banner {
+    height: auto;
+    min-height: 100svh;
+    display: flex;
+    flex-direction: column;
+  }
+  .hero-banner-media {
+    position: relative;
+    flex: 1 0 56.25vw;
+  }
+  .hero-banner-content {
+    --hero-fg: rgb(var(--color-canvas-900));
+    --hero-fg-sec: rgb(var(--color-canvas-400));
+    --hero-fg-muted: rgb(var(--color-canvas-300));
+    --hero-accent: rgb(var(--color-primary-800));
+    position: static;
+    display: block;
+    padding: 2.25rem 2.5rem 2.5rem;
+    text-shadow: none;
+  }
+  .hero-banner-content > div {
+    width: auto;
+  }
 }
 
 /* Hero stacks with the portrait below the text on narrow screens */

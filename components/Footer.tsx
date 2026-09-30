@@ -28,7 +28,7 @@ export default function Footer() {
             >
               Martin <span style={{color: C.redFooter}}>Braquet</span>
             </div>
-            <p style={{fontSize: '0.78rem', color: C.bgA35, lineHeight: 1.6}}>
+            <p style={{fontSize: '0.78rem', color: C.bgA70, lineHeight: 1.6}}>
               Researcher · Engineer
             </p>
           </div>
@@ -40,13 +40,13 @@ export default function Footer() {
                 href={href}
                 style={{
                   fontSize: '0.75rem',
-                  color: C.bgA40,
+                  color: C.bgA70,
                   textDecoration: 'none',
                   letterSpacing: '0.05em',
                   transition: 'color 0.2s',
                 }}
-                onMouseEnter={(e) => (e.currentTarget.style.color = C.bgA80)}
-                onMouseLeave={(e) => (e.currentTarget.style.color = C.bgA40)}
+                onMouseEnter={(e) => (e.currentTarget.style.color = C.bgA95)}
+                onMouseLeave={(e) => (e.currentTarget.style.color = C.bgA70)}
               >
                 {label}
               </a>
@@ -65,7 +65,7 @@ export default function Footer() {
             gap: '0.5rem',
           }}
         >
-          <p style={{fontSize: '0.75rem', color: C.bgA25, margin: 0}}>
+          <p style={{fontSize: '0.75rem', color: C.bgA65, margin: 0}}>
             © {new Date().getFullYear()} Martin Braquet
           </p>
           <div style={{display: 'flex', gap: '1.25rem'}}>
@@ -76,13 +76,13 @@ export default function Footer() {
                 target="_blank"
                 rel="noopener noreferrer"
                 style={{
-                  color: C.bgA25,
+                  color: C.bgA65,
                   textDecoration: 'none',
                   fontSize: '0.75rem',
                   transition: 'color 0.2s',
                 }}
-                onMouseEnter={(e) => (e.currentTarget.style.color = C.bgA65)}
-                onMouseLeave={(e) => (e.currentTarget.style.color = C.bgA25)}
+                onMouseEnter={(e) => (e.currentTarget.style.color = C.bgA95)}
+                onMouseLeave={(e) => (e.currentTarget.style.color = C.bgA65)}
               >
                 {s.label}
               </a>

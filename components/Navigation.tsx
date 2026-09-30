@@ -1,3 +1,4 @@
+import clsx from 'clsx'
 import {useRouter} from 'next/router'
 import {useEffect, useState} from 'react'
 import {CustomLink} from 'web/components/links'
@@ -11,10 +12,40 @@ const linkActive = `${linkBase} text-canvas-900 sm:border-b-primary-800 cursor-d
 const linkInactive = `${linkBase} text-canvas-400 border-b-transparent
                       hover:text-canvas-900 hover:border-b-primary-800`
 
+// Variants for when the nav floats transparently over the home banner photo
+const onPhoto = '[text-shadow:0_1px_6px_rgb(0_0_0/0.5)]'
+const linkActiveOnPhoto = `${linkBase} ${onPhoto} text-white sm:border-b-white cursor-default`
+const linkInactiveOnPhoto = `${linkBase} ${onPhoto} text-white/80 border-b-transparent
+                             hover:text-white hover:border-b-white`
+const NAV_H = 52
+
 export default function Navigation() {
   const router = useRouter()
   const currentPath = router.pathname
   const [isMenuOpen, setIsMenuOpen] = useState(false)
+  const isHome = currentPath === '/'
+  // On the home page the nav overlays the full-screen banner until it scrolls past
+  const [overBanner, setOverBanner] = useState(isHome)
+
+  useEffect(() => {
+    if (!isHome) return setOverBanner(false)
+    const update = () => {
+      const banner = document.querySelector('.hero-banner-media')
+      setOverBanner(!!banner && banner.getBoundingClientRect().bottom > NAV_H)
+    }
+    update()
+    window.addEventListener('scroll', update, {passive: true})
+    window.addEventListener('resize', update)
+    return () => {
+      window.removeEventListener('scroll', update)
+      window.removeEventListener('resize', update)
+    }
+  }, [isHome])
+
+  const transparent = overBanner
+  const active = transparent ? linkActiveOnPhoto : linkActive
+  const inactive = transparent ? linkInactiveOnPhoto : linkInactive
+  const bar = transparent ? 'bg-white' : 'bg-canvas-900'
 
   // Close menu when clicking outside
   useEffect(() => {
@@ -34,16 +65,27 @@ export default function Navigation() {
 
   return (
     <nav
-      className="
-      top-0 z-[100] h-[52px] px-10
-      flex items-center justify-between
-      bg-canvas-25/80 backdrop-blur-lg
-      border-b border-transparent
-      transition-all duration-300
-    "
+      className={clsx(
+        'top-0 z-[100] h-[52px] px-10 flex items-center justify-between border-b transition-all duration-300',
+        isHome && 'fixed inset-x-0',
+        transparent
+          ? 'bg-transparent border-transparent'
+          : clsx(
+              'bg-canvas-25/80 backdrop-blur-lg',
+              isHome ? 'border-canvas-100' : 'border-transparent',
+            ),
+      )}
     >
-      {/* Logo */}
-      <a href="/" className="no-underline">
+      {/* Logo — hidden over the home banner, where the hero already shows the name */}
+      <a
+        href="/"
+        aria-hidden={transparent}
+        tabIndex={transparent ? -1 : undefined}
+        className={clsx(
+          'no-underline transition-opacity duration-300',
+          transparent && 'pointer-events-none opacity-0',
+        )}
+      >
         <span className="font-['Playfair_Display',serif] text-base font-bold tracking-[-0.01em] text-canvas-900">
           Martin <span className="text-primary-800">Braquet</span>
         </span>
@@ -58,15 +100,15 @@ export default function Navigation() {
           {/* Inline style kept intentionally: CSS transform order matters —       */}
           {/* rotate(45deg) translate(5px,5px) ≠ translate then rotate (Tailwind)  */}
           <div
-            className="h-[2px] w-5 bg-canvas-900 transition-transform duration-300 ease-in-out"
+            className={`h-[2px] w-5 ${bar} transition-transform duration-300 ease-in-out`}
             style={{transform: isMenuOpen ? 'rotate(45deg) translate(5px, 5px)' : 'none'}}
           />
           <div
-            className={`h-[2px] w-5 bg-canvas-900 transition-opacity duration-300
+            className={`h-[2px] w-5 ${bar} transition-opacity duration-300
                            ${isMenuOpen ? 'opacity-0' : 'opacity-100'}`}
           />
           <div
-            className="h-[2px] w-5 bg-canvas-900 transition-transform duration-300 ease-in-out"
+            className={`h-[2px] w-5 ${bar} transition-transform duration-300 ease-in-out`}
             style={{transform: isMenuOpen ? 'rotate(-45deg) translate(2px, -3px)' : 'none'}}
           />
         </button>
@@ -99,11 +141,11 @@ export default function Navigation() {
       <div className="hidden gap-8 lg:flex">
         {PAGES.map(([href, label]) =>
           href === currentPath ? (
-            <span key={label} className={linkActive}>
+            <span key={label} className={active}>
               {label}
             </span>
           ) : (
-            <CustomLink key={label} href={href} className={linkInactive}>
+            <CustomLink key={label} href={href} className={inactive}>
               {label}
             </CustomLink>
           ),

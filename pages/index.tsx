@@ -18,7 +18,7 @@ const PROFILE_PIC =
   'https://ewdq9sshhf9cseit.public.blob.vercel-storage.com/profile-media/martin-indoor.jpg'
 
 const BANNER_PIC =
-  'https://ewdq9sshhf9cseit.public.blob.vercel-storage.com/profile-media/banner.jpg'
+  'https://ewdq9sshhf9cseit.public.blob.vercel-storage.com/profile-media/banner-full.jpg'
 
 const NATURE_BASE = 'https://ewdq9sshhf9cseit.public.blob.vercel-storage.com/nature'
 
@@ -112,55 +112,98 @@ function HeroBanner() {
   }, [])
 
   return (
-    <section
-      className="hero-banner"
-      aria-hidden="true"
-      style={{
-        position: 'relative',
-        height: 'var(--banner-h)',
-        overflow: 'hidden',
-        background: C.bg,
-      }}
-    >
+    <section className="hero-banner" style={{background: C.bg}}>
       {/* Reveal wrapper — animation owns the scale, the img owns the parallax */}
-      <div style={{position: 'absolute', inset: 0, animation: 'bannerReveal 1.3s ease-out both'}}>
-        <img
-          src={BANNER_PIC}
-          alt=""
-          style={{
-            position: 'absolute',
-            top: '-14%',
-            left: 0,
-            width: '100%',
-            height: '128%',
-            objectFit: 'cover',
-            objectPosition: '30% 58%',
-            display: 'block',
-            transform: `translate3d(0, ${offset}px, 0)`,
-            willChange: 'transform',
-          }}
-        />
+      <div className="hero-banner-media" aria-hidden="true">
+        <div style={{position: 'absolute', inset: 0, animation: 'bannerReveal 1.3s ease-out both'}}>
+          <img
+            src={BANNER_PIC}
+            alt=""
+            style={{
+              position: 'absolute',
+              // top: '-14%',
+              left: 0,
+              width: '100%',
+              height: '128%',
+              objectFit: 'cover',
+              // Keep the left third (me) in frame when the viewport is narrower than 16:9
+              objectPosition: '20% 40%',
+              display: 'block',
+              transform: `translate3d(0, ${offset}px, 0)`,
+              willChange: 'transform',
+            }}
+          />
+        </div>
       </div>
 
-      {/* Warm tint — marries the cool photo to the brand palette */}
-      <div
-        style={{
-          position: 'absolute',
-          inset: 0,
-          background: `linear-gradient(to bottom, ${C.redA25} 0%, transparent 45%)`,
-          pointerEvents: 'none',
-        }}
-      />
+      {/* Hero copy — over the forest on the right on wide screens, below the photo on narrow ones */}
+      <div className="hero-banner-content">
+        <div style={{maxWidth: 560}}>
+          <div
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              gap: '0.75rem',
+              marginBottom: '1rem',
+              animation: 'fadeUp 0.5s 0.3s ease both',
+            }}
+          >
+            {/*<div*/}
+            {/*  style={{*/}
+            {/*    width: 8,*/}
+            {/*    height: 8,*/}
+            {/*    borderRadius: '50%',*/}
+            {/*    background: 'var(--hero-accent)',*/}
+            {/*    animation: 'fadeIn 1s 1.1s ease both',*/}
+            {/*  }}*/}
+            {/*/>*/}
+            <span
+              style={{
+                fontSize: '0.7rem',
+                fontWeight: 500,
+                letterSpacing: '0.12em',
+                textTransform: 'uppercase',
+                color: 'var(--hero-fg-muted)',
+              }}
+            >
+              Quantitative Engineer & Researcher
+            </span>
+          </div>
 
-      {/* Bottom fade — dissolves the banner into the hero */}
-      <div
-        style={{
-          position: 'absolute',
-          inset: 0,
-          background: `linear-gradient(to top, ${C.bg} 0%, rgb(var(--color-canvas-25) / 0.6) 22%, transparent 62%)`,
-          pointerEvents: 'none',
-        }}
-      />
+          <h1
+            style={{
+              fontFamily: "'Playfair Display', serif",
+              fontSize: 'clamp(2.6rem, 6vw, 5rem)',
+              lineHeight: 1.0,
+              fontWeight: 700,
+              color: 'var(--hero-fg)',
+              marginBottom: '1.25rem',
+              animation: 'fadeUp 0.55s 0.38s ease both',
+            }}
+          >
+            Martin
+            <br />
+            <span style={{color: 'var(--hero-accent)'}}>Braquet</span>
+          </h1>
+
+          <p
+            style={{
+              fontSize: 'clamp(1rem, 1.5vw, 1.1rem)',
+              lineHeight: 1.75,
+              color: 'var(--hero-fg-sec)',
+              maxWidth: 540,
+              marginBottom: '2rem',
+              animation: 'fadeUp 0.55s 0.46s ease both',
+            }}
+          >
+            {LEDE}
+          </p>
+
+          <div style={{animation: 'fadeUp 0.55s 0.54s ease both'}}>
+            <Button href="#contact">Get in touch</Button>
+          </div>
+        </div>
+      </div>
     </section>
   )
 }
@@ -578,133 +621,10 @@ export default function Home() {
         {/* ── BANNER ── */}
         <HeroBanner />
 
-        {/* ── HERO ── */}
-        <section
-          style={{
-            minHeight: 'max(360px, calc(70vh - var(--banner-h)))',
-            padding: '0 2.5rem',
-            display: 'flex',
-            alignItems: 'center',
-            position: 'relative',
-            overflow: 'hidden',
-          }}
-        >
-          {/* Atmospheric background */}
-          <div
-            style={{
-              position: 'absolute',
-              inset: 0,
-              pointerEvents: 'none',
-              background: [
-                `radial-gradient(ellipse 55% 50% at 85% 15%, ${C.redA07} 0%, transparent 60%)`,
-                // The warm tan (196 154 114) is a unique one-off decoration, not in the palette
-                `radial-gradient(ellipse 40% 35% at 5% 85%, rgba(196, 154, 114, 0.10) 0%, transparent 55%)`,
-              ].join(', '),
-            }}
-          />
-
-          <div
-            style={{
-              maxWidth: 1100,
-              margin: '0 auto',
-              width: '100%',
-              position: 'relative',
-              zIndex: 1,
-              paddingTop: '1.5rem',
-              paddingBottom: '3rem',
-            }}
-          >
-            <div className="hero-grid" style={{display: 'flex', alignItems: 'center', gap: '4rem'}}>
-              <div style={{flex: '1 1 340px', maxWidth: 620}}>
-                <div
-                  style={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    gap: '0.75rem',
-                    marginBottom: '1rem',
-                    animation: 'fadeUp 0.5s ease both',
-                  }}
-                >
-                  <div
-                    style={{
-                      width: 8,
-                      height: 8,
-                      borderRadius: '50%',
-                      background: C.red,
-                      animation: 'fadeIn 1s 0.8s ease both',
-                    }}
-                  />
-                  <span
-                    style={{
-                      fontSize: '0.7rem',
-                      fontWeight: 500,
-                      letterSpacing: '0.12em',
-                      textTransform: 'uppercase',
-                      color: C.textTert,
-                    }}
-                  >
-                    Quantitative Engineer & Researcher
-                  </span>
-                </div>
-
-                <h1
-                  style={{
-                    fontFamily: "'Playfair Display', serif",
-                    fontSize: 'clamp(2.6rem, 6vw, 5rem)',
-                    lineHeight: 1.0,
-                    fontWeight: 700,
-                    color: C.text,
-                    marginBottom: '1.25rem',
-                    animation: 'fadeUp 0.55s 0.08s ease both',
-                  }}
-                >
-                  Martin
-                  <br />
-                  <span style={{color: C.red}}>Braquet</span>
-                </h1>
-
-                <p
-                  style={{
-                    fontSize: 'clamp(1rem, 1.5vw, 1.1rem)',
-                    lineHeight: 1.75,
-                    color: C.textSec,
-                    maxWidth: 540,
-                    marginBottom: '2rem',
-                    animation: 'fadeUp 0.55s 0.16s ease both',
-                  }}
-                >
-                  {LEDE}
-                </p>
-
-                <div
-                  style={{
-                    display: 'flex',
-                    gap: '0.75rem',
-                    flexWrap: 'wrap',
-                    animation: 'fadeUp 0.55s 0.24s ease both',
-                  }}
-                >
-                  {/*<Button href="#work">See my work →</Button>*/}
-                  <Button href="#contact" variant="outline">
-                    Get in touch
-                  </Button>
-                </div>
-              </div>
-
-              <HeroPortrait />
-            </div>
-          </div>
-        </section>
-
-        <div className="divider" />
-
         {/* ── ABOUT ── */}
         <section id="about" style={{padding: '90px 2.5rem'}}>
           <div style={{maxWidth: 1100, margin: '0 auto'}}>
-            <div
-              className="two-col"
-              style={{display: 'flex', gap: '5rem', alignItems: 'flex-start'}}
-            >
+            <div className="two-col" style={{display: 'flex', gap: '5rem', alignItems: 'center'}}>
               {/* LEFT — Personal */}
               <div {...R()} style={{...rs, flex: '0 0 45%'}}>
                 <SectionHeading label="About" title="Personal Life" />
@@ -724,26 +644,38 @@ export default function Home() {
                 </div>
               </div>
 
-              {/* RIGHT — Professional */}
-              <div {...R()} style={{...rs, flex: '1 1 280px'}}>
-                <SectionHeading label="Professional" title="Open to Work" />
-                <div style={{marginTop: '1.5rem'}}>
-                  <AboutParagraph>
-                    Quantitative engineer and full-stack developer with 4 years of experience across
-                    aerospace robotics, climate-risk finance, humanitarian software, and open-source
-                    science.
-                  </AboutParagraph>
-                  <AboutParagraph>
-                    Questioning the relationship between technological and moral progress, I'm drawn
-                    to technologies deliberately scoped to purposeful, laudable ends. I'm seeking
-                    nonprofit roles with human interaction at organizations driving measurable
-                    impact on humanitarian causes such as global development.
-                  </AboutParagraph>
-                  <Button href="https://ewdq9sshhf9cseit.public.blob.vercel-storage.com/Braquet-Martin-resume.pdf">
-                    Download Resume →
-                  </Button>
-                </div>
+              {/* RIGHT — Portrait */}
+              <div
+                className="about-portrait"
+                style={{flex: '1 1 280px', display: 'flex', justifyContent: 'center'}}
+              >
+                <HeroPortrait />
               </div>
+            </div>
+          </div>
+        </section>
+
+        <div className="divider" />
+
+        {/* ── OPEN TO WORK ── */}
+        <section id="open-to-work" style={{padding: '90px 2.5rem'}}>
+          <div {...R()} style={{...rs, maxWidth: 1100, margin: '0 auto'}}>
+            <SectionHeading label="Professional" title="Open to Work" />
+            <div style={{marginTop: '1.5rem', maxWidth: 740}}>
+              <AboutParagraph>
+                Quantitative engineer and full-stack developer with 4 years of experience across
+                aerospace robotics, climate-risk finance, humanitarian software, and open-source
+                science.
+              </AboutParagraph>
+              <AboutParagraph>
+                Questioning the relationship between technological and moral progress, I'm drawn to
+                technologies deliberately scoped to purposeful, laudable ends. I'm seeking nonprofit
+                roles with human interaction at organizations driving measurable impact on
+                humanitarian causes such as global development.
+              </AboutParagraph>
+              <Button href="https://ewdq9sshhf9cseit.public.blob.vercel-storage.com/Braquet-Martin-resume.pdf">
+                Download Resume →
+              </Button>
             </div>
           </div>
         </section>

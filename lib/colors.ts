@@ -38,11 +38,9 @@ export const C = {
   // Text-secondary (canvas-400 = #7a7060) — with alpha
   textSecA25: 'rgb(var(--color-canvas-400) / 0.25)',
 
-  // Page bg (canvas-25 = #faf6f0) — with alpha (nav glass, footer text overlays)
+  // Page bg (canvas-25 = #faf6f0) — with alpha (nav glass, footer text overlays).
+  // Footer text needs ≥ 0.65 on canvas-900 to meet WCAG AA (4.5:1).
   bgA07: 'rgb(var(--color-canvas-25) / 0.07)',
-  bgA25: 'rgb(var(--color-canvas-25) / 0.25)',
-  bgA35: 'rgb(var(--color-canvas-25) / 0.35)',
-  bgA40: 'rgb(var(--color-canvas-25) / 0.40)',
   bgA65: 'rgb(var(--color-canvas-25) / 0.65)',
   bgA70: 'rgb(var(--color-canvas-25) / 0.70)',
   bgA80: 'rgb(var(--color-canvas-25) / 0.80)',
