@@ -157,17 +157,17 @@ function HeroBanner() {
             {/*    animation: 'fadeIn 1s 1.1s ease both',*/}
             {/*  }}*/}
             {/*/>*/}
-            <span
-              style={{
-                fontSize: '0.7rem',
-                fontWeight: 500,
-                letterSpacing: '0.12em',
-                textTransform: 'uppercase',
-                color: 'var(--hero-fg-muted)',
-              }}
-            >
-              Quantitative Engineer & Researcher
-            </span>
+            {/*<span*/}
+            {/*  style={{*/}
+            {/*    fontSize: '0.7rem',*/}
+            {/*    fontWeight: 500,*/}
+            {/*    letterSpacing: '0.12em',*/}
+            {/*    textTransform: 'uppercase',*/}
+            {/*    color: 'var(--hero-fg-muted)',*/}
+            {/*  }}*/}
+            {/*>*/}
+            {/*  Quantitative Engineer & Researcher*/}
+            {/*</span>*/}
           </div>
 
           <h1
@@ -814,7 +814,7 @@ export default function Home() {
                 fontStyle: 'italic',
                 fontSize: '1rem',
                 lineHeight: 1.75,
-                color: C.textTert,
+                color: C.textSec,
                 maxWidth: 520,
                 margin: '3.5rem auto 0',
                 paddingTop: '2.5rem',
